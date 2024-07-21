@@ -3,22 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { toggleSidebar } from '../../store/themeConfigSlice';
-import AnimateHeight from 'react-animate-height';
 import { IRootState } from '../../store';
 import { useState, useEffect } from 'react';
 import IconCaretsDown from '../Icon/IconCaretsDown';
-import IconCaretDown from '../Icon/IconCaretDown';
 import IconMinus from '../Icon/IconMinus';
-import IconMenuUsers from '../Icon/Menu/IconMenuUsers';
-import IconMenuResturant from '../Icon/Menu/IconMenuRestuarants';
+
 import Logo from '../../assets/Artboard 2 2.png';
 import IconMenuCategory from '../Icon/Menu/IconMenuCategory';
-import IconMenuStore from '../Icon/Menu/IconMenuStore';
-import IconMenuExpenses from '../Icon/Menu/IconMenuExpenses';
+
+import IconCoupons from '../Icon/Menu/IconCoupons';
+import IconOffers from '../Icon/Menu/IconOffers';
+import IconPermission from '../Icon/Menu/IconPermission';
+import IconTables from '../Icon/Menu/IconTables';
+import IconMeals from '../Icon/Menu/iconMeals';
 const Sidebar = () => {
     const [currentMenu, setCurrentMenu] = useState<string>('');
-    const [CategorySubMenu, setCategorySubMenu] = useState(false);
-    const [ItemSubMenu, setItemSubMenu] = useState(false);
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
     const semidark = useSelector((state: IRootState) => state.themeConfig.semidark);
     const location = useLocation();
@@ -29,7 +28,6 @@ const Sidebar = () => {
             return oldValue === value ? '' : value;
         });
     };
-    console.log(currentMenu);
 
     useEffect(() => {
         const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
@@ -153,7 +151,7 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Sub_Categories/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconCoupons className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Sub_Categories')}</span>
                                                 </div>
                                         </NavLink>
@@ -165,7 +163,7 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Tables/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconTables className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Tables')}</span>
                                                 </div>
                                         </NavLink>
@@ -178,7 +176,7 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Meals/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconMeals className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Meals')}</span>
                                                 </div>
                                         </NavLink>
@@ -191,7 +189,7 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Coupons/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconCoupons className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Coupons')}</span>
                                                 </div>
                                         </NavLink>
@@ -201,9 +199,9 @@ const Sidebar = () => {
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
-                                        <NavLink to="/Coupons/List" className="group">
+                                        <NavLink to="/Offers/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconOffers className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Offers')}</span>
                                                 </div>
                                         </NavLink>
@@ -213,9 +211,9 @@ const Sidebar = () => {
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
-                                        <NavLink to="/Coupons/List" className="group">
+                                        <NavLink to="/Permission/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
+                                            <IconPermission className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Permission')}</span>
                                                 </div>
                                         </NavLink>
