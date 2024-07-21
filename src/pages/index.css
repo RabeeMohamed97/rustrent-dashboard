@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    font-family: "Montserrat", sans-serif !important;
+}
+.input_color {
+    padding: 19px 16px;
+}
+.input_color::placeholder {
+    color: #b7b7b7;
+    /* border-radius: 12px; */
+    font-size: 14px;
+    font-weight: 400;
+}
+.select_styles .css-13cymwt-control,
+.css-t3ipsp-control {
+    padding: 10px 16px;
+    /* z-index: 50; */
+}
+
+.css-t3ipsp-control {
+    border-color: red !important;
+    box-shadow: none !important;
+}
+
+.select_styles .css-tj5bde-Svg {
+    color: red !important;
+}
+
+.select_styles .css-1u9des2-indicatorSeparator {
+    background-color: red !important;
+    display: none !important;
+}
+
+.react-tel-input .form-control {
+    height: 60px;
+    z-index: 0;
+    width: 100% !important;
+}
+
+.react-tel-input .selected-flag {
+    background-color: white;
+}
+
+
+
+
+
