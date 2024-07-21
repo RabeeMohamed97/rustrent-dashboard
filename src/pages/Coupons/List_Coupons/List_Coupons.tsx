@@ -4,9 +4,9 @@ import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
-import Add_Category from '../Add_Category/Add_Category';
+import Add_Coupons from '../Add_Coupons/Add_Coupons';
 
-export default function List_Category() {
+export default function List_Coupons() {
 
   const rowData = [
     {
@@ -553,15 +553,15 @@ const updateHander = async(id:string,status:boolean)=> {
 
 
   return (
-    <Main_list  title='Categeories'>
+    <Main_list  title='Coupons'>
     <MainPageCard>
-    <CustomModal  title='Add Category' >
-    <Add_Category/>
+    <CustomModal  title='Add Coupons' >
+    <Add_Coupons/>
     </CustomModal>
 
 
     
-    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Coupons' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
    
     </MainPageCard>
 
