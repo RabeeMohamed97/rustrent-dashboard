@@ -64,6 +64,10 @@ const routes = [
         element: <List_Meals/>,
     },
     // {
+    //     path: '/Coupons/List',
+    //     element: <List_Coupons/>,
+    // },
+    // {
     //     path: '/Categories/item/Add',
     //     element: <Add_item />,
     // },
