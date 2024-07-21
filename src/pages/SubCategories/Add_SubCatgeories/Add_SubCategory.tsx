@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
 
 import Upload from '../../../components/reusableComponents/Upload';
+import CustomSelect from '../../../components/reusableComponents/CustomSelect';
   
     
   
 export default function Add_SubCategory() {
+  
+  const options = [
+    { value: '', label: 'Burger' },
+    { value: 'orange', label: 'Orange' },
+    { value: 'white', label: 'White' },
+    { value: 'purple', label: 'Purple' },
+];
     const [formData, setFormData] = useState({
         name: '',
         price: '',
@@ -48,18 +56,23 @@ export default function Add_SubCategory() {
   return <> 
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
-                  <div className="col-span-4">
+                  <div className="col-span-6">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Name</label>
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
-                  <div className="col-span-4 ">
+                  <div className="col-span-6">
+                  <CustomSelect options={options} label="Category" />       
+                  
+                             </div>
+               
+                  <div className="col-span-10">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
-                  <div className="col-span-4 ">
-                                        <h2 className="text-[#373837] text-[18px] font-semibold pb-5">Delivery</h2>
+                    <div className="col-span-2   ">
+                                        <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 
-                                        <div className="inline-flex gap-4 capitalize items-center">
+                                        <div className="flex gap-4 capitalize items-center justify-center ">
                                             <span className={!isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>No</span>
 
                                             <div className="relative inline-block w-8 h-4 rounded-full cursor-pointer">

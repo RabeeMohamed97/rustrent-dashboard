@@ -5,7 +5,7 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 ;
-import Add_Coupons from '../Add_Coupons/Add_Category';
+import Add_Coupons from '../Add_Coupons/Add_Coupons';
 
 export default function List_Coupons() {
 

@@ -11,10 +11,18 @@ body{
     font-size: 14px;
     font-weight: 400;
 }
+.select_styles .css-13cymwt-control
+ {
+    padding: 10px 16px;
+    
+    /* z-index: 50; */
+    
+}
 .select_styles .css-13cymwt-control,
 .css-t3ipsp-control {
     padding: 10px 16px;
     /* z-index: 50; */
+    
 }
 
 .css-t3ipsp-control {
@@ -24,6 +32,9 @@ body{
 
 .select_styles .css-tj5bde-Svg {
     color: red !important;
+}
+.css-13cymwt-control {
+
 }
 
 .select_styles .css-1u9des2-indicatorSeparator {

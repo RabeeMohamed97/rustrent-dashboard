@@ -47,19 +47,15 @@ export default function Add_Category() {
  
   return <> 
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
-                <div className="grid gap-4 mb-4 grid-cols-12">
-                  <div className="col-span-4">
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Name</label>
+                <div className="grid gap-4  mb-4 grid-cols-12">
+                  <div className="col-span-10">
+                    <label htmlFor="name" className="block mb-2 text-[16px] font-medium text-[#2E2E2E] dark:text-white">Category Name</label>
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
-                  <div className="col-span-4 ">
-                    <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
-                    <Upload  setFile={setFile} />
-                    </div>
-                  <div className="col-span-4 ">
-                                        <h2 className="text-[#373837] text-[18px] font-semibold pb-5">Delivery</h2>
+                  <div className="col-span-2   ">
+                                        <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 
-                                        <div className="inline-flex gap-4 capitalize items-center">
+                                        <div className="flex gap-4 capitalize items-center justify-center ">
                                             <span className={!isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>No</span>
 
                                             <div className="relative inline-block w-8 h-4 rounded-full cursor-pointer">
@@ -80,12 +76,17 @@ export default function Add_Category() {
                                             <span className={isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>Yes</span>
                                         </div>
                   </div>
+                  <div className="col-span-12 ">
+                    <label htmlFor="price" className="block mb-2 text-[16px] font-medium text-[#2E2E2E]  dark:text-white">Image</label>
+                    <Upload  setFile={setFile} />
+                    </div>
+               
              
                 </div>
                 <div className='w-full  flex justify-end'>
-                <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
-                  Add new product
+                  Add new Categories
                 </button>
                 </div>
               

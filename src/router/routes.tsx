@@ -7,7 +7,7 @@ const List_Category = lazy(() => import('../pages/Categories/List_Category/List_
 const List_Offers = lazy(() => import('../pages/Offer/List_Offers/List_Offers'));
 const List_Permsion = lazy(() => import('../pages/Permesion/List_Permsion/List_Permsion'));
 const List_Meals = lazy(() => import('../pages/Meals/List_Meals/List_Meals'));
-const List_Coupons = lazy(() => import('../pages/Coupons/List_Coupons/List_Category'));
+const List_Coupons = lazy(() => import('../pages/Coupons/List_Coupons/List_Coupons'));
 // const Add_Store = lazy(() => import('../pages/Store/Add_Store/Add_Store'));
 // const Add_Expenses = lazy(() => import('../pages/Expenses/Add_Expenses/Add_Expenses'));
 
