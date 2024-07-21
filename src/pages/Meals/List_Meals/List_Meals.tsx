@@ -3,10 +3,9 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-import Upload from '../../../components/reusableComponents/Upload';
-import Add_Category from '../Add_Category/Add_Category';
+import Add_Meals from '../Add_Meals/Add_Meals';
 
-export default function List_Category() {
+export default function List_Meals() {
 
   const rowData = [
     {
@@ -553,10 +552,10 @@ const updateHander = async(id:string,status:boolean)=> {
 
 
   return (
-    <Main_list  title='Categeories'>
+    <Main_list  title='Meals'>
     <MainPageCard>
-    <CustomModal  title='Add Category' >
-    <Add_Category/>
+    <CustomModal  title='Add Meals' >
+    <Add_Meals/>
     </CustomModal>
 
 

@@ -3,13 +3,15 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
+import Upload from '../../../components/reusableComponents/Upload';
+import Add_SubCategory from '../Add_SubCatgeories/Add_SubCategory';
 
 export default function List_SubCategory() {
 
   const rowData = [
     {
         id: 1,
-        firstName: 'Caroline',
+        firstNames: 'Caroline',
         lastName: 'Jensen',
         email: 'carolinejensen@zidant.com',
         dob: '2004-05-28',
@@ -29,7 +31,7 @@ export default function List_SubCategory() {
     },
     {
         id: 2,
-        firstName: 'Celeste',
+        firstNames: 'Celeste',
         lastName: 'Grant',
         email: 'celestegrant@polarax.com',
         dob: '1989-11-19',
@@ -49,7 +51,7 @@ export default function List_SubCategory() {
     },
     {
         id: 3,
-        firstName: 'Tillman',
+        firstNames: 'Tillman',
         lastName: 'Forbes',
         email: 'tillmanforbes@manglo.com',
         dob: '2016-09-05',
@@ -69,7 +71,7 @@ export default function List_SubCategory() {
     },
     {
         id: 4,
-        firstName: 'Daisy',
+        firstNames: 'Daisy',
         lastName: 'Whitley',
         email: 'daisywhitley@applideck.com',
         dob: '1987-03-23',
@@ -89,7 +91,7 @@ export default function List_SubCategory() {
     },
     {
         id: 5,
-        firstName: 'Weber',
+        firstNames: 'Weber',
         lastName: 'Bowman',
         email: 'weberbowman@volax.com',
         dob: '1983-02-24',
@@ -109,7 +111,7 @@ export default function List_SubCategory() {
     },
     {
         id: 6,
-        firstName: 'Buckley',
+        firstNames: 'Buckley',
         lastName: 'Townsend',
         email: 'buckleytownsend@orbaxter.com',
         dob: '2011-05-29',
@@ -129,7 +131,7 @@ export default function List_SubCategory() {
     },
     {
         id: 7,
-        firstName: 'Latoya',
+        firstNames: 'Latoya',
         lastName: 'Bradshaw',
         email: 'latoyabradshaw@opportech.com',
         dob: '2010-11-23',
@@ -149,7 +151,7 @@ export default function List_SubCategory() {
     },
     {
         id: 8,
-        firstName: 'Kate',
+        firstNames: 'Kate',
         lastName: 'Lindsay',
         email: 'katelindsay@gorganic.com',
         dob: '1987-07-02',
@@ -169,7 +171,7 @@ export default function List_SubCategory() {
     },
     {
         id: 9,
-        firstName: 'Marva',
+        firstNames: 'Marva',
         lastName: 'Sandoval',
         email: 'marvasandoval@avit.com',
         dob: '2010-11-02',
@@ -189,7 +191,7 @@ export default function List_SubCategory() {
     },
     {
         id: 10,
-        firstName: 'Decker',
+        firstNames: 'Decker',
         lastName: 'Russell',
         email: 'deckerrussell@quilch.com',
         dob: '1994-04-21',
@@ -209,7 +211,7 @@ export default function List_SubCategory() {
     },
     {
         id: 11,
-        firstName: 'Odom',
+        firstNames: 'Odom',
         lastName: 'Mills',
         email: 'odommills@memora.com',
         dob: '2010-01-24',
@@ -229,7 +231,7 @@ export default function List_SubCategory() {
     },
     {
         id: 12,
-        firstName: 'Sellers',
+        firstNames: 'Sellers',
         lastName: 'Walters',
         email: 'sellerswalters@zorromop.com',
         dob: '1975-11-12',
@@ -249,7 +251,7 @@ export default function List_SubCategory() {
     },
     {
         id: 13,
-        firstName: 'Wendi',
+        firstNames: 'Wendi',
         lastName: 'Powers',
         email: 'wendipowers@orboid.com',
         dob: '1979-06-02',
@@ -269,7 +271,7 @@ export default function List_SubCategory() {
     },
     {
         id: 14,
-        firstName: 'Sophie',
+        firstNames: 'Sophie',
         lastName: 'Horn',
         email: 'sophiehorn@snorus.com',
         dob: '2018-09-20',
@@ -289,7 +291,7 @@ export default function List_SubCategory() {
     },
     {
         id: 15,
-        firstName: 'Levine',
+        firstNames: 'Levine',
         lastName: 'Rodriquez',
         email: 'levinerodriquez@xth.com',
         dob: '1973-02-08',
@@ -309,7 +311,7 @@ export default function List_SubCategory() {
     },
     {
         id: 16,
-        firstName: 'Little',
+        firstNames: 'Little',
         lastName: 'Hatfield',
         email: 'littlehatfield@comtract.com',
         dob: '2012-01-03',
@@ -329,7 +331,7 @@ export default function List_SubCategory() {
     },
     {
         id: 17,
-        firstName: 'Larson',
+        firstNames: 'Larson',
         lastName: 'Kelly',
         email: 'larsonkelly@zidant.com',
         dob: '2010-06-14',
@@ -349,7 +351,7 @@ export default function List_SubCategory() {
     },
     {
         id: 18,
-        firstName: 'Kendra',
+        firstNames: 'Kendra',
         lastName: 'Molina',
         email: 'kendramolina@sureplex.com',
         dob: '2002-07-19',
@@ -369,7 +371,7 @@ export default function List_SubCategory() {
     },
     {
         id: 19,
-        firstName: 'Ebony',
+        firstNames: 'Ebony',
         lastName: 'Livingston',
         email: 'ebonylivingston@danja.com',
         dob: '1994-10-18',
@@ -389,7 +391,7 @@ export default function List_SubCategory() {
     },
     {
         id: 20,
-        firstName: 'Kaufman',
+        firstNames: 'Kaufman',
         lastName: 'Rush',
         email: 'kaufmanrush@euron.com',
         dob: '2011-07-10',
@@ -409,7 +411,7 @@ export default function List_SubCategory() {
     },
     {
         id: 21,
-        firstName: 'Frank',
+        firstNames: 'Frank',
         lastName: 'Hays',
         email: 'frankhays@illumity.com',
         dob: '2005-06-15',
@@ -429,7 +431,7 @@ export default function List_SubCategory() {
     },
     {
         id: 22,
-        firstName: 'Carmella',
+        firstNames: 'Carmella',
         lastName: 'Mccarty',
         email: 'carmellamccarty@sybixtex.com',
         dob: '1980-03-06',
@@ -449,7 +451,7 @@ export default function List_SubCategory() {
     },
     {
         id: 23,
-        firstName: 'Massey',
+        firstNames: 'Massey',
         lastName: 'Owen',
         email: 'masseyowen@zedalis.com',
         dob: '2012-03-01',
@@ -469,7 +471,7 @@ export default function List_SubCategory() {
     },
     {
         id: 24,
-        firstName: 'Lottie',
+        firstNames: 'Lottie',
         lastName: 'Lowery',
         email: 'lottielowery@dyno.com',
         dob: '1982-10-10',
@@ -489,7 +491,7 @@ export default function List_SubCategory() {
     },
     {
         id: 25,
-        firstName: 'Addie',
+        firstNames: 'Addie',
         lastName: 'Luna',
         email: 'addieluna@multiflex.com',
         dob: '1988-05-01',
@@ -511,13 +513,12 @@ export default function List_SubCategory() {
 
 const cols = [
     { accessor: 'id', title: '#' },
-    { accessor: 'firstName', title: 'Sub Categories' },
-    { accessor: 'lastName', title: 'Categories' },
+    { accessor: 'firstNames', title: 'Categories Name' },
     // { accessor: 'email', title: 'Email' },
     // { accessor: 'phone', title: 'Phone' },
-    // { accessor: 'company', title: 'Company' },
+    { accessor: 'company', title: 'Company' },
     // { accessor: 'address.street', title: 'Address' },
-    { accessor: 'age', title: 'Age' },
+    // { accessor: 'age', title: 'Age' },
     { accessor: 'dob', title: 'Birthdate' },
 
 
@@ -525,11 +526,6 @@ const cols = [
 
 
     { accessor: 'status', title: 'Status' },
-
-
-
-
-
     {accessor: 'action', title: 'Action',},
 ]; 
 
@@ -543,31 +539,24 @@ const EditHandelr=(id:string)=> {
     console.log( "id form index EditHandelr" ,id)
 }
 
-const [isTrue, setisTrue] = useState(false)
-const [isTrueFrommoale, setisTrueFrommoale] = useState(false)
 
 const updateHander = async(id:string,status:boolean)=> {
     console.log( "id form index updateHander" ,id ,!status)
 }
-const updateModal = async(status:boolean)=> {
-    console.log( "id form index updateModal" ,status)
-    setisTrue(status)
 
-}
-const updateModalFromModal = async(status:boolean)=> {
-    console.log( "id form index updateModalFromModal" ,status)
-    setisTrueFrommoale(status)
-
-}
 
 
   return (
     <Main_list  title='Sub Categeories'>
     <MainPageCard>
-    <CustomModal onupdatedModal={updateModalFromModal} modalis={isTrue}/>
+    <CustomModal  title='Add Sub Category' >
+        <Add_SubCategory/>
+    </CustomModal>
 
 
-        <ColumnChooser TableBody={rowData}  onupdateModal={updateModal}  statusmodal={isTrueFrommoale} tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+    
+    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+   
     </MainPageCard>
 
     </Main_list> 

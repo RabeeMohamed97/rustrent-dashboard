@@ -4,7 +4,7 @@ import Upload from '../../../components/reusableComponents/Upload';
   
     
   
-export default function Add_Category() {
+export default function Add_Meals() {
     const [formData, setFormData] = useState({
         name: '',
         price: '',

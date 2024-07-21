@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
 import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-import Upload from '../../../components/reusableComponents/Upload';
-import Add_Category from '../Add_Category/Add_Category';
+import Add_Tables from '../Add_Tabels/Add_Tables';
 
-export default function List_Category() {
+export default function List_Tables() {
 
   const rowData = [
     {
@@ -539,8 +537,6 @@ const EditHandelr=(id:string)=> {
     console.log( "id form index EditHandelr" ,id)
 }
 
-const [isTrue, setisTrue] = useState(false)
-const [isTrueFrommoale, setisTrueFrommoale] = useState(false)
 
 const updateHander = async(id:string,status:boolean)=> {
     console.log( "id form index updateHander" ,id ,!status)
@@ -548,15 +544,11 @@ const updateHander = async(id:string,status:boolean)=> {
 
 
 
-
-  
-
-
   return (
-    <Main_list  title='Categeories'>
+    <Main_list  title='Tables'>
     <MainPageCard>
-    <CustomModal  title='Add Category' >
-    <Add_Category/>
+    <CustomModal  title='Add Tables' >
+        <Add_Tables/>
     </CustomModal>
 
 

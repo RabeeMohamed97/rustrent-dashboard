@@ -1,13 +1,13 @@
 import { lazy } from 'react';
-import List_Category from '../pages/Categories/List_Category/List_Category';
-import List_SubCategory from '../pages/SubCategories/List_SubCategory/List_SubCategory';
+import List_Meals from '../pages/Meals/List_Meals/List_Meals';
+
 
 const Index = lazy(() => import('../pages/Index'));
-// const Add_Restaurant = lazy(() => import('../pages/Restaurant/Add_Restaurant/Add_Restaurant'));
-// const List_Restaurant = lazy(() => import('../pages/Restaurant/List_Restaurant/List_Restaurant'));
-// const Add_Users = lazy(() => import('../pages/Users/Add_User/Add_Users'));
+const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
+const List_SubCategory = lazy(() => import('../pages/SubCategories/List_SubCategory/List_SubCategory'));
+const List_Category = lazy(() => import('../pages/Categories/List_Category/List_Category'));
 // const List_Users = lazy(() => import('../pages/Users/List_Users/List_Users'));
-const Add_Category = lazy(() => import('../pages/Categories/Add_Category/Add_Category'));
+// const Add_Category = lazy(() => import('../pages/Categories/Add_Category/Add_Category'));
 // const Add_item = lazy(() => import('../pages/Categories/Item/Add_Item'));
 // const Add_Store = lazy(() => import('../pages/Store/Add_Store/Add_Store'));
 // const Add_Expenses = lazy(() => import('../pages/Expenses/Add_Expenses/Add_Expenses'));
@@ -43,10 +43,10 @@ const routes = [
 
 
     //Categories , Items
-    {
-        path: '/Categories/Add',
-        element: <Add_Category />,
-    },
+    // {
+    //     path: '/Categories/Add',
+    //     element: <Add_Category />,
+    // },
     {
         path: '/Categories/List',
         element: <List_Category />,
@@ -54,6 +54,14 @@ const routes = [
     {
         path: '/Sub_Categories/List',
         element: <List_SubCategory />,
+    },
+    {
+        path: '/Tables/List',
+        element: <List_Tables />,
+    },
+    {
+        path: '/Meals/List',
+        element: <List_Meals/>,
     },
     // {
     //     path: '/Categories/item/Add',
