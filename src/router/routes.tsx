@@ -4,9 +4,10 @@ const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
 const List_SubCategory = lazy(() => import('../pages/SubCategories/List_SubCategory/List_SubCategory'));
 const List_Category = lazy(() => import('../pages/Categories/List_Category/List_Category'));
-const List_Coupons = lazy(() => import('../pages/Coupons/List_Coupons/List_Coupons'));
+const List_Offers = lazy(() => import('../pages/Offer/List_Offers/List_Offers'));
+const List_Permsion = lazy(() => import('../pages/Permesion/List_Permsion/List_Permsion'));
 const List_Meals = lazy(() => import('../pages/Meals/List_Meals/List_Meals'));
-// const Add_item = lazy(() => import('../pages/Categories/Item/Add_Item'));
+const List_Coupons = lazy(() => import('../pages/Coupons/List_Coupons/List_Category'));
 // const Add_Store = lazy(() => import('../pages/Store/Add_Store/Add_Store'));
 // const Add_Expenses = lazy(() => import('../pages/Expenses/Add_Expenses/Add_Expenses'));
 
@@ -17,7 +18,7 @@ const routes = [
         element: <Index />,
         layout: 'default',
     },
-   
+
 
     //Resturants
     // {
@@ -41,10 +42,13 @@ const routes = [
 
 
     //Categories , Items
-    // {
-    //     path: '/Categories/Add',
-    //     element: <Add_Category />,
-    // },
+
+
+
+    {
+        path: '/offers/List',
+        element: <List_Offers/>,
+    },
     {
         path: '/Categories/List',
         element: <List_Category />,
@@ -62,6 +66,10 @@ const routes = [
         element: <List_Meals/>,
     },
     {
+        path: '/Permsion/List',
+        element: <List_Permsion/>,
+    },
+    {
         path: '/Coupons/List',
         element: <List_Coupons/>,
     },
@@ -73,15 +81,15 @@ const routes = [
 
     // Store
     // {
-    
+
     //         path: '/Store/Add',
-    //         element: <Add_Store/>,        
+    //         element: <Add_Store/>,
     // },
     // Expenses
     // {
-    
+
     //         path: '/Expenses/Add',
-    //         element: <Add_Expenses/>,        
+    //         element: <Add_Expenses/>,
     // }
 
 ];

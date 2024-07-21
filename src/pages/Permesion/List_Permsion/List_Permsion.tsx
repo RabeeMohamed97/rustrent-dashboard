@@ -3,10 +3,10 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-import Upload from '../../../components/reusableComponents/Upload';
-import Add_Coupons from '../Add_Coupons/Add_Coupons';
 
-export default function List_Coupons() {
+import Add_Permision from '../Add_Permsion/Add_Permision';
+
+export default function List_Permsion() {
 
   const rowData = [
     {
@@ -527,7 +527,7 @@ const cols = [
 
     { accessor: 'status', title: 'Status' },
     {accessor: 'action', title: 'Action',},
-]; 
+];
 
 const deleteHander=(id:string)=> {
     console.log( "id form index deleteHander" ,id)
@@ -549,22 +549,22 @@ const updateHander = async(id:string,status:boolean)=> {
 
 
 
-  
+
 
 
   return (
-    <Main_list  title='Coupons'>
+    <Main_list  title='Permission'>
     <MainPageCard>
-    <CustomModal  title='Add Coupons' >
-    <Add_Coupons/>
+    <CustomModal  title='Add Permission' >
+    <Add_Permision/>
     </CustomModal>
 
 
-    
-    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Coupons' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
-   
+
+    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+
     </MainPageCard>
 
-    </Main_list> 
+    </Main_list>
      )
 }
