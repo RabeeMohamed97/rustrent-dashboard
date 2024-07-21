@@ -1,12 +1,14 @@
 import { lazy } from 'react';
 import List_Meals from '../pages/Meals/List_Meals/List_Meals';
+// import List_Permsion from '../pages/Permesion/List_Permsion/List_Permsion';
 
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
 const List_SubCategory = lazy(() => import('../pages/SubCategories/List_SubCategory/List_SubCategory'));
 const List_Category = lazy(() => import('../pages/Categories/List_Category/List_Category'));
-// const List_Users = lazy(() => import('../pages/Users/List_Users/List_Users'));
+const List_Offers = lazy(() => import('../pages/Offer/List_Offers/List_Offers'));
+const List_Permsion = lazy(() => import('../pages/Permesion/List_Permsion/List_Permsion'));
 // const Add_Category = lazy(() => import('../pages/Categories/Add_Category/Add_Category'));
 // const Add_item = lazy(() => import('../pages/Categories/Item/Add_Item'));
 // const Add_Store = lazy(() => import('../pages/Store/Add_Store/Add_Store'));
@@ -19,7 +21,7 @@ const routes = [
         element: <Index />,
         layout: 'default',
     },
-   
+
 
     //Resturants
     // {
@@ -43,10 +45,13 @@ const routes = [
 
 
     //Categories , Items
-    // {
-    //     path: '/Categories/Add',
-    //     element: <Add_Category />,
-    // },
+
+
+
+    {
+        path: '/offers/List',
+        element: <List_Offers/>,
+    },
     {
         path: '/Categories/List',
         element: <List_Category />,
@@ -63,6 +68,10 @@ const routes = [
         path: '/Meals/List',
         element: <List_Meals/>,
     },
+    {
+        path: '/Permsion/List',
+        element: <List_Permsion/>,
+    },
     // {
     //     path: '/Coupons/List',
     //     element: <List_Coupons/>,
@@ -75,15 +84,15 @@ const routes = [
 
     // Store
     // {
-    
+
     //         path: '/Store/Add',
-    //         element: <Add_Store/>,        
+    //         element: <Add_Store/>,
     // },
     // Expenses
     // {
-    
+
     //         path: '/Expenses/Add',
-    //         element: <Add_Expenses/>,        
+    //         element: <Add_Expenses/>,
     // }
 
 ];

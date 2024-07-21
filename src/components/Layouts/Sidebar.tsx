@@ -133,7 +133,7 @@ const Sidebar = () => {
                             </li> */}
 
                             {/* Categories */}
-                          
+
                                 <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
@@ -170,7 +170,7 @@ const Sidebar = () => {
                                     </li>
                                 </ul>
                             </li>
-                              
+
                                 <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
@@ -183,7 +183,7 @@ const Sidebar = () => {
                                     </li>
                                 </ul>
                             </li>
-                             
+
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
@@ -211,7 +211,7 @@ const Sidebar = () => {
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
-                                        <NavLink to="/Permission/List" className="group">
+                                        <NavLink to="/Permsion/List" className="group">
                                             <div className="flex items-center">
                                             <IconPermission className=" shrink-0" />
                                             <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Permission')}</span>
@@ -220,8 +220,8 @@ const Sidebar = () => {
                                     </li>
                                 </ul>
                             </li>
-                              
-{/* 
+
+{/*
                                 <AnimateHeight duration={300} height={currentMenu === 'Categories' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
