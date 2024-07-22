@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import List_City from '../pages/City/List_City/List_City';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
@@ -73,10 +74,10 @@ const routes = [
         path: '/Coupons/List',
         element: <List_Coupons/>,
     },
-    // {
-    //     path: '/Categories/item/Add',
-    //     element: <Add_item />,
-    // },
+    {
+        path: '/City/List',
+        element: <List_City />,
+    },
 
 
     // Store
