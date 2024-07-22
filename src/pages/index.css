@@ -43,13 +43,23 @@ body{
 }
 
 .react-tel-input .form-control {
-    height: 60px;
+    height: 40px;
     z-index: 0;
     width: 100% !important;
+    border-radius: 10px;
+    border-color: rgb(199, 198, 198);
+}
+.react-tel-input .form-control{
+    width: 100% !important;
+
 }
 
 .react-tel-input .selected-flag {
     background-color: white;
+}
+.react-tel-input{
+    width: 100% !important;
+
 }
 
 

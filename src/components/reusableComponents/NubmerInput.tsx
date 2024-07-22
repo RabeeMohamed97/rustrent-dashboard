@@ -8,11 +8,11 @@ import { IRootState } from '../../store';
 const NubmerInput = (props: customNumbersInputProps) => {
     return (
         <div className="relative  ">
-            <label htmlFor="" className={`absolute z-10   top-[-10px] left-[19px] bg-white text-[14px] font-[500]`}>
+            <label htmlFor="" className={`    bg-white text-[14px] font-[500]`}>
                 Phone Number
             </label>
 
-            <PhoneInput       country={'eg'} value={props.value} onChange={(value) => props.onChange(value)} />
+            <PhoneInput        country={'eg'} value={props.value} onChange={(value) => props.onChange(value)} />
         </div>
     );
 };

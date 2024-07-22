@@ -10,6 +10,8 @@ import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
 
 import 'mantine-datatable/styles.layer.css';
+import './pages/index.css';
+
 function App({ children }: PropsWithChildren) {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
     const dispatch = useDispatch();
