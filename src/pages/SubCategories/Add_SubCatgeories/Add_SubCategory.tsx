@@ -52,7 +52,7 @@ export default function Add_SubCategory() {
           description: '',
         });
       };
- 
+
   return <> 
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
@@ -63,14 +63,14 @@ export default function Add_SubCategory() {
                   <div className="col-span-6">
                   <CustomSelect options={options} label="Category" />       
                   
-                             </div>
-               
+                          </div>
+              
                   <div className="col-span-10">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
                     <div className="col-span-2   ">
-                                        <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
+                      <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 
                                         <div className="flex gap-4 capitalize items-center justify-center ">
                                             <span className={!isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>No</span>
@@ -93,7 +93,7 @@ export default function Add_SubCategory() {
                                             <span className={isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>Yes</span>
                                         </div>
                   </div>
-             
+        
                 </div>
                 <div className='w-full  flex justify-end'>
                 <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

@@ -44,7 +44,6 @@ export default function Add_Category() {
           description: '',
         });
       };
- 
   return <> 
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4  mb-4 grid-cols-12">
@@ -80,8 +79,8 @@ export default function Add_Category() {
                     <label htmlFor="price" className="block mb-2 text-[16px] font-medium text-[#2E2E2E]  dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
-               
-             
+              
+            
                 </div>
                 <div className='w-full  flex justify-end'>
                 <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
