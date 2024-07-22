@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-
+import React, { useState } from 'react';
 import Upload from '../../../components/reusableComponents/Upload';
 import InputComponent from '../../../components/reusableComponents/InputComponent';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -15,33 +14,22 @@ export default function Add_Permision() {
         password: '',
         category: '',
         description: '',
-      });
-
-
-
-
-      const [file, setFile] = useState<File | null>(null);
-  const [isChecked, setIsChecked] = useState(true);
-  const handleCheckboxChange = (event: any) => {
-      setIsChecked(event.target.checked);
-  };
-
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    });
+    const [file, setFile] = useState<File | null>(null);
+    const [isChecked, setIsChecked] = useState(true);
+    const handleCheckboxChange = (event: any) => {
+        setIsChecked(event.target.checked);
+    };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
-          ...formData,
-          [name]: value,
+            ...formData,
+            [name]: value,
         });
-      };
-
-      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    };
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        // dispatch(modalActions.closeModal())
-
-        // Perform your form submission logic here, such as making an API call.
-        // After submission, you can close the modal and clear the form
-
         setFormData({
           name: '',
           price: '',
@@ -125,18 +113,23 @@ export default function Add_Permision() {
         </li>
     </ul>
 </div>
+</div>
 
                   
 
+                     
+                <div className="w-full  flex justify-end">
+                    <button
+                        type="submit"
+                        className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path>
+                        </svg>
+                        Add new Permission
+                    </button>
                 </div>
-                <div className='w-full  flex justify-end'>
-                <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
-                  Add new Permission
-                </button>
-                </div>
-
-              </form>
-
-</>
+            </form>
+        </>
+    
 }
