@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import List_City from '../pages/City/List_City/List_City';
+
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
@@ -9,7 +9,8 @@ const List_Offers = lazy(() => import('../pages/Offer/List_Offers/List_Offers'))
 const List_Permsion = lazy(() => import('../pages/Permesion/List_Permsion/List_Permsion'));
 const List_Meals = lazy(() => import('../pages/Meals/List_Meals/List_Meals'));
 const List_Coupons = lazy(() => import('../pages/Coupons/List_Coupons/List_Coupons'));
-// const Add_Store = lazy(() => import('../pages/Store/Add_Store/Add_Store'));
+const List_Region = lazy(() => import('../pages/Region/List_Region/List_Region'));
+const List_City = lazy(() => import('../pages/City/List_City/List_City'));
 // const Add_Expenses = lazy(() => import('../pages/Expenses/Add_Expenses/Add_Expenses'));
 
 const routes = [
@@ -78,6 +79,14 @@ const routes = [
         path: '/City/List',
         element: <List_City />,
     },
+    {
+        path: '/region/List',
+        element: <List_Region/>,
+    },
+    // {
+    //     path: '/Categories/item/Add',
+    //     element: <Add_item />,
+    // },
 
 
     // Store
