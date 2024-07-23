@@ -134,14 +134,14 @@ const Sidebar = () => {
 
                             {/* Categories */}
 
-                                <li className="nav-item">
+                            <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Categories/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMenuCategory className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Categories')}</span>
-                                                </div>
+                                                <IconMenuCategory className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Categories')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -151,9 +151,9 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Sub_Categories/List" className="group">
                                             <div className="flex items-center">
-                                            <IconCoupons className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Sub_Categories')}</span>
-                                                </div>
+                                                <IconCoupons className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Sub_Categories')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -163,22 +163,22 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Tables/List" className="group">
                                             <div className="flex items-center">
-                                            <IconTables className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Tables')}</span>
-                                                </div>
+                                                <IconTables className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Tables')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
                             </li>
 
-                                <li className="nav-item">
+                            <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Meals/List" className="group">
                                             <div className="flex items-center">
-                                            <IconMeals className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Meals')}</span>
-                                                </div>
+                                                <IconMeals className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Meals')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -189,9 +189,9 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Coupons/List" className="group">
                                             <div className="flex items-center">
-                                            <IconCoupons className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Coupons')}</span>
-                                                </div>
+                                                <IconCoupons className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Coupons')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -201,9 +201,9 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Offers/List" className="group">
                                             <div className="flex items-center">
-                                            <IconOffers className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Offers')}</span>
-                                                </div>
+                                                <IconOffers className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Offers')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -213,15 +213,15 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <NavLink to="/Permsion/List" className="group">
                                             <div className="flex items-center">
-                                            <IconPermission className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Permission')}</span>
-                                                </div>
+                                                <IconPermission className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Permission')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
                             </li>
 
-{/*
+                            {/*
                                 <AnimateHeight duration={300} height={currentMenu === 'Categories' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
@@ -329,14 +329,14 @@ const Sidebar = () => {
                                 </AnimateHeight>
                             </li> */}
 
-<li className="nav-item">
+                            <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/region/List" className="group">
                                             <div className="flex items-center">
-                                            <IconPermission className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Region')}</span>
-                                                </div>
+                                                <IconPermission className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Region')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
