@@ -14,7 +14,7 @@ const Upload = (props: UploadImageProps) => {
 
     const handleButtonClick = () => {
         // Programmatically click the hidden file input
-        
+
         if (fileInputRef.current) {
             dispatch(modalActions.openModal())
             fileInputRef.current.click();
@@ -58,7 +58,7 @@ const Upload = (props: UploadImageProps) => {
         className="flex justify-between items-center  gap-[2px] text-[#373837]"
       >
         <h5>Drag & Drop Files  OR <span className='text-[#F23F39]'> Browse </span>Files</h5>
-  
+
       </button>
     </div>
     );

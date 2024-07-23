@@ -527,7 +527,7 @@ const cols = [
 
     { accessor: 'status', title: 'Status' },
     {accessor: 'action', title: 'Action',},
-]; 
+];
 
 const deleteHander=(id:string)=> {
     console.log( "id form index deleteHander" ,id)
@@ -549,7 +549,7 @@ const updateHander = async(id:string,status:boolean)=> {
 
 
 
-  
+
 
 
   return (
@@ -560,11 +560,11 @@ const updateHander = async(id:string,status:boolean)=> {
     </CustomModal>
 
 
-    
+
     <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
-   
+
     </MainPageCard>
 
-    </Main_list> 
+    </Main_list>
      )
 }

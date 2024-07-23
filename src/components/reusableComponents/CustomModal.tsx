@@ -8,8 +8,8 @@ import { ModalProps } from '../../types/types';
 const CustomModal= (props: ModalProps) => {
    const {openModal} = useSelector((state:IRootState)=> state.modal)
    const dispatch = useDispatch()
-    
-  
+
+
 
 
 
@@ -20,7 +20,7 @@ dispatch(modalActions.closeModal())
 
   return (
     <>
-     
+
       {openModal&& (
         <div id="crud-modal"  aria-hidden="true" className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50">
           <div className="relative p-4  w-[75%]">
