@@ -15,7 +15,6 @@ export default function Add_Coupons() {
     
     
       
-      const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
       setIsChecked(event.target.checked);
