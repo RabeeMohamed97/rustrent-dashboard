@@ -30,17 +30,17 @@ const CustomSelect = (props: customSelectProps) => {
     // Add more styles here if needed
   };
     return <>
-    
+
 <div className="relative ">
 <label htmlFor="" className=" text-[16px]  font-[500]   pb-1 ">                {props.label}
 </label>
 
-            
+
             <Select defaultValue={props.options[0]} className="select_styles" options={props.options} isSearchable={false}  styles={customStyles} />
         </div>
     </>
-        
-    
+
+
 
 };
 

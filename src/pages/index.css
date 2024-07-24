@@ -14,15 +14,15 @@ body{
 .select_styles .css-13cymwt-control
  {
     padding: 10px 16px;
-    
+
     /* z-index: 50; */
-    
+
 }
 .select_styles .css-13cymwt-control,
 .css-t3ipsp-control {
     padding: 10px 16px;
     /* z-index: 50; */
-    
+
 }
 
 .css-t3ipsp-control {
@@ -60,6 +60,9 @@ body{
 .react-tel-input{
     width: 100% !important;
 
+}
+.btn {
+    border-radius: 10px !important;
 }
 
 
