@@ -41,6 +41,7 @@ export default function Add_Region() {
             name: '',
             price: '',
             category: '',
+            password: '',
             description: '',
         });
     };
@@ -54,17 +55,17 @@ export default function Add_Region() {
   return <>
 <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
-                  <div className="col-span-6">
+                  <div className="lg:col-span-6 col-span-12">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region Name</label>
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Coupon name"  />
                   </div>
-                  <div className="col-span-6">
+                  <div className="lg:col-span-6 col-span-12">
                   <CustomSelect options={options} label="City name" />
                 </div>
 
 
 
-                  <div className="col-span-6 ">
+                  <div className="lg:col-span-6 col-span-12 ">
                                         <h2 className="text-[#373837] text-[18px] font-semibold pb-5">Category Status</h2>
 
                                         <div className="inline-flex gap-4 capitalize items-center">

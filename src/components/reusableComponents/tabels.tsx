@@ -17,7 +17,6 @@ import { modalActions } from '../../store/modelSlice';
 
 
 const ColumnChooser = (props: tabelProps) => {
-    console.log(props);
     
     const [rowData, setrowData] = useState(props.TableBody)
     const [cols, setcols] = useState(props.tabelHead)
@@ -186,7 +185,7 @@ console.log("This is id",selectedId);
             <div className="text-left">
                             <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                         </div>
-                    <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
+                    <div className="flex items-center flex-wrap gap-5 ltr:ml-auto rtl:mr-auto">
                  
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -233,9 +232,9 @@ console.log("This is id",selectedId);
                                 </Dropdown>
                             </div>
                         </div>
-                        <div className="text-right flex gap-2">
+                        <div className="text-right flex md:items-center md:flex-row flex-col  gap-2">
                             {selectedRecords.length > 0 && selectedRecords?<>
-                                <button className='btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white'>
+                                <button className='btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-2xl shadow-none text-white'>
                                 <span className='mr-1'>
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2 4H3.33333H14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -268,7 +267,7 @@ console.log("This is id",selectedId);
 </>:<>
 
            
-<button onClick={openModal} className='btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white'>
+<button onClick={openModal} className='btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-xl shadow-none text-white'>
                                 <span className='mr-2'>
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
