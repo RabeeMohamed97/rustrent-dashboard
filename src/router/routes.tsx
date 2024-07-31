@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import Login from '../pages/Auth/Login';
 import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
+import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 
 
 const Index = lazy(() => import('../pages/Index'));
@@ -20,6 +21,11 @@ const routes = [
     // dashboard
     {
         path: '/',
+        element: <CheckCode_Login />,
+        layout: 'blank',
+    },
+    {
+        path: '/Login',
         element: <Login />,
         layout: 'blank',
     },

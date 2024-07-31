@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: any) => {
 
     // }, [])
 
-    if (!localStorage.getItem('deliToken')) {
+    if (!localStorage.getItem('restaurantToken')) {
         return <Navigate to="/" replace={true} />;
     } else {
         return children;

@@ -8,27 +8,25 @@ import { toast } from 'react-toastify';
 
 interface signInfromData {
     password: string;
-    username: string;
+    email: string;
+    restaurant_id: number | null;
 }
 
 const initialFormData = {
-    username: '',
-
+    email: '',
+    restaurant_id:null,
     password: '',
 };
 const loginSchema = z.object({
-    username: z.string().min(1, 'User name is required'),
-    // email: z.string().email('Invalid email address').min(1, 'Email is required'),
+    email: z.string().email('Invalid email address').min(1, 'Email is required'),
+    // restaurant_id: z.string().min(1, 'User name is required'),
     password: z.string().min(8, 'Password must be at least 8 characters long'),
 });
 
 const Login = () => {
     const navigate = useNavigate();
-
     const [Adminlogin, { isLoading }] = useAdminloginMutation();
-
     const [formData, setFormData] = useState<signInfromData>(initialFormData);
-
     const [toastData, setToastData] = useState<any>({});
 
     const [errors, setErrors] = useState<any>({});
@@ -53,7 +51,7 @@ const Login = () => {
                 JSON.stringify(toastData?.response.data.token)
             );
             setToastData({});
-            navigate('/Restaurant/List');
+            navigate('/Categories/List');
         }
 
         if (toastData?.status === 422) {
@@ -149,24 +147,34 @@ const Login = () => {
                 <div className="flex flex-col w-full justify-center items-center rounded-2xl   bg-[#555755] gap-[20px] p-[48px]">
                     <div className="flex flex-col w-full justify-center items-center py-3 bg-[#555755]">
                         <img src={Logo} className="w-[60%] pb-5" />
-                        <h2 className="font-bold text-white text-[24px]">Admin Login</h2>
+                        <h2 className="font-bold text-white text-[24px]">Restaurant Login</h2>
                     </div>
 
                     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-[24px]">
                         <div className="flex flex-col   ">
                             <input
-                                placeholder="Enter User Name"
-                                value={formData.username}
+                                placeholder="Enter Email"
+                                value={formData.email}
                                 className="py-3 px-2 rounded-2xl   outline-none  border-[1px]  bg-[#3C3D41] text-white"
                                 type="text"
-                                name="username"
+                                name="email"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="flex flex-col   ">
+                            <input
+                                placeholder="Enter Restaurant id"
+                                value={formData?.restaurant_id ? formData.restaurant_id : 0 }
+                                className="py-3 px-2 rounded-2xl   outline-none  border-[1px]  bg-[#3C3D41] text-white"
+                                type="number"
+                                name="restaurant_id"
                                 onChange={handleChange}
                             />
                         </div>
 
-                        {errors.username && (
+                        {errors.restaurant_id && (
                             <div className="bg-red-100 border mx-2 border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <span className="block sm:inline">{errors.username}</span>
+                                <span className="block sm:inline">{errors.restaurant_id}</span>
                             </div>
                         )}
 

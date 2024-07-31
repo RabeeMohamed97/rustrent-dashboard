@@ -20,7 +20,7 @@ const authApi = createApi({
     endpoints: (builder) => ({
         Adminlogin: builder.mutation<any, any>({
             query: (formData) => ({
-                url: `admin/auth/login`,
+                url: `restaurant/auth/login`,
                 method: 'POST',
                 body: formData,
             }),
@@ -43,7 +43,7 @@ const authApi = createApi({
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: 'admin/auth/change-password',
+                    url: 'restaurant/auth/change-password',
                     method: 'POST',
                     body: formData,
                     headers: {

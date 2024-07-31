@@ -21,7 +21,7 @@ const resApi = createApi({
     endpoints: (builder) => ({
         Adminlogin: builder.mutation<any, any>({
             query: (formData) => ({
-                url: `admin/auth/login`,
+                url: `restaurant/auth/login`,
                 method: 'POST',
                 body: formData,
             }),
@@ -39,7 +39,7 @@ const resApi = createApi({
             query: ({ page }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
                 return {
-                    url: `/client/mainCategories/all?page=${page}`,
+                    url: `/restaurant/mainCategories/all?page=${page}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
