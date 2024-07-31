@@ -1,4 +1,7 @@
 import { lazy } from 'react';
+import Login from '../pages/Auth/Login';
+import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
+import { AuthProvider } from '../components/AuthProvider';
 
 
 const Index = lazy(() => import('../pages/Index'));
@@ -17,8 +20,8 @@ const routes = [
     // dashboard
     {
         path: '/',
-        element: <Index />,
-        layout: 'default',
+        element: <Login />,
+        layout: 'blank',
     },
 
 
@@ -45,7 +48,14 @@ const routes = [
 
     //Categories , Items
 
-
+    {
+        path: '/change-password',
+        element: (
+            <AuthProvider>
+                <ChangePpassword />
+            </AuthProvider>
+        ),
+    },
 
     {
         path: '/offers/List',
@@ -53,7 +63,11 @@ const routes = [
     },
     {
         path: '/Categories/List',
-        element: <List_Category />,
+        element: 
+        <AuthProvider>
+        <List_Category />
+        </AuthProvider>
+,
     },
     {
         path: '/Sub_Categories/List',
