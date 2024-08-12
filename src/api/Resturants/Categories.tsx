@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories'],
+    tagTypes: ['country', 'Categories','sub_category'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -81,15 +81,15 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        deleteResturant: builder.mutation<any, any>({
+        deleteCategory: builder.mutation<any, any>({
             query: (id) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `/admin/restaurant/delete/${id}`,
+                    url: `/restaurant/store/category/${id}`,
                     method: 'DELETE',
 
                     headers: {
@@ -97,7 +97,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories'],
+            invalidatesTags: ['Categories','sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -288,18 +288,18 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getAllCoountries: builder.query<any, { page: number }>({
+        getAllSubCategories: builder.query<any, { page: number }>({
             query: ({ page }) => {
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/admin/country?page=${page}`,
+                    url: `/restaurant/store/subCategories?page=${page}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 };
             },
-            providesTags: ['country'],
+            providesTags: ['sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -358,6 +358,7 @@ export const {
     useAdminloginMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
+    useGetAllSubCategoriesQuery,
 
 
     useForgetPasswordMutation,
@@ -368,9 +369,8 @@ export const {
     useUpdateCountryMutation,
     useVerifyCodeMutation,
     useCreateCountryMutation,
-    useGetAllCoountriesQuery,
     useDeleteCountryMutation,
-    useDeleteResturantMutation,
+    useDeleteCategoryMutation,
     useGetCountryQuery,
 } = resApi;
 export default resApi;

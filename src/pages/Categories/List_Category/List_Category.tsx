@@ -5,8 +5,9 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_Category from '../Add_Category/Add_Category';
-import { useDeleteResturantMutation, useGetAllCategoriesQuery, useUpdateRestaurantDeliveryMutation, useUpdateRestaurantStatusMutation } from '../../../api/Resturants/Categories';
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../api/Resturants/Categories';
 import swal from 'sweetalert';
+import { showAlert } from '../../../components/Error';
 
 export default function List_Category() {
     const [page, setPage] = useState(1);
@@ -16,7 +17,7 @@ export default function List_Category() {
         refetch();
     }, [page]);
 
-    const [deleteResturant, { isLoading }] = useDeleteResturantMutation();
+    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -32,7 +33,6 @@ export default function List_Category() {
             setColKeys(keys);
         }
     }, [isSuccess]);
-console.log();
 
     let colss: { accessor: string; title: string }[] = [];
     useEffect(() => {
@@ -68,13 +68,13 @@ console.log();
 
     const deleteSubmitHandler = async (id: string) => {
         swal({
-            title: 'Are you sure you want to delete Resturant?',
+            title: 'Are you sure you want to delete Category?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deleteResturant(id);
+                const data = await deleteCategory(id);
                 console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
