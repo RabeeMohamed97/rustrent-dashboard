@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Artboard 2 2.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { z } from 'zod';
-import { useAdminloginMutation } from '../../api/Auth';
+import { useAdminloginCodeMutation } from '../../api/Auth';
 import { toast } from 'react-toastify';
 interface signInfromData {
-  restaurant_code: string | null;
+  code: string | null;
 }
 
 const initialFormData = {
-  restaurant_code:'',
+  code:'',
 };
 const loginSchema = z.object({
-  restaurant_code: z.string().min(1, ' restaurant_code is required'),
+  code: z.string().min(1, ' restaurant Code is required'),
 });
 
 export default function CheckCode_Login() {
   const navigate = useNavigate();
-  const [Adminlogin, { isLoading }] = useAdminloginMutation();
+  const [AdminloginCode, { isLoading }] = useAdminloginCodeMutation();
   const [formData, setFormData] = useState<signInfromData>(initialFormData);
   const [toastData, setToastData] = useState<any>({});
 
@@ -29,22 +29,22 @@ export default function CheckCode_Login() {
       setFormData({ ...formData, [name]: value });
   };
   useEffect(() => {
-      const token = localStorage.getItem('deliToken');
+      const token = localStorage.getItem('deliProviderToken');
       if (token) {
-          navigate('/Login');
+          navigate('/Categories/List');
       }
   }, []);
   useEffect(() => {
       if (toastData.status === 200) {
           toast.success('تم تسجيل دخولك بنجاح', {});
-          console.log(toastData);
+          console.log();
           localStorage.setItem(
               'restaurantToken',
               // @ts-ignore
               JSON.stringify(toastData?.response.data.token)
           );
           setToastData({});
-          navigate('/Login');
+          navigate('/Login', { state: { restaurant_id: toastData?.response?.data?.restaurant_id } });
       }
 
       if (toastData?.status === 422) {
@@ -87,7 +87,7 @@ export default function CheckCode_Login() {
       }
 
       try {
-          const response = await Adminlogin(formData).unwrap();
+          const response = await AdminloginCode(formData).unwrap();
           console.log(response);
           setToastData(response);
           setErrors({});
@@ -139,17 +139,17 @@ export default function CheckCode_Login() {
                 <div className="flex flex-col   ">
                     <input
                         placeholder="Enter Restaurant Code"
-                        value={formData?.restaurant_code || ''}
+                        value={formData?.code || ''}
                         className="py-3 px-2 rounded-2xl   outline-none  border-[1px]  bg-[#3C3D41] text-white"
                         type="text" 
-                        name="restaurant_code"
+                        name="code"
                         onChange={handleChange}
                     />
                 </div>
 
-                {errors.restaurant_code && (
+                {errors.code && (
                     <div className="bg-red-100 border mx-2 border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span className="block sm:inline">{errors.restaurant_code}</span>
+                        <span className="block sm:inline">{errors.code}</span>
                     </div>
                 )}
 

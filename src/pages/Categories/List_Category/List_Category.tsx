@@ -5,17 +5,17 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_Category from '../Add_Category/Add_Category';
-import { useDeleteResturantMutation, useGetAllResturantQuery, useUpdateRestaurantDeliveryMutation, useUpdateRestaurantStatusMutation } from '../../../api/Resturants/resturant';
+import { useDeleteResturantMutation, useGetAllCategoriesQuery, useUpdateRestaurantDeliveryMutation, useUpdateRestaurantStatusMutation } from '../../../api/Resturants/Categories';
+import swal from 'sweetalert';
 
 
 export default function List_Category() {
     const [page, setPage] = useState(1);
-    const { refetch, data, isSuccess, isError } = useGetAllResturantQuery({ page });
+    const { refetch, data, isSuccess, isError } = useGetAllCategoriesQuery({ page });
+
     useEffect(() => {
         refetch();
     }, [page]);
-    const [updateRestaurantStatus] = useUpdateRestaurantStatusMutation();
-    const [updateRestaurantDelivery] = useUpdateRestaurantDeliveryMutation();
 
     const [deleteResturant, { isLoading }] = useDeleteResturantMutation();
     const [toastData, setToastData] = useState<any>({});
@@ -28,11 +28,12 @@ export default function List_Category() {
 
     let keys: string[] = [];
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess&&data?.response?.data?.data?.length) {
             keys = Object?.keys(data?.response?.data?.data[0]);
             setColKeys(keys);
         }
     }, [isSuccess]);
+console.log();
 
     let colss: { accessor: string; title: string }[] = [];
     useEffect(() => {
@@ -66,30 +67,58 @@ export default function List_Category() {
 
 
 
-const deleteHander=(id:string)=> {
-    console.log( "id form index deleteHander" ,id)
-}
-const viewHander=(id:string)=> {
+    const deleteSubmitHandler = async (id: string) => {
+        swal({
+            title: 'Are you sure you want to delete Resturant?',
+            icon: 'error',
+            buttons: ['Cancel', 'Delete'],
+            dangerMode: true,
+        }).then(async (willDelete: any) => {
+            if (willDelete) {
+                const data = await deleteResturant(id);
+                console.log(data);
+                //@ts-ignore
+                if (data?.error?.data?.status === 400) {
+                    //@ts-ignore
+                    toast.error(data?.error?.data?.message, {});
+                    setToastData({});
+                }
+                //@ts-ignore
+                if (data?.data.status === 200) {
+                    //@ts-ignore
+                    showAlert('Added', data?.data.response?.message);
+                    setToastData({});
+                }
+                // setToastData(data);
+            } else {
+                swal('Not deleted');
+            }
+        });
+
+        if (data?.error) setToastData(data);
+        setErrors({});
+    };
+    const viewHander=(id:string)=> {
     console.log( "id form index viewHander" ,id)
-}
-const EditHandelr=(id:string)=> {
+    }
+    const EditHandelr=(id:string)=> {
     console.log( "id form index EditHandelr" ,id)
-}
+    }
 
 const [isTrue, setisTrue] = useState(false)
 const [isTrueFrommoale, setisTrueFrommoale] = useState(false)
 
-const updateHander = async(id:string,status:boolean)=> {
+    const updateHander = async(id:string,status:boolean)=> {
     console.log( "id form index updateHander" ,id ,!status)
-}
+    }
 
 
-const updateDeliveryHander = async (id: string, status: boolean) => {
+    const updateDeliveryHander = async (id: string, status: boolean) => {
     console.log("updateDeliveryHander",status);
 
 
 
-};
+    };
 
 
 
@@ -105,15 +134,18 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
 
 
 
-    <ColumnChooser     isLoading={loadingStatus}
-                    isLoadingDelivery={loadingDelivery}            setPage={setPage}
-                    page={page}
-                    pagination={data?.response?.data?.pagination}
+    <ColumnChooser
 
+    isLoading={loadingStatus}
+                    isLoadingDelivery={loadingDelivery}
+                       setPage={setPage}
+                    page={page}
+
+                    pagination={data?.response?.data}
                     onUpdateDelivery={updateDeliveryHander}
-                    Enabel_edit={false}
+                    Enabel_edit={true}
                     TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
-                    tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+                    tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
 
     </MainPageCard>
 
