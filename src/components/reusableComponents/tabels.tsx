@@ -166,7 +166,7 @@ const ColumnChooser = (props: tabelProps) => {
            
             : accessor === 'action'
             ? ({ id }: any) => (
-                  <div className="flex  justify-between w-max mx-auto gap-3">
+                  <div className="flex  justify-between w-max  gap-3">
                 
 {props.Enabel_edit?<>
     <button type="button" onClick={() => props.onEdit(id)}>
@@ -186,8 +186,8 @@ const ColumnChooser = (props: tabelProps) => {
               )
             : accessor === 'image'
             ? ({ attachments }: any) => (
-                  <div className="flex  justify-between w-max mx-auto gap-3">
-                      <img src={attachments[0]?.original} alt="" className="w-[50px] h-[50px] rounded-full" />
+                  <div className="flex  justify-between w-max  gap-3">
+                      <img src={attachments} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
                   </div>
               )
             : accessor === 'image_cover'
@@ -239,7 +239,9 @@ const ColumnChooser = (props: tabelProps) => {
         // props.setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
-
+    console.log(props?.pagination?.current_page);
+    console.log(props?.pagination?.total);
+    
     return (
         <div>
             <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
@@ -248,7 +250,8 @@ const ColumnChooser = (props: tabelProps) => {
                 </div>
                 <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                     <div className="flex md:items-center md:flex-row flex-col gap-5">
-                        <div className="dropdown">
+                        {props?.TableBody.length>0?<>
+                            <div className="dropdown">
                             <Dropdown
                                 placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
                                 btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
@@ -290,6 +293,8 @@ const ColumnChooser = (props: tabelProps) => {
                                 </ul>
                             </Dropdown>
                         </div>
+                        </>:<></>}
+                        
                     </div>
                     <div className="text-right flex gap-2">
                         {selectedRecords?.length > 0 && selectedRecords ? (
@@ -364,7 +369,7 @@ const ColumnChooser = (props: tabelProps) => {
                         highlightOnHover
                         totalRecords={props?.pagination?.total}
                         recordsPerPage={pageSize}
-                        page={props?.pagination?.currentPage}
+                        page={props?.pagination?.current_page}
                         onPageChange={(p) => props.setPage(p)}
                         // recordsPerPageOptions={PAGE_SIZES}
                         onRecordsPerPageChange={setPageSize}

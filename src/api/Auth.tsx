@@ -35,6 +35,23 @@ const authApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        AdminloginCode: builder.mutation<any, any>({
+            query: (code) => ({
+                url: `/admin/restaurant/code`,
+                method: 'POST',
+                body: code,
+            }),
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+              
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+       
+                return { status: meta?.response?.status, response };
+            },
+        }),
         changePassword: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -86,5 +103,5 @@ const authApi = createApi({
 });
 
 // Export the generated hooks and the API slice
-export const { useAdminloginMutation, useForgetPasswordMutation, useResetPasswordMutation, useChangePasswordMutation, useVerifyCodeMutation } = authApi;
+export const { useAdminloginMutation,useAdminloginCodeMutation, useForgetPasswordMutation, useResetPasswordMutation, useChangePasswordMutation, useVerifyCodeMutation } = authApi;
 export default authApi;

@@ -16,8 +16,8 @@ export type Mainlist = {
 interface Pagination {
     total: number;
     last_page: number;
-    perPage: number;
-    currentPage: number;
+    per_page: number;
+    current_page: number;
 }
 export type tabelProps = {
     tabelHead: any[];

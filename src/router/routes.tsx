@@ -6,7 +6,7 @@ import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 
 
 const Index = lazy(() => import('../pages/Index'));
-const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_SubCategory'));
+const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
 const List_SubCategory = lazy(() => import('../pages/SubCategories/List_SubCategory/List_SubCategory'));
 const List_Category = lazy(() => import('../pages/Categories/List_Category/List_Category'));
 const List_Offers = lazy(() => import('../pages/Offer/List_Offers/List_Offers'));
