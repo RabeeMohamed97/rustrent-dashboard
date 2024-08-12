@@ -5,8 +5,16 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_SubCategory from '../Add_SubCatgeories/Add_SubCategory';
+import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 
 export default function List_SubCategory() {
+
+    const options = [
+        { value: '', label: 'Burger' },
+        { value: 'orange', label: 'Orange' },
+        { value: 'white', label: 'White' },
+        { value: 'purple', label: 'Purple' },
+    ];
 
   const rowData = [
     {
@@ -527,7 +535,7 @@ const cols = [
 
     { accessor: 'status', title: 'Status' },
     {accessor: 'action', title: 'Action',},
-]; 
+];
 
 const deleteHander=(id:string)=> {
     console.log( "id form index deleteHander" ,id)
@@ -549,16 +557,16 @@ const updateHander = async(id:string,status:boolean)=> {
   return (
     <Main_list  title='Sub Categeories'>
     <MainPageCard>
+
     <CustomModal  title='Add Sub Category' >
         <Add_SubCategory/>
     </CustomModal>
 
 
-    
-    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
-   
-    </MainPageCard>
 
-    </Main_list> 
+    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+
+    </MainPageCard>
+    </Main_list>
      )
 }

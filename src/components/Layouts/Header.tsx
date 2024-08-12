@@ -32,7 +32,7 @@ import IconMenuDatatables from '../Icon/Menu/IconMenuDatatables';
 import IconMenuForms from '../Icon/Menu/IconMenuForms';
 import IconMenuPages from '../Icon/Menu/IconMenuPages';
 import IconMenuMore from '../Icon/Menu/IconMenuMore';
-
+import logo from '../../assets/Artboard 2 2.png'
 const Header = () => {
     const location = useLocation();
     useEffect(() => {
@@ -143,9 +143,9 @@ const Header = () => {
             <div className="shadow-sm">
                 <div className="relative bg-[#F5F5F5] flex w-full items-center lg:px-5 px-2 py-2.5 dark:bg-black">
                     <div className="horizontal-logo flex lg:hidden justify-between items-center ltr:mr-2 rtl:ml-2">
-                        <Link to="/" className="main-logo flex items-center shrink-0">
-                            <img className="w-[60px] ltr:-ml-1 rtl:-mr-1 inline" src="/assets/images/logo.svg" alt="logo" />
-                        </Link>
+                        {/* <Link to="/" className="main-logo flex items-center shrink-0">
+                            <img className="w-[100px] ltr:-ml-1 rtl:-mr-1 inline" src={logo} alt="logo" />
+                        </Link> */}
 
                         <button
                             type="button"

@@ -1,7 +1,7 @@
 //components / reusableComponents/ formLayout
 export type formLayoutProps = {
     children: React.ReactNode;
-    title?: string;
+    title?: String;
 };
 
 //components / reusableComponents/ mainPageCard
@@ -10,32 +10,43 @@ export type MainCardProps = {
 };
 export type Mainlist = {
     children?: React.ReactNode;
-    title?: string;
-
-};
-export type ModalProps = {
-    children: React.ReactNode;
-    title: string;
+    title?: String;
 };
 
-export type tabelProps={
-    tabelHead:any[],
-    TableBody:any[],
-    Link_Navigation?:string|null,
-    Page_Add?:boolean;
-    Chcekbox?:boolean
-    onEdit: (id:string) => void;
-    onDelete: (id:string) => void;
-    onView: (id:string) => void;
-    onUpdate: (id:string,status:boolean) => void;
+interface Pagination {
+    total: number;
+    last_page: number;
+    perPage: number;
+    currentPage: number;
 }
+export type tabelProps = {
+    tabelHead: any[];
+    TableBody: any[];
+    allCols?: string[];
+    isLoading?: { [key: number]: boolean };
+    isLoadingDelivery?: { [key: number]: boolean };
+    Link_Navigation: string;
+    Chcekbox?: boolean;
+    Page_Add?: boolean;
+    Enabel_edit?: boolean;
+    onEdit: (id: string) => void;
+    onDelete: (id: string) => void;
+    onView: (id: string) => void;
+    onUpdate: (id: string, status: boolean) => void;
+    onUpdateDelivery?: (id: string, status: boolean) => void;
+    pagination?: Pagination;
+    setPage: (page: number) => void;
+    page: number
+};
+
 //components / reusableComponents/ inputComponnent
 export type customInputProps = {
     label: string;
     type: string;
     placeholder: string;
+    name?: string;
     // value: string;
-    onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     required?: boolean;
     disabled?: boolean;
@@ -43,6 +54,7 @@ export type customInputProps = {
 //components / reusableComponents/ NumberInput
 export type customNumbersInputProps = {
     value: string;
+
     onChange: (value: string) => void;
     required?: boolean;
 };
@@ -50,6 +62,5 @@ export type customNumbersInputProps = {
 //components / reusableComponents/ customSelect
 export type customSelectProps = {
     options: { value: string; label: string }[];
-    label: string;
+    label?: string;
 };
-

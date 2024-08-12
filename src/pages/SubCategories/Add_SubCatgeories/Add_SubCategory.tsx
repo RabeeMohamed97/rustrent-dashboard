@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 import Upload from '../../../components/reusableComponents/Upload';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
-  
-    
-  
+
+
+
 export default function Add_SubCategory() {
-  
+
   const options = [
     { value: '', label: 'Burger' },
     { value: 'orange', label: 'Orange' },
@@ -19,10 +19,10 @@ export default function Add_SubCategory() {
         category: '',
         description: '',
       });
-    
-    
-    
-      
+
+
+
+
       const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
@@ -36,15 +36,15 @@ export default function Add_SubCategory() {
           [name]: value,
         });
       };
-    
+
       const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
         // dispatch(modalActions.closeModal())
-    
+
         // Perform your form submission logic here, such as making an API call.
         // After submission, you can close the modal and clear the form
-    
+
         setFormData({
           name: '',
           price: '',
@@ -53,23 +53,23 @@ export default function Add_SubCategory() {
         });
       };
 
-  return <> 
+  return <>
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
-                  <div className="col-span-6">
+                  <div className="md:col-span-6 col-span-12 ">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Name</label>
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
-                  <div className="col-span-6">
-                  <CustomSelect options={options} label="Category" />       
-                  
+                  <div className="md:col-span-6 col-span-12">
+                  <CustomSelect options={options} label="Category" />
+
                           </div>
-              
-                  <div className="col-span-10">
+
+                  <div className=" lg:col-span-10 md:col-span-12 col-span-12">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
-                    <div className="col-span-2   ">
+                    <div className=" lg:col-span-2 md:col-span-12 col-span-12   ">
                       <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 
                                         <div className="flex gap-4 capitalize items-center justify-center ">
@@ -93,7 +93,7 @@ export default function Add_SubCategory() {
                                             <span className={isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>Yes</span>
                                         </div>
                   </div>
-        
+
                 </div>
                 <div className='w-full  flex justify-end'>
                 <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -101,8 +101,8 @@ export default function Add_SubCategory() {
                   Add new product
                 </button>
                 </div>
-              
-              </form> 
+
+              </form>
 
 </>
 }

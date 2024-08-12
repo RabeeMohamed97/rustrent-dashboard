@@ -17,6 +17,7 @@ import IconPermission from '../Icon/Menu/IconPermission';
 import IconTables from '../Icon/Menu/IconTables';
 import IconMeals from '../Icon/Menu/iconMeals';
 import IconCity from '../Icon/Menu/IconCity';
+import IconRegion from '../Icon/Menu/IconRegion';
 const Sidebar = () => {
     const [currentMenu, setCurrentMenu] = useState<string>('');
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
