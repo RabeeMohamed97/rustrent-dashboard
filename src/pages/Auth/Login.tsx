@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Artboard 2 2.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { z } from 'zod';
@@ -12,11 +12,7 @@ interface signInfromData {
     restaurant_id: number | null;
 }
 
-const initialFormData = {
-    email: '',
-    restaurant_id:null,
-    password: '',
-};
+
 const loginSchema = z.object({
     email: z.string().email('Invalid email address').min(1, 'Email is required'),
     // restaurant_id: z.string().min(1, 'User name is required'),
@@ -25,9 +21,18 @@ const loginSchema = z.object({
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const restaurant_id = location.state?.restaurant_id;
     const [Adminlogin, { isLoading }] = useAdminloginMutation();
+    const initialFormData = {
+        email: '',
+        restaurant_id:restaurant_id,
+        password: '',
+    };
     const [formData, setFormData] = useState<signInfromData>(initialFormData);
     const [toastData, setToastData] = useState<any>({});
+   
+    
 
     const [errors, setErrors] = useState<any>({});
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +41,10 @@ const Login = () => {
         setFormData({ ...formData, [name]: value });
     };
     useEffect(() => {
-        const token = localStorage.getItem('deliToken');
+        const token = localStorage.getItem('deliProviderToken');
+        console.log(token);    
         if (token) {
-            navigate('/Restaurant/List');
+            navigate('/Categories/List');
         }
     }, []);
     useEffect(() => {
@@ -46,7 +52,7 @@ const Login = () => {
             toast.success('تم تسجيل دخولك بنجاح', {});
             console.log(toastData);
             localStorage.setItem(
-                'deliToken',
+                'deliProviderToken',
                 // @ts-ignore
                 JSON.stringify(toastData?.response.data.token)
             );
@@ -103,23 +109,7 @@ const Login = () => {
             setErrors(err);
         }
 
-        //@ts-ignore
-        // if (+data?.error?.status === 410) {
-        //   setIsVirefied(false);
-        // }
-        // @ts-ignore
-        // if (data?.data?.status_code === 200) {
-        //   dispatch(modelActions.closeAuthModel());
-        // @ts-ignore
-        // localStorage.getItem("celiacToken")! &&
-        // dispatch(modelActions.SetToken(localStorage.getItem("celiacToken")));
-
-        // setFormData(initialFormData);
-
-        // dispatch(modelActions.closeAuthModel())
-        // }
-
-        // if (data?.error)
+      
     };
 
     const goForgetPasswordPage = () => {
@@ -161,7 +151,7 @@ const Login = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="flex flex-col   ">
+                        {/* <div className="flex flex-col   ">
                             <input
                                 placeholder="Enter Restaurant id"
                                 value={formData?.restaurant_id ? formData.restaurant_id : 0 }
@@ -170,7 +160,7 @@ const Login = () => {
                                 name="restaurant_id"
                                 onChange={handleChange}
                             />
-                        </div>
+                        </div> */}
 
                         {errors.restaurant_id && (
                             <div className="bg-red-100 border mx-2 border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

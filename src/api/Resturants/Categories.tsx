@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Resturant'],
+    tagTypes: ['country', 'Categories'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -35,18 +35,18 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getAllResturant: builder.query<any, { page: number }>({
+        getAllCategories: builder.query<any, { page: number }>({
             query: ({ page }) => {
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/restaurant/mainCategories/all?page=${page}`,
+                    url: `/restaurant/store/category?page=${page}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 };
             },
-            providesTags: ['Resturant'],
+            providesTags: ['Categories'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -58,7 +58,7 @@ const resApi = createApi({
         createResturant: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
@@ -97,7 +97,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Resturant'],
+            invalidatesTags: ['Categories'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -106,6 +106,9 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+
+
         updateRestaurantStatus: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -123,7 +126,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Resturant'],
+            invalidatesTags: ['Categories'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -149,7 +152,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Resturant'],
+            invalidatesTags: ['Categories'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -339,7 +342,6 @@ const resApi = createApi({
                 body: code,
             }),
         }),
-
         ResetPassword: builder.mutation<any, any>({
             query: (formData) => ({
                 url: `reset-password/change-password`,
@@ -352,11 +354,14 @@ const resApi = createApi({
 
 // Export the generated hooks and the API slice
 export const {
+    useGetAllCategoriesQuery,
     useAdminloginMutation,
-    useForgetPasswordMutation,
-    useCreateResturantMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
+
+
+    useForgetPasswordMutation,
+    useCreateResturantMutation,
     useUpdateCountryStatusMutation,
     useUpdateRestaurantStatusMutation,
     useUpdateRestaurantDeliveryMutation,
@@ -364,7 +369,6 @@ export const {
     useVerifyCodeMutation,
     useCreateCountryMutation,
     useGetAllCoountriesQuery,
-    useGetAllResturantQuery,
     useDeleteCountryMutation,
     useDeleteResturantMutation,
     useGetCountryQuery,

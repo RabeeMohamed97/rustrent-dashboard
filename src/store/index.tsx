@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import themeConfigSlice from './themeConfigSlice';
 import modelSlice from './modelSlice';
 import authApi from '../api/Auth';
-import resApi from '../api/Resturants/resturant';
+import resApi from '../api/Resturants/Categories';
 
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
