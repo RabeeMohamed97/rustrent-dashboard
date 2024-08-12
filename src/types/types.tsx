@@ -29,11 +29,6 @@ export type tabelProps={
     onView: (id:string) => void;
     onUpdate: (id:string,status:boolean) => void;
 }
-
-
-
-
-
 //components / reusableComponents/ inputComponnent
 export type customInputProps = {
     label: string;
