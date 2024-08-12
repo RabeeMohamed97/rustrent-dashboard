@@ -34,17 +34,14 @@ export default function Add_Tables() {
       const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        // dispatch(modalActions.closeModal())
-    
-        // Perform your form submission logic here, such as making an API call.
-        // After submission, you can close the modal and clear the form
-    
+
         setFormData({
           name: '',
           price: '',
           category: '',
           description: '',
         });
+
       };
  
   return <> 

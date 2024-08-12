@@ -106,7 +106,51 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        deletetable: builder.mutation<any, any>({
+            query: (id) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `/restaurant/store/table/${id}`,
+                    method: 'DELETE',
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['Categories','sub_category'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        getAlltable: builder.query<any, { page: number }>({
+            query: ({ page }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/table?page=${page}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['Categories'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
 
 
         updateRestaurantStatus: builder.mutation<any, any>({
@@ -361,6 +405,7 @@ export const {
     useGetAllSubCategoriesQuery,
 
 
+     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateResturantMutation,
     useUpdateCountryStatusMutation,
@@ -371,6 +416,7 @@ export const {
     useCreateCountryMutation,
     useDeleteCountryMutation,
     useDeleteCategoryMutation,
+    useDeletetableMutation,
     useGetCountryQuery,
 } = resApi;
 export default resApi;
