@@ -106,7 +106,26 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-
+        getAlltable: builder.query<any, { page: number }>({
+            query: ({ page }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/table?page=${page}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['Categories'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
 
 
         updateRestaurantStatus: builder.mutation<any, any>({
@@ -358,8 +377,7 @@ export const {
     useAdminloginMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
-
-
+     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateResturantMutation,
     useUpdateCountryStatusMutation,
