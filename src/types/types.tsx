@@ -36,7 +36,7 @@ export type tabelProps = {
     onUpdateDelivery?: (id: string, status: boolean) => void;
     pagination?: Pagination;
     setPage: (page: number) => void;
-    page: number
+    page: number;
 };
 
 //components / reusableComponents/ inputComponnent
@@ -63,4 +63,8 @@ export type customSelectProps = {
     options: { value: number; label: string }[];
     label?: string;
     onChange: (value: number) => void; // Add this prop
+};
+export type ModalProps = {
+    children: React.ReactNode;
+    title?: string;
 };
