@@ -1,56 +1,145 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Upload from '../../../components/reusableComponents/Upload';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
-  
+import { toast } from 'react-toastify';
+import { showAlert } from '../../../components/Error';
+import { useNavigate } from 'react-router-dom';
+import LoadingButton from '../../../components/reusableComponents/Loading_button';
+import { useCreateCategoryMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+import { z } from 'zod';
+
     
+export const formSchema = z
+.object({
+    name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
+})
+
+interface CategoreyresFormData {
+name: string;
+has_delivery: number;
+description: string,
+parent_id:number
+} 
+  
+interface Category {
+  id: number;
+  name: string;
+}
   
 export default function Add_SubCategory() {
+  const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
   
-  const options = [
-    { value: '', label: 'Burger' },
-    { value: 'orange', label: 'Orange' },
-    { value: 'white', label: 'White' },
-    { value: 'purple', label: 'Purple' },
-];
-    const [formData, setFormData] = useState({
-        name: '',
-        price: '',
-        category: '',
-        description: '',
-      });
-    
-    
-    
-      
-      const [file, setFile] = useState<File | null>(null);
+const [options, setoptions] = useState([]);
+  const navigate = useNavigate();
+  const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
       setIsChecked(event.target.checked);
   };
 
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
+    const [resformData, setresFormData] =  useState<CategoreyresFormData>({
+      name: '',
+      has_delivery: 1,
+      description: 'Test',
+      parent_id:0
+  });
+
+
+
+ useEffect(() => {
+  if (isSuccess) {
+    const dataOfCategorty = data?.response?.data.map((category: Category) => ({
+      value: category?.id,
+      label: category?.name
+  }));
+  setoptions(dataOfCategorty)
+}
+
+ }, [isSuccess]);
+
+
+const [toastData, setToastData] = useState<any>({});
+
+const [errors, setErrors] = useState<any>({});
+const [createCategory, { isLoading }] = useCreateCategoryMutation();
+
+const handleSelectChange = (value: number) => {
+  setresFormData({ ...resformData, parent_id: value }); // Update the category in state
+};    
+
     
-      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setresFormData({ ...resformData, [name]: value });
+};
+
+    
+
+    
+    
+useEffect(() => {
+  if (toastData?.data?.status === 200) {
+      showAlert('Added', toastData?.data?.response?.message);
+      navigate('/Sub_Categories/List')
+      setToastData({});
+  }
+  if (toastData?.error?.status === 422) {
+      toast.error(toastData?.error?.response.data?.message, {});
+      setToastData({});
+  }
+  if (toastData?.error?.status === 500) {
+      toast.error(toastData?.error?.response?.data?.message, {});
+      setToastData({});
+  }
+
+  if (isLoading) {
+      toast.loading('Loading...', {
+          toastId: 'loginLoadingToast',
+          autoClose: false,
+      });
+  } else {
+      toast.dismiss('loginLoadingToast');
+  }
+}, [toastData, isLoading]);
+      const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:', resformData);
+        const formData = new FormData();
+        formData.append('name', resformData.name);
+        formData.append('description', resformData.description);
+                        //@ts-ignore
+
+        formData.append('parent_id', resformData.parent_id);
+                //@ts-ignore
+        formData.append('has_delivery', resformData.has_delivery);
+
+        if (file) {
+          formData.append(`image`, file);
+      }
         // dispatch(modalActions.closeModal())
-    
+        const result = formSchema.safeParse(resformData);
+
         // Perform your form submission logic here, such as making an API call.
         // After submission, you can close the modal and clear the form
-    
-        setFormData({
-          name: '',
-          price: '',
-          category: '',
-          description: '',
-        });
+        if (!result.success) {
+          // @ts-ignore
+          setErrors(result.error.formErrors.fieldErrors);
+          console.log(result.error.formErrors.fieldErrors);
+          return;
+      }
+      // const data = await createResturant(formData);
+      // console.log(data);
+      try {
+        const response = await createCategory(formData);
+        console.log(response);
+        setToastData(response);
+        setErrors({});
+    } catch (err) {
+        setToastData(err);
+        setErrors(err);
+    }
+      
       };
 
   return <> 
@@ -58,12 +147,11 @@ export default function Add_SubCategory() {
                 <div className="grid gap-4 mb-4 grid-cols-12">
                   <div className="md:col-span-6 col-span-12 ">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Name</label>
-                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
+                    <input type="text" name="name" id="name" value={resformData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
                   <div className="md:col-span-6 col-span-12">
-                  <CustomSelect options={options} label="Category" />       
-                  
-                          </div>
+                  <CustomSelect options={options} onChange={handleSelectChange} label="Category" />       
+                    </div>
               
                   <div className=" lg:col-span-10 md:col-span-12 col-span-12">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>

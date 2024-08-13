@@ -60,6 +60,7 @@ export type customNumbersInputProps = {
 
 //components / reusableComponents/ customSelect
 export type customSelectProps = {
-    options: { value: string; label: string }[];
+    options: { value: number; label: string }[];
     label?: string;
+    onChange: (value: number) => void; // Add this prop
 };

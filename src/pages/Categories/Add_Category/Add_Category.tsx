@@ -17,7 +17,6 @@ interface CategoreyresFormData {
 name: string;
 has_delivery: number;
 description: string,
-
 } 
   
 export default function Add_Category() {
