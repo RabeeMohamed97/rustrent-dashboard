@@ -32,10 +32,6 @@ export default function Add_Tables() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        // dispatch(modalActions.closeModal())
-
-        // Perform your form submission logic here, such as making an API call.
-        // After submission, you can close the modal and clear the form
 
         setFormData({
             table_name: '',
@@ -43,11 +39,11 @@ export default function Add_Tables() {
             maximum_count: '',
             minimum_count: '',
         });
-    };
 
-    return (
-        <>
-            <form onSubmit={handleSubmit} className="p-4 md:p-5">
+      };
+
+  return <>
+    <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
                     <div className="lg:col-span-6 col-span-12">
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -131,5 +127,5 @@ export default function Add_Tables() {
                 </div>
             </form>
         </>
-    );
+   
 }

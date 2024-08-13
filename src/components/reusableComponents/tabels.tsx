@@ -190,6 +190,17 @@ const ColumnChooser = (props: tabelProps) => {
                       <img src={attachments} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
                   </div>
               )
+            :accessor === 'main_category'
+            ? ({ name }: any) => {
+                // Log the attachments object
+                console.log('Attachments:', name);
+          
+                return (
+                  <div className="flex justify-between w-max gap-3">
+                    <p>{name}</p>
+                  </div>
+                );
+              }
             : accessor === 'image_cover'
             ? ({ attachments }: any) => (
                   <div className="flex  justify-between w-max mx-auto gap-3">

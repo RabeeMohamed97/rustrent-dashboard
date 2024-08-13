@@ -4,7 +4,10 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Add_Tables from '../Add_Tabels/Add_Tables';
 import { useEffect, useState } from 'react';
-import { useGetAlltableQuery,useDeleteResturantMutation } from '../../../api/Resturants/Categories';
+import { useDeletetableMutation, useGetAlltableQuery } from '../../../api/Resturants/Categories';
+import swal from 'sweetalert';
+
+import { showAlert } from '../../../components/Error';
 
 export default function List_Tables() {
 
@@ -13,7 +16,7 @@ export default function List_Tables() {
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deleteResturant, { isLoading }] = useDeleteResturantMutation();
+    const [deletetable, { isLoading }] = useDeletetableMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -61,14 +64,13 @@ useEffect(() => {
 }, [colKeys, isSuccess]);
 const deleteSubmitHandler = async (id: string) => {
     swal({
-        title: 'Are you sure you want to delete Resturant?',
+        title: 'Are you sure you want to delete Tabel?',
         icon: 'error',
         buttons: ['Cancel', 'Delete'],
         dangerMode: true,
     }).then(async (willDelete: any) => {
         if (willDelete) {
-            const data = await deleteResturant(id);
-            console.log(data);
+            const data = await deletetable(id);
             //@ts-ignore
             if (data?.error?.data?.status === 400) {
                 //@ts-ignore
