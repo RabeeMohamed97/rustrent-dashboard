@@ -55,7 +55,7 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        createResturant: builder.mutation<any, any>({
+        createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
@@ -63,7 +63,7 @@ const resApi = createApi({
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: 'admin/restaurant/create',
+                    url: '/restaurant/store/category',
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -71,6 +71,7 @@ const resApi = createApi({
                     },
                 };
             },
+            invalidatesTags: ['Categories'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -407,7 +408,7 @@ export const {
 
      useGetAlltableQuery,
     useForgetPasswordMutation,
-    useCreateResturantMutation,
+    useCreateCategoryMutation,
     useUpdateCountryStatusMutation,
     useUpdateRestaurantStatusMutation,
     useUpdateRestaurantDeliveryMutation,
