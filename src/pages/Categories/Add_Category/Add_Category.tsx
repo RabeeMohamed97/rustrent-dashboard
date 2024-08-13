@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Upload from '../../../components/reusableComponents/Upload';
 
@@ -11,9 +11,6 @@ export default function Add_Category() {
         category: '',
         description: '',
       });
-
-
-
 
       const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);

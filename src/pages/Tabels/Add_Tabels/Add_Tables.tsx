@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 import Upload from '../../../components/reusableComponents/Upload';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function Add_Tables() {
     const options = [
         { value: '', label: 'Write your table Category' },
@@ -127,5 +143,5 @@ export default function Add_Tables() {
                 </div>
             </form>
         </>
-   
+
 }
