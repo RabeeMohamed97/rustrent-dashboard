@@ -233,14 +233,14 @@ const resApi = createApi({
             query: ({ page }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/restaurant/store//city?page=${page}`,
+                    url: `restaurant/store/city?page=${page}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 };
             },
-            providesTags: ['Categories'],
+            providesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };

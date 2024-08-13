@@ -5,17 +5,18 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
-import { useDeleteCategoryMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
+import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
 
 export default function List_City() {
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllcityQuery({ page });
+    console.log(data)
 
     useEffect(() => {
         refetch();
     }, [page]);
 
-    const [deleteCity, { isLoading }] = useDeleteCategoryMutation();
+    const [deleteCity, { isLoading }] = useDeleteCityMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -142,7 +143,7 @@ isLoading={loadingStatus}
                 onUpdateDelivery={updateDeliveryHander}
                 Enabel_edit={true}
                 TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
-                tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+                tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='City' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
     </MainPageCard>
 
     </Main_list>

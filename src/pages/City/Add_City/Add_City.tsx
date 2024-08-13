@@ -19,21 +19,6 @@ name: string;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default function Add_City() {
     const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();
@@ -41,20 +26,20 @@ export default function Add_City() {
       const [resformData, setresFormData] =  useState<CityFormData>({
         name: '',
 
-    });
+});
 
 
 
 
 
     const [isChecked, setIsChecked] = useState(true);
-    const handleCheckboxChange = (event: any) => {
-      setresFormData({ ...resformData, has_delivery: event.target.checked ? 1 : 0 });
-    };
+    // const handleCheckboxChange = (event: any) => {
+    //   setresFormData({ ...resformData, has_delivery: event.target.checked ? 1 : 0 });
+    // };
     const [toastData, setToastData] = useState<any>({});
 
     const [errors, setErrors] = useState<any>({});
-    const [createCategory, { isLoading }] = useCreateCityMutation();
+    const [createCity, { isLoading }] = useCreateCityMutation();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -67,7 +52,7 @@ export default function Add_City() {
         navigate('/City/List')
         setToastData({});
     }
-    console.log(toastData.data);
+    // console.log(toastData.data);
     if (toastData?.error?.status === 422) {
         toast.error(toastData?.error?.response.data?.message, {});
         setToastData({});
@@ -93,9 +78,6 @@ export default function Add_City() {
           formData.append('name', resformData.name);
 
 
-          if (file) {
-            formData.append(`image`, file);
-        }
           // dispatch(modalActions.closeModal())
           const result = formSchema.safeParse(resformData);
 
@@ -110,7 +92,7 @@ export default function Add_City() {
         // const data = await createResturant(formData);
         // console.log(data);
         try {
-          const response = await createCategory(formData);
+          const response = await createCity(formData);
 
           setToastData(response);
           setErrors({});
@@ -142,7 +124,7 @@ export default function Add_City() {
                                                     id="switch-2"
                                                     type="checkbox"
                                                     checked={isChecked}
-                                                    onChange={handleCheckboxChange}
+
                                                     className="absolute w-8 h-4 transition-colors duration-300 rounded-full appearance-none cursor-pointer peer bg-blue-gray-100 checked:bg-red-500 peer-checked:border-red-500 peer-checked:before:bg-red-500"
                                                 />
                                                 <label
