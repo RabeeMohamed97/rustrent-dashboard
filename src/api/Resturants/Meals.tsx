@@ -38,6 +38,26 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        createMeal: builder.mutation<any, any>({
+            query: (formData) => {
+                return {
+                    url: 'restaurant/store/item',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['meals'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
         createResturant: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -355,7 +375,7 @@ const mealsApi = createApi({
 // Export the generated hooks and the API slice
 export const {
     useGetAllMealsQuery,
-
+    useCreateMealMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
