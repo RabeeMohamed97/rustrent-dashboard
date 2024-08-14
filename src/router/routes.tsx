@@ -69,10 +69,10 @@ const routes = [
     },
     {
         path: '/Categories/List',
-        element: 
-        <AuthProvider>
+        element:
+        // <AuthProvider>
         <List_Category />
-        </AuthProvider>
+        // </AuthProvider>
 ,
     },
     {

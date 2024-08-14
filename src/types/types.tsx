@@ -55,13 +55,14 @@ export type customInputProps = {
 
 export type customNumbersInputProps = {
     value: string;
+
     onChange: (value: string) => void;
     required?: boolean;
 };
 
 //components / reusableComponents/ customSelect
 export type customSelectProps = {
-    options: { value: number; label: string }[];
+    options: { value: any; label: string }[];
     label?: string;
     onChange: (value: number) => void; // Add this prop
 };

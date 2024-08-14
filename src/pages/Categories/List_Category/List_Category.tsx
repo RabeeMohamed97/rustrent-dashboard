@@ -9,6 +9,7 @@ import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../ap
 import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 
+
 export default function List_Category() {
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllCategoriesQuery({ page });
