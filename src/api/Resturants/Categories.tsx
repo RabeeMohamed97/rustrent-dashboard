@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories','sub_category'],
+    tagTypes: ['country', 'Categories','sub_category',],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -72,6 +72,33 @@ const resApi = createApi({
                 };
             },
             invalidatesTags: ['Categories'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        createRegion: builder.mutation<any, any>({
+            query: (formData) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: '/restaurant/store/region',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['country'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -184,6 +211,31 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        deleteregion: builder.mutation<any, any>({
+            query: (id) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `/restaurant/store/region/${id}`,
+                    method: 'DELETE',
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['Categories','sub_category'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         deletemeals: builder.mutation<any, any>({
             query: (id) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -200,7 +252,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories','sub_category'],
+            invalidatesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -249,18 +301,19 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getAllMeals: builder.query<any, { page: number }>({
+
+        getAllregion: builder.query<any, { page: number }>({
             query: ({ page }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/restaurant/store/table?page=${page}`,
+                    url: `restaurant/store/region?page=${page}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 };
             },
-            providesTags: ['Categories'],
+            providesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -269,6 +322,19 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         updateRestaurantStatus: builder.mutation<any, any>({
@@ -517,13 +583,15 @@ const resApi = createApi({
 // Export the generated hooks and the API slice
 export const {
     useGetAllCategoriesQuery,
+    useCreateRegionMutation,
     useGetAllcityQuery,
     useDeleteCityMutation,
     useAdminloginMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
-    useGetAllMealsQuery,
+    useDeleteregionMutation,
+useGetAllregionQuery,
      useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateCategoryMutation,

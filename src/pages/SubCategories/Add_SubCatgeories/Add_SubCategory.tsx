@@ -19,11 +19,7 @@ export default function Add_SubCategory() {
         category: '',
         description: '',
       });
-
-
-
-
-      const [file, setFile] = useState<File | null>(null);
+ const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
       setIsChecked(event.target.checked);
@@ -61,7 +57,7 @@ export default function Add_SubCategory() {
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
                   <div className="md:col-span-6 col-span-12">
-                  <CustomSelect options={options} label="Category" />
+                  <CustomSelect   options={options} label="Category" />
 
                           </div>
 
@@ -69,6 +65,7 @@ export default function Add_SubCategory() {
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
+
                     <div className=" lg:col-span-2 md:col-span-12 col-span-12   ">
                       <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 

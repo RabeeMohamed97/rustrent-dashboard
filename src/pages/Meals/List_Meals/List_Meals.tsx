@@ -4,16 +4,13 @@ import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Add_Meals from '../Add_Meals/Add_Meals';
-import { useDeletemealsMutation, useDeletetableMutation, useGetAllMealsQuery } from '../../../api/Resturants/Categories';
 
 export default function List_Meals() {
     const [page, setPage] = useState(1);
-    const { refetch, data, isSuccess, isError } = useGetAllMealsQuery({ page });
 
-    useEffect(() => {
-        refetch();
-    }, [page]);
-    const [deletemeals, { isLoading }] = useDeletemealsMutation();
+
+
+
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -33,12 +30,7 @@ export default function List_Meals() {
 
 
 let keys: string[] = [];
-useEffect(() => {
-    if (isSuccess&&data?.response?.data?.data?.length) {
-        keys = Object?.keys(data?.response?.data?.data[0]);
-        setColKeys(keys);
-    }
-}, [isSuccess]);
+
 console.log();
 let colss: { accessor: string; title: string }[] = [];
 useEffect(() => {
@@ -68,7 +60,7 @@ if (colss?.length > 0) {
 }
 setFinalKeys(colss);
 console.log(colss);
-}, [colKeys, isSuccess]);
+}, );
 const deleteSubmitHandler = async (id: string) => {
 swal({
     title: 'Are you sure you want to delete Tabel?',
@@ -77,7 +69,7 @@ swal({
     dangerMode: true,
 }).then(async (willDelete: any) => {
     if (willDelete) {
-        const data = await deletemeals(id);
+
         //@ts-ignore
         if (data?.error?.data?.status === 400) {
             //@ts-ignore
@@ -96,9 +88,7 @@ swal({
     }
 });
 
-if (data?.error) setToastData(data);
-setErrors({});
-};
+;
 
 
 
@@ -147,10 +137,10 @@ console.log("updateDeliveryHander",status);
         setPage={setPage}
      page={page}
 
-     pagination={data?.response?.data}
+
      onUpdateDelivery={updateHander}
      Enabel_edit={true}
-     TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
+
      tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
 
 
@@ -158,4 +148,5 @@ console.log("updateDeliveryHander",status);
 
     </Main_list>
      )
+}
 }
