@@ -41,7 +41,7 @@ export default function List_SubCategory() {
     useEffect(() => {
         colKeys?.map((key: any) => {
             console.log(key);
-       
+
             if (key === 'attachments') {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
@@ -130,19 +130,20 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
   return (
     <Main_list  title='Sub Categeories'>
     <MainPageCard>
+
     <CustomModal  title='Add Sub Category' >
         <Add_SubCategory/>
     </CustomModal>
 
 
-    
-    <ColumnChooser  
-    
+
+    <ColumnChooser
+
     isLoading={loadingStatus}
-                    isLoadingDelivery={loadingDelivery}         
+                    isLoadingDelivery={loadingDelivery}
                        setPage={setPage}
-                    page={page}       
-                
+                    page={page}
+
                     pagination={data?.response?.data}
                     onUpdateDelivery={updateDeliveryHander}
                     Enabel_edit={true}
@@ -151,6 +152,8 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
 
     </MainPageCard>
 
-    </Main_list> 
+  
+
+    </Main_list>
      )
 }

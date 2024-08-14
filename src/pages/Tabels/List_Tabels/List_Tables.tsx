@@ -6,6 +6,7 @@ import Add_Tables from '../Add_Tabels/Add_Tables';
 import { useEffect, useState } from 'react';
 import { useDeletetableMutation, useGetAlltableQuery } from '../../../api/Resturants/Categories';
 import swal from 'sweetalert';
+
 import { showAlert } from '../../../components/Error';
 
 export default function List_Tables() {

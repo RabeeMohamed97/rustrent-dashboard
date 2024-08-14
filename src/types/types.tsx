@@ -54,6 +54,7 @@ export type customInputProps = {
 //components / reusableComponents/ NumberInput
 export type customNumbersInputProps = {
     value: string;
+
     onChange: (value: string) => void;
     required?: boolean;
 };
