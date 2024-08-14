@@ -55,6 +55,26 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        getAllCategoriesWithoutPagination: builder.query<any, void>({
+            query: () => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/listOfcategories?type=mainCategory`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['Categories'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -71,7 +91,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories'],
+            invalidatesTags: ['Categories','sub_category'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -400,6 +420,7 @@ const resApi = createApi({
 // Export the generated hooks and the API slice
 export const {
     useGetAllCategoriesQuery,
+    useGetAllCategoriesWithoutPaginationQuery,
     useAdminloginMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
