@@ -52,6 +52,7 @@ export type customInputProps = {
     disabled?: boolean;
 };
 //components / reusableComponents/ NumberInput
+
 export type customNumbersInputProps = {
     value: string;
     onChange: (value: string) => void;
@@ -62,6 +63,11 @@ export type customNumbersInputProps = {
 export type customSelectProps = {
     options: { value: number; label: string }[];
     label?: string;
+    onChange: (value: number) => void; // Add this prop
+};
+export type customAnySelectProps = {
+    label?: string;
+    type: string;
     onChange: (value: number) => void; // Add this prop
 };
 export type ModalProps = {

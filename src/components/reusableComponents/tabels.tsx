@@ -166,11 +166,11 @@ const ColumnChooser = (props: tabelProps) => {
                   </>
               )
             : accessor === 'action'
-            ? ({ id }: any) => (
+            ? (data: any) => (
                   <div className="flex  justify-between w-max  gap-3">
                       {props.Enabel_edit ? (
                           <>
-                              <button type="button" onClick={() => props.onEdit(id)}>
+                              <button type="button" onClick={() => props.onEdit(data)}>
                                   <IconPencil />
                               </button>
                           </>
@@ -187,9 +187,9 @@ const ColumnChooser = (props: tabelProps) => {
                   </div>
               )
             : accessor === 'image'
-            ? ({ attachments }: any) => (
+            ? ({ image }: any) => (
                   <div className="flex  justify-between w-max  gap-3">
-                      <img src={attachments} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
+                      <img src={image} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
                   </div>
               )
             : accessor === 'main_category'
