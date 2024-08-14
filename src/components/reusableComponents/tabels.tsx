@@ -184,15 +184,14 @@ const ColumnChooser = (props: tabelProps) => {
                   </div>
               )
             : accessor === 'image'
-            ? ({ attachments }: any) => (
+            ? ({ image }: any) => (
                   <div className="flex  justify-between w-max  gap-3">
-                      <img src={attachments} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
+                      <img src={image} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
                   </div>
               )
             : accessor === 'main_category'
             ? ({ name }: any) => {
                   // Log the attachments object
-                  console.log('Attachments:', name);
 
                   return (
                       <div className="flex justify-between w-max gap-3">

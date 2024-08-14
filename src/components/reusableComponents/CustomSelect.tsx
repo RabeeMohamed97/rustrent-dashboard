@@ -3,6 +3,7 @@ import Select, { SingleValue, ActionMeta } from 'react-select';
 import { customSelectProps } from '../../types/types';
 
 const CustomSelect = (props: customSelectProps) => {
+  
   const customStyles = {
     container: (provided:any) => ({
       ...provided,
