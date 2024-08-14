@@ -1,47 +1,122 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 import Upload from '../../../components/reusableComponents/Upload';
-  
-    
-  
+import { useCreateTableMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { showAlert } from '../../../components/Error';
+import { z } from 'zod';
+
+interface TableFormData {
+  table_name: string;
+  minimum_count: number;
+  type: any,
+  maximum_count:number
+  }   
+  export const formSchema = z
+.object({
+  table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
+})
 export default function Add_Tables() {
-  const options = [
-    { value: '', label: 'Write your table Category' },
-    { value: 'orange', label: 'Orange' },
-    { value: 'white', label: 'White' },
-    { value: 'purple', label: 'Purple' },
-];
-    const [formData, setFormData] = useState({
-        name: '',
-        price: '',
-        category: '',
-        description: '',
-      });
-      const [file, setFile] = useState<File | null>(null);
+  
+  const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
+
+  const navigate = useNavigate();
+  const [file, setFile] = useState<File | null>(null);
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
       setIsChecked(event.target.checked);
   };
 
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
-    
-      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [resformData, setresFormData] =  useState<TableFormData>({
+    table_name: '',
+    minimum_count: 0,
+    type: '',
+    maximum_count:1
+});
+const options = [
+  { value: 'private', label: 'private' },
+  { value: 'public', label: 'public' },
+
+];
+
+
+  const handleSelectChange = (value: number) => {
+    setresFormData({ ...resformData, type: value }); // Update the category in state
+  };    
+  
+      
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setresFormData({ ...resformData, [name]: value });
+  };
+  const [createTable, { isLoading }] = useCreateTableMutation();
+
+  const [toastData, setToastData] = useState<any>({});
+  const [errors, setErrors] = useState<any>({});
+
+ useEffect(() => {
+  if (toastData?.data?.status === 200) {
+      showAlert('Added', toastData?.data?.response?.message);
+      navigate('/Tables/List')
+      setToastData({});
+  }
+  if (toastData?.error?.status === 422) {
+      toast.error(toastData?.error?.response.data?.message, {});
+      setToastData({});
+  }
+  if (toastData?.error?.status === 500) {
+      toast.error(toastData?.error?.response?.data?.message, {});
+      setToastData({});
+  }
+
+  if (isLoading) {
+      toast.loading('Loading...', {
+          toastId: 'loginLoadingToast',
+          autoClose: false,
+      });
+  } else {
+      toast.dismiss('loginLoadingToast');
+  }
+}, [toastData, isLoading]);
+      const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:', resformData);
+        const formData = new FormData();
+        formData.append('table_name', resformData.table_name);
+                                //@ts-ignore
 
-        setFormData({
-          name: '',
-          price: '',
-          category: '',
-          description: '',
-        });
+        formData.append('minimum_count', resformData.minimum_count);
+                        //@ts-ignore
 
+        formData.append('type', resformData.type);
+                //@ts-ignore
+        formData.append('maximum_count', resformData.maximum_count);
+
+    
+        // dispatch(modalActions.closeModal())
+        const result = formSchema.safeParse(resformData);
+
+        // Perform your form submission logic here, such as making an API call.
+        // After submission, you can close the modal and clear the form
+        if (!result.success) {
+          // @ts-ignore
+          setErrors(result.error.formErrors.fieldErrors);
+          console.log(result.error.formErrors.fieldErrors);
+          return;
+      }
+      // const data = await createResturant(formData);
+      // console.log(data);
+      try {
+        const response = await createTable(formData);
+        console.log(response);
+        setToastData(response);
+        setErrors({});
+    } catch (err) {
+        setToastData(err);
+        setErrors(err);
+    }
+      
       };
  
   return <> 
@@ -49,22 +124,22 @@ export default function Add_Tables() {
                 <div className="grid gap-4 mb-4 grid-cols-12">
 
                 <div className="lg:col-span-6 col-span-12">
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Table Name</label>
-                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Table name"  />
+                    <label htmlFor="table_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Table Name</label>
+                    <input type="text" name="table_name" id="table_name" value={resformData.table_name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Table name"  />
                   </div>
 
                   <div className="lg:col-span-6 col-span-12">
-                  <CustomSelect options={options} label=" Table Category " />
+                  <CustomSelect options={options} onChange={handleSelectChange} label=" Table Category " />
                 </div>
 
                 
                   <div className="lg:col-span-6 col-span-12">
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Minimum number of people</label>
-                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Minimum number of people "  />
+                    <label htmlFor="minimum_count" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Minimum number of people</label>
+                    <input type="text" name="minimum_count" id="minimum_count" value={resformData.minimum_count} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Minimum number of people "  />
                   </div>
                   <div className="lg:col-span-6 col-span-12">
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Maximum number of people</label>
-                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Maximum number of people"  />
+                    <label htmlFor="maximum_count" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Maximum number of people</label>
+                    <input type="text" name="maximum_count" id="maximum_count" value={resformData.maximum_count} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Maximum number of people"  />
                   </div>
                   <div className="lg:col-span-4 col-span-12 ">
                                         <h2 className="text-[#373837] text-[18px] font-semibold pb-5">Table Status</h2>

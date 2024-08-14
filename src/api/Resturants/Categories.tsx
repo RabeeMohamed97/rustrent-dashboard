@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories','sub_category'],
+    tagTypes: ['country', 'Categories','sub_category','table'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -143,7 +143,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories','sub_category'],
+            invalidatesTags: ['table'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -163,7 +163,7 @@ const resApi = createApi({
                     },
                 };
             },
-            providesTags: ['Categories'],
+            providesTags: ['table'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -172,7 +172,33 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        createTable: builder.mutation<any, any>({
+            query: (formData) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: '/restaurant/store/table',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['table'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
 
         updateRestaurantStatus: builder.mutation<any, any>({
             query: ({ id, formData }) => {
@@ -425,11 +451,12 @@ export const {
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
+    useGetAlltableQuery,
 
 
-     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateCategoryMutation,
+    useCreateTableMutation,
     useUpdateCountryStatusMutation,
     useUpdateRestaurantStatusMutation,
     useUpdateRestaurantDeliveryMutation,
