@@ -5,7 +5,7 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 
 import Add_Permision from '../Add_Region/Add_Region';
-import { useDeleteregionMutation, useGetAllregionQuery } from '../../../api/Resturants/Categories';
+import { useDeleteRegionMutation,  useGetAllregionQuery } from '../../../api/Resturants/Categories';
 import { showAlert } from '../../../components/Error';
 
 export default function List_Region() {
@@ -16,7 +16,7 @@ export default function List_Region() {
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deletetable, { isLoading }] = useDeleteregionMutation();
+    const [deletetable, { isLoading }] = useDeleteRegionMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
