@@ -10,7 +10,8 @@ import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 
 export default function List_Tables() {
-
+    const [editData, setEditData] = useState<any>([]);
+    const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAlltableQuery({ page });
     useEffect(() => {
@@ -103,9 +104,9 @@ const deleteHander=(id:string)=> {
 const viewHander=(id:string)=> {
     console.log( "id form index viewHander" ,id)
 }
-const EditHandelr=(id:string)=> {
-    console.log( "id form index EditHandelr" ,id)
-}
+const EditHandelr = (data: any) => {
+    setEditData(data);
+};
 
 
 const updateHander = async(id:string,status:boolean)=> {
@@ -125,15 +126,26 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
   return (
     <Main_list  title='Tables'>
     <MainPageCard>
-    <CustomModal  title='Add Tables' >
-        <Add_Tables/>
-    </CustomModal>
+    {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add Tables">
+                                <Add_Tables/>
+
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Tables">
+                                <Add_Tables
+                                data={editData} />
+                    </CustomModal>
+                )}
+
     <ColumnChooser
 
     isLoading={loadingStatus}
                     isLoadingDelivery={loadingDelivery}
                        setPage={setPage}
                     page={page}
+                    openCloseModal={setOpen}
 
                     pagination={data?.response?.data}
                     onUpdateDelivery={updateHander}

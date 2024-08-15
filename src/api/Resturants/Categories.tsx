@@ -205,7 +205,7 @@ const resApi = createApi({
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: '/restaurant/store/city',
+                    url: '/restaurant/store/table',
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -213,7 +213,26 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['city'],
+            invalidatesTags: ['table'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editTable: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `/restaurant/store/table/${id}`,
+                    method: 'PUT',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['table'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -708,6 +727,7 @@ export const {
     useGetAllSubCategoriesWithoutPaginationQuery,
     useGetAnySelectOptionsQuery,
     useEditCategoryMutation,
+    useEditTableMutation,
 
     useGetAllMealsQuery,
     useGetAlltableQuery,
