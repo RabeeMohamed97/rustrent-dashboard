@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories', 'sub_category', 'table', 'city'],
+    tagTypes: ['country', 'Categories','sub_category','reigon'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -55,46 +55,6 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getAllCategoriesWithoutPagination: builder.query<any, void>({
-            query: () => {
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-                return {
-                    url: `/restaurant/store/listOfcategories?type=mainCategory`,
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            providesTags: ['Categories'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        getAllSubCategoriesWithoutPagination: builder.query<any, void>({
-            query: () => {
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-                return {
-                    url: `/restaurant/store/listOfcategories`,
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            providesTags: ['Categories'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
         createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -111,7 +71,34 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories', 'sub_category'],
+            invalidatesTags: ['Categories'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        createRegion: builder.mutation<any, any>({
+            query: (formData) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: '/restaurant/store/region',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['reigon'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -138,34 +125,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['city'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        createTable: builder.mutation<any, any>({
-            query: (formData) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: '/restaurant/store/city',
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['city'],
+            invalidatesTags: ['Categories'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -192,7 +152,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories', 'sub_category'],
+            invalidatesTags: ['Categories','sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -217,7 +177,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['city'],
+            invalidatesTags: ['Categories','sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -242,7 +202,32 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['table'],
+            invalidatesTags: ['Categories','sub_category'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        deleteregion: builder.mutation<any, any>({
+            query: (id) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `/restaurant/store/region/${id}`,
+                    method: 'DELETE',
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['reigon'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -267,7 +252,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories', 'sub_category'],
+            invalidatesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -287,7 +272,7 @@ const resApi = createApi({
                     },
                 };
             },
-            providesTags: ['table'],
+            providesTags: ['Categories'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -307,27 +292,7 @@ const resApi = createApi({
                     },
                 };
             },
-            providesTags: ['city'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        getAllMeals: builder.query<any, { page: number }>({
-            query: ({ page }) => {
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-                return {
-                    url: `/restaurant/store/table?page=${page}`,
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            providesTags: ['Categories'],
+            providesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -337,7 +302,71 @@ const resApi = createApi({
             },
         }),
 
-        // Get the access token from the parsed auth_data
+        getAllregion: builder.query<any, { page: number }>({
+            query: ({ page }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `restaurant/store/region?page=${page}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['reigon'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+
+
+
+
+        
+        getAnySelectOptions: builder.query<any,{ type: string }>({
+            query: ({ type }) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `restaurant/list/${type}`,
+                    method: 'GET',
+                    
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+        
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         updateRestaurantStatus: builder.mutation<any, any>({
             query: ({ id, formData }) => {
@@ -365,6 +394,31 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         updateRestaurantDelivery: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -538,26 +592,7 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getAnySelectOptions: builder.query<any, { type: string }>({
-            query: ({ type }) => {
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-                return {
-                    url: `restaurant/list/${type}`,
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
+        
         getCountry: builder.query<any, { id: string | undefined }>({
             query: ({ id }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
@@ -605,21 +640,19 @@ const resApi = createApi({
 // Export the generated hooks and the API slice
 export const {
     useGetAllCategoriesQuery,
-    useGetAllCategoriesWithoutPaginationQuery,
+    useCreateRegionMutation,
     useGetAllcityQuery,
     useDeleteCityMutation,
     useAdminloginMutation,
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
-    useGetAllSubCategoriesWithoutPaginationQuery,
-    useGetAnySelectOptionsQuery,
-
-    useGetAllMealsQuery,
-    useGetAlltableQuery,
+    useDeleteregionMutation,
+useGetAllregionQuery,
+useGetAnySelectOptionsQuery,
+     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateCategoryMutation,
-    useCreateTableMutation,
     useUpdateCountryStatusMutation,
     useUpdateRestaurantStatusMutation,
     useUpdateRestaurantDeliveryMutation,

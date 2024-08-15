@@ -157,6 +157,7 @@ useEffect(() => {
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
+
                     <div className=" lg:col-span-2 md:col-span-12 col-span-12   ">
                       <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
 
