@@ -37,6 +37,7 @@ export type tabelProps = {
     pagination?: Pagination;
     setPage: (page: number) => void;
     page: number;
+    openCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 //components / reusableComponents/ inputComponnent
@@ -69,9 +70,12 @@ export type customSelectProps = {
 export type customAnySelectProps = {
     label?: string;
     type: string;
+    id?: string;
     onChange: (value: number) => void; // Add this prop
 };
 export type ModalProps = {
     children: React.ReactNode;
     title?: string;
+    openCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+    resetEditData?: React.Dispatch<React.SetStateAction<[]>>;
 };

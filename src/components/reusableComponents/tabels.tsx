@@ -170,7 +170,14 @@ const ColumnChooser = (props: tabelProps) => {
                   <div className="flex  justify-between w-max  gap-3">
                       {props.Enabel_edit ? (
                           <>
-                              <button type="button" onClick={() => props.onEdit(data)}>
+                              <button
+                                  type="button"
+                                  onClick={() => {
+                                      props.onEdit(data);
+
+                                      openModal();
+                                  }}
+                              >
                                   <IconPencil />
                               </button>
                           </>
@@ -249,7 +256,10 @@ const ColumnChooser = (props: tabelProps) => {
     }, [props.page, pageSize, initialRecords]);
 
     const openModal = () => {
-        dispatch(modalActions.openModal());
+        // dispatch(modalActions.openModal());
+        props.openCloseModal((prevState) => !prevState);
+        // props.resetEditData([]);
+        console.log('openModal');
     };
     useEffect(() => {
         console.log(props.TableBody);
@@ -423,6 +433,7 @@ const ColumnChooser = (props: tabelProps) => {
 
             <div className="panel mt-6">
                 <div className="datatables z-10">
+                    {/* @ts-ignore */}
                     <DataTable
                         className="whitespace-nowrap   table-hover"
                         records={recordsData}

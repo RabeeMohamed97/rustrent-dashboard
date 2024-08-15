@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Upload from '../../../components/reusableComponents/Upload';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
-import { useCreateMealMutation } from '../../../api/Resturants/Meals';
+import { useCreateMealMutation, useEditMealMutation } from '../../../api/Resturants/Meals';
 import { showAlert } from '../../../components/Error';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
@@ -17,7 +17,6 @@ export const formSchema = z.object({
 type mealsFormData = {
     name: string;
     price: string;
-
     sub_category_id: string;
     category_id: string;
     details: string;
@@ -69,12 +68,17 @@ export default function Add_Meals(props: EditMealProps) {
         details: '',
     });
 
+    useEffect(() => {
+        setMealsFormData(props.data);
+    }, []);
+
     const [isChecked, setIsChecked] = useState(true);
 
     const [toastData, setToastData] = useState<any>({});
 
     const [errors, setErrors] = useState<any>({});
     const [createMeal, { isLoading }] = useCreateMealMutation();
+    const [editMeal, { isLoading: editIsLoading }] = useEditMealMutation();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -141,10 +145,17 @@ export default function Add_Meals(props: EditMealProps) {
         // const data = await createResturant(formData);
         // console.log(data);
         try {
-            const response = await createMeal(formData);
-            console.log(response);
-            setToastData(response);
-            setErrors({});
+            if (props.data.id) {
+                const response = await editMeal({ id: props?.data?.id, formData });
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            } else {
+                const response = await createMeal(formData);
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            }
         } catch (err) {
             setToastData(err);
             setErrors(err);
@@ -186,7 +197,7 @@ export default function Add_Meals(props: EditMealProps) {
 
                     <div className="lg:col-span-6 col-span-12">
                         {/* <CustomSelect options={options} onChange={handleSelectChange} label="Category" /> */}
-                        <CustomSelectWithType label="MainCategory" type="Category" onChange={handleSelectChange} />
+                        <CustomSelectWithType id={props?.data?.category_id} label="MainCategory" type="Category" onChange={handleSelectChange} />
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">
