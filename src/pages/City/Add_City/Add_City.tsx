@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { z } from 'zod';
+import { useEditCityMutation, useGetAllCategoriesWithoutPaginationQuery, useGetAllSubCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 
 import Upload from '../../../components/reusableComponents/Upload';
 import { toast } from 'react-toastify';
@@ -18,10 +19,14 @@ name: string;
 
 }
 
-
-export default function Add_City() {
+type EditMealProps = {
+    data?: any;
+};
+export default function Add_City(props:EditMealProps) {
     const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();
+    const { data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
+    const { data: subCat, isSuccess: subCatIsSucces } = useGetAllSubCategoriesWithoutPaginationQuery();
 
       const [resformData, setresFormData] =  useState<CityFormData>({
         name: '',
@@ -40,6 +45,7 @@ export default function Add_City() {
 
     const [errors, setErrors] = useState<any>({});
     const [createCity, { isLoading }] = useCreateCityMutation();
+    const [editCity, { isLoading:Editisloding }] = useEditCityMutation();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -62,7 +68,7 @@ export default function Add_City() {
         setToastData({});
     }
 
-    if (isLoading) {
+    if (isLoading||Editisloding) {
         toast.loading('Loading...', {
             toastId: 'loginLoadingToast',
             autoClose: false,
@@ -70,13 +76,11 @@ export default function Add_City() {
     } else {
         toast.dismiss('loginLoadingToast');
     }
-  }, [toastData, isLoading]);
+  }, [toastData, isLoading,Editisloding]);
         const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           console.log('Form submitted:', resformData);
-          const formData = new FormData();
-          formData.append('name', resformData.name);
-
+    
 
           // dispatch(modalActions.closeModal())
           const result = formSchema.safeParse(resformData);
@@ -92,18 +96,31 @@ export default function Add_City() {
         // const data = await createResturant(formData);
         // console.log(data);
         try {
-          const response = await createCity(formData);
-
-          setToastData(response);
-          setErrors({});
-      } catch (err) {
-          setToastData(err);
-          setErrors(err);
-      }
+            if (props?.data?.id) {
+                const response = await editCity({ id: props?.data?.id, formData:resformData });
+                setToastData(response);
+                setErrors({});
+            } else {
+                const response = await createCity(resformData);
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            }
+        } catch (err) {
+            setToastData(err);
+            setErrors(err);
+        }
+      
 
         };
 
-
+        useEffect(() => {
+            setresFormData({
+                ...resformData,
+                name:props?.data?.name
+            });
+        }, []);
+    
 
 
   return <>

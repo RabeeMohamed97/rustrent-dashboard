@@ -96,6 +96,27 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+        // getAllCityWithoutPagination: builder.query<any, void>({
+        //     query: () => {
+        //         const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+        //         return {
+        //             url: `restaurant/store/city/`,
+        //             method: 'GET',
+        //             headers: {
+        //                 Authorization: `Bearer ${accessToken}`,
+        //             },
+        //         };
+        //     },
+        //     providesTags: ['Categories'],
+        //     transformResponse: (response, meta) => {
+        //         console.log(meta?.response?.status);
+        //         return { status: meta?.response?.status, response };
+        //     },
+        //     transformErrorResponse: (response, meta) => {
+        //         return { status: meta?.response?.status, response };
+        //     },
+        // }),
         createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -142,6 +163,41 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+
+
+
+
+        editCity: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url:`/restaurant/store/city/${id}`,
+                    method: 'PUT',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['city'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+
+       
+
+
+
+
+
+
+
+
 
         createCity: builder.mutation<any, any>({
             query: (formData) => {
@@ -733,6 +789,8 @@ const resApi = createApi({
 
 // Export the generated hooks and the API slice
 export const {
+
+    useCreateTableMutation,
     useGetAllCategoriesQuery,
     useGetAllCategoriesWithoutPaginationQuery,
     useGetAllcityQuery,
@@ -753,8 +811,9 @@ export const {
     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateCategoryMutation,
-    useCreateTableMutation,
+
     useUpdateCountryStatusMutation,
+    useEditCityMutation,
     useUpdateRestaurantStatusMutation,
     useUpdateRestaurantDeliveryMutation,
     useUpdateCountryMutation,

@@ -186,7 +186,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Coupons/List" className="group">
@@ -197,7 +197,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> */}
                             {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
@@ -210,7 +210,7 @@ const Sidebar = () => {
                                     </li>
                                 </ul>
                             </li> */}
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Permsion/List" className="group">
@@ -221,15 +221,15 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/City/List" className="group">
                                             <div className="flex items-center">
-                                            <IconCity className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('City')}</span>
-                                                </div>
+                                                <IconCity className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('City')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>

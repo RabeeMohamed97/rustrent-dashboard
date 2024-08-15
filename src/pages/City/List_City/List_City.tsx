@@ -6,9 +6,13 @@ import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
 import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
+import { showAlert } from '../../../components/Error';
 
 export default function List_City() {
     const [page, setPage] = useState(1);
+
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
     const { refetch, data, isSuccess, isError } = useGetAllcityQuery({ page });
     console.log(data);
 
@@ -40,10 +44,6 @@ export default function List_City() {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
                 colss.splice(1, 2);
-                // colss.splice(4, 2);
-
-                // colss?.push({ accessor: 'image cover', title: 'Image Cover' });
-                // colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
             } else {
@@ -98,16 +98,16 @@ export default function List_City() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-    const EditHandelr = (id: string) => {
-        console.log('id form index EditHandelr', id);
-    };
-
-    const [isTrue, setisTrue] = useState(false);
-    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
     const updateHander = async (id: string, status: boolean) => {
         console.log('id form index updateHander', id, !status);
     };
+
+    const EditHandelr = (data: any) => {
+        setEditData(data);
+    };
+    const [isTrue, setisTrue] = useState(false);
+    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
     const updateDeliveryHander = async (id: string, status: boolean) => {
         console.log('updateDeliveryHander', status);
@@ -116,12 +116,18 @@ export default function List_City() {
     return (
         <Main_list title="Cities">
             <MainPageCard>
-                {/* <CustomModal  title='Add City' >
-    <Add_City/>
-    </CustomModal> */}
+                {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add City">
+                        <Add_City />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit City">
+                        <Add_City data={editData} />
+                    </CustomModal>
+                )}
 
                 <ColumnChooser
-                    openCloseModal={() => {}}
                     isLoading={loadingStatus}
                     isLoadingDelivery={loadingDelivery}
                     setPage={setPage}
@@ -138,6 +144,7 @@ export default function List_City() {
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
                 />
             </MainPageCard>
         </Main_list>

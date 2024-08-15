@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Upload from '../../../components/reusableComponents/Upload';
-import InputComponent from '../../../components/reusableComponents/InputComponent';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { NumberInput } from '@mantine/core';
+
 import { z } from 'zod';
-import NubmerInput from '../../../components/reusableComponents/NubmerInput';
-import CustomSelect from '../../../components/reusableComponents/CustomSelect';
+
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { useNavigate } from 'react-router-dom';
@@ -35,9 +31,7 @@ export default function Add_Region(props: editData) {
     });
 
     const [isChecked, setIsChecked] = useState(true);
-    // const handleCheckboxChange = (event: any) => {
-    //   setresFormData({ ...resformData, has_delivery: event.target.checked ? 1 : 0 });
-    // };
+
     const [toastData, setToastData] = useState<any>({});
 
     const [errors, setErrors] = useState<any>({});
