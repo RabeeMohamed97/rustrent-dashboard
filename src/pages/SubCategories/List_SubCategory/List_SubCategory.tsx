@@ -14,6 +14,8 @@ export default function List_SubCategory() {
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllSubCategoriesQuery({ page });
     const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
+    const [editData, setEditData] = useState<any>([]);
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         refetch();
@@ -73,7 +75,6 @@ export default function List_SubCategory() {
     }, [colKeys, isSuccess]);
 
 
-console.log(finslColsKeys);
 
 
 
@@ -111,9 +112,9 @@ console.log(finslColsKeys);
 const viewHander=(id:string)=> {
     console.log( "id form index viewHander" ,id)
 }
-const EditHandelr=(id:string)=> {
-    console.log( "id form index EditHandelr" ,id)
-}
+const EditHandelr = (data: any) => {
+    setEditData(data);
+};
 
 
 const updateHander = async(id:string,status:boolean)=> {
@@ -134,10 +135,16 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
     <Main_list  title='Sub Categeories'>
     <MainPageCard>
 
-    <CustomModal  title='Add Sub Category' >
-        <Add_SubCategory/>
-    </CustomModal>
-
+    {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add Sub_Category">
+                        <Add_SubCategory />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Sub_Category">
+                        <Add_SubCategory data={editData} />
+                    </CustomModal>
+                )}
 
 
     <ColumnChooser
@@ -146,7 +153,7 @@ const updateDeliveryHander = async (id: string, status: boolean) => {
                     isLoadingDelivery={loadingDelivery}
                        setPage={setPage}
                     page={page}
-
+                    openCloseModal={setOpen}
                     pagination={data?.response?.data}
                     onUpdateDelivery={updateDeliveryHander}
                     Enabel_edit={true}

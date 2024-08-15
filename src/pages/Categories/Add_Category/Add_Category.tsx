@@ -21,7 +21,6 @@ type catEditProps = {
     data?: any;
 };
 export default function Add_Category(props: catEditProps) {
-    console.log(props.data);
     const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();
 
@@ -68,7 +67,7 @@ export default function Add_Category(props: catEditProps) {
             setToastData({});
         }
 
-        if (isLoading) {
+        if (isLoading ||editIsLoading) {
             toast.loading('Loading...', {
                 toastId: 'loginLoadingToast',
                 autoClose: false,
@@ -76,7 +75,7 @@ export default function Add_Category(props: catEditProps) {
         } else {
             toast.dismiss('loginLoadingToast');
         }
-    }, [toastData, isLoading]);
+    }, [toastData, isLoading,editIsLoading]);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -167,7 +166,7 @@ export default function Add_Category(props: catEditProps) {
                     </div>
                 </div>
                 <div className="w-full  flex justify-end">
-                    {isLoading ? (
+                    {isLoading ||editIsLoading ? (
                         <>
                             <LoadingButton />
                         </>

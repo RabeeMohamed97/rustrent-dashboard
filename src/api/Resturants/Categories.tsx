@@ -131,7 +131,7 @@ const resApi = createApi({
                     body: formData,
                 };
             },
-            invalidatesTags: ['Categories'],
+            invalidatesTags: ['Categories','sub_category'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);

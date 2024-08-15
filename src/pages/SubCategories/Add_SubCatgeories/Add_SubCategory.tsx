@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
-import { useCreateCategoryMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+import { useCreateCategoryMutation, useEditCategoryMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 import { z } from 'zod';
 
     
@@ -26,8 +26,11 @@ interface Category {
   id: number;
   name: string;
 }
-  
-export default function Add_SubCategory() {
+type catEditProps = {
+  data?: any;
+};
+
+export default function Add_SubCategory(props: catEditProps) {
   const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
   
 const [options, setoptions] = useState([]);
@@ -46,7 +49,6 @@ const [options, setoptions] = useState([]);
   });
 
 
-
  useEffect(() => {
   if (isSuccess) {
     const dataOfCategorty = data?.response?.data.map((category: Category) => ({
@@ -63,6 +65,7 @@ const [toastData, setToastData] = useState<any>({});
 
 const [errors, setErrors] = useState<any>({});
 const [createCategory, { isLoading }] = useCreateCategoryMutation();
+const [editCategory, { isLoading: editIsLoading }] = useEditCategoryMutation();
 
 const handleSelectChange = (value: number) => {
   setresFormData({ ...resformData, parent_id: value }); // Update the category in state
@@ -93,7 +96,7 @@ useEffect(() => {
       setToastData({});
   }
 
-  if (isLoading) {
+  if (isLoading||editIsLoading) {
       toast.loading('Loading...', {
           toastId: 'loginLoadingToast',
           autoClose: false,
@@ -101,7 +104,7 @@ useEffect(() => {
   } else {
       toast.dismiss('loginLoadingToast');
   }
-}, [toastData, isLoading]);
+}, [toastData, isLoading,editIsLoading]);
       const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', resformData);
@@ -131,16 +134,31 @@ useEffect(() => {
       // const data = await createResturant(formData);
       // console.log(data);
       try {
-        const response = await createCategory(formData);
-        console.log(response);
-        setToastData(response);
-        setErrors({});
+        if (props?.data?.id) {
+            const response = await editCategory({ id: props?.data?.id, formData });
+            console.log(response);
+            setToastData(response);
+            setErrors({});
+        } else {
+            const response = await createCategory(formData);
+            console.log(response);
+            setToastData(response);
+            setErrors({});
+        }
     } catch (err) {
         setToastData(err);
         setErrors(err);
     }
+   
       
       };
+      useEffect(() => {
+        setresFormData({
+            ...resformData,
+            name: props?.data?.name,
+  
+        });
+    }, []);
 
   return <>
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
@@ -155,7 +173,7 @@ useEffect(() => {
               
                   <div className=" lg:col-span-10 md:col-span-12 col-span-12">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
-                    <Upload  setFile={setFile} />
+                    <Upload  setFile={setFile}  editImgUrl={props?.data ? props?.data?.image : null}/>
                     </div>
 
                     <div className=" lg:col-span-2 md:col-span-12 col-span-12   ">
@@ -185,7 +203,7 @@ useEffect(() => {
 
                 </div>
                 <div className='w-full  flex justify-end'>
-                {isLoading ? (
+                {isLoading||editIsLoading ? (
                         <>
                             <LoadingButton />
                         </>
