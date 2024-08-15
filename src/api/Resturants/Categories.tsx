@@ -98,7 +98,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['reigon'],
+            invalidatesTags: ['country'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -109,6 +109,72 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+
+
+        createTable: builder.mutation<any, any>({
+            query: (formData) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: '/restaurant/store/city',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['country'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+
+
+
+
+
+
+
+        getAllCategoriesWithoutPagination: builder.query<any, void>({
+            query: () => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url:'/restaurant/store/listOfcategories?type=mainCategory',
+                    method: 'GET',
+                    headers: {
+                        Authorization:` Bearer ${accessToken}`,
+                    },
+                };
+            },
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+
+
+
+
+
+
+
+
+
         createCity: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -313,7 +379,7 @@ const resApi = createApi({
                     },
                 };
             },
-            providesTags: ['reigon'],
+            providesTags: ['country'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -324,6 +390,14 @@ const resApi = createApi({
         }),
 
 
+
+
+
+
+
+
+
+        
 
 
 
@@ -639,6 +713,8 @@ const resApi = createApi({
 
 // Export the generated hooks and the API slice
 export const {
+useGetAllCategoriesWithoutPaginationQuery,
+    useCreateTableMutation,
     useGetAllCategoriesQuery,
     useCreateRegionMutation,
     useGetAllcityQuery,

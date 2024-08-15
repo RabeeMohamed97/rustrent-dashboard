@@ -3,7 +3,6 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
 import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
 
@@ -40,10 +39,6 @@ export default function List_City() {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
                 colss.splice(1, 2);
-                // colss.splice(4, 2);
-
-                // colss?.push({ accessor: 'image cover', title: 'Image Cover' });
-                // colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
             } else {
@@ -102,8 +97,6 @@ export default function List_City() {
     console.log( "id form index EditHandelr" ,id)
     }
 
-const [isTrue, setisTrue] = useState(false)
-const [isTrueFrommoale, setisTrueFrommoale] = useState(false)
 
     const updateHander = async(id:string,status:boolean)=> {
     console.log( "id form index updateHander" ,id ,!status)
