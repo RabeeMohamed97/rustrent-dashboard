@@ -117,9 +117,9 @@ export default function List_Category() {
     return (
         <Main_list title="Categeories">
             <MainPageCard>
-                <CustomModal title="Add Category">
+                {/* <CustomModal title="Add Category">
                     <Add_Category />
-                </CustomModal>
+                </CustomModal> */}
 
                 <ColumnChooser
                     isLoading={loadingStatus}
