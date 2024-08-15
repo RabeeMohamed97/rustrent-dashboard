@@ -16,7 +16,7 @@ export default function List_Region() {
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deletetable, { isLoading }] = useDeleteRegionMutation();
+    const [deleteRegion, { isLoading }] = useDeleteRegionMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -62,7 +62,9 @@ export default function List_Region() {
         setFinalKeys(colss);
         console.log(colss);
     }, [colKeys, isSuccess]);
+
     const deleteSubmitHandler = async (id: string) => {
+        //@ts-ignore
         swal({
             title: 'Are you sure you want to delete region?',
             icon: 'error',
@@ -70,15 +72,14 @@ export default function List_Region() {
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deletetable(id);
+                const data = await deleteRegion(id);
+                console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
                     //@ts-ignore
                     toast.error(data?.error?.data?.message, {});
                     setToastData({});
                 }
-                console.log(data);
-
                 //@ts-ignore
                 if (data?.data.status === 200) {
                     //@ts-ignore
@@ -87,6 +88,7 @@ export default function List_Region() {
                 }
                 // setToastData(data);
             } else {
+                //@ts-ignore
                 swal('Not deleted');
             }
         });

@@ -86,19 +86,15 @@ export default function Add_Region(props: editData) {
         e.preventDefault();
         console.log('Form submitted:', resformData);
 
-        // dispatch(modalActions.closeModal())
         const result = formSchema.safeParse(resformData);
 
-        // Perform your form submission logic here, such as making an API call.
-        // After submission, you can close the modal and clear the form
         if (!result.success) {
             // @ts-ignore
             setErrors(result.error.formErrors.fieldErrors);
             console.log(result.error.formErrors.fieldErrors);
             return;
         }
-        // const data = await createResturant(formData);
-        // console.log(data);
+
         try {
             if (props?.data?.id) {
                 const response = await editRegion({ id: props?.data?.id, formData: resformData });

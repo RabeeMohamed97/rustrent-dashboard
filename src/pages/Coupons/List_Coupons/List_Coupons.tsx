@@ -556,14 +556,14 @@ const updateHander = async(id:string,status:boolean)=> {
   return (
     <Main_list  title='Coupons'>
     <MainPageCard>
-    <CustomModal  title='Add Coupons' >
+    {/* <CustomModal  title='Add Coupons' >
     <Add_Coupons/>
-    </CustomModal>
-
+    </CustomModal> */}
+<div className=""></div>
 
     
-    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Coupons' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
-   
+    {/* <ColumnChooser   TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Coupons' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+    */}
     </MainPageCard>
 
     </Main_list> 
