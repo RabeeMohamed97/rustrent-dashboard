@@ -4,6 +4,7 @@ import InputComponent from '../../../components/reusableComponents/InputComponen
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { NumberInput } from '@mantine/core';
 import NubmerInput from '../../../components/reusableComponents/NubmerInput';
+import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 
 
 
@@ -43,7 +44,14 @@ export default function Add_Permision() {
           setIsPasswordVisible(!isPasswordVisible);
       };
       const [phone, setPohone] = useState('');
-
+      const options = [
+        { value: 'Administrative', label: 'Administrative' },
+        { value: 'Sales', label: 'Sales' },
+      
+      ];
+      const handleSelectChange = (value: number) => {
+        // re({ ...resformData, type: value }); // Update the category in state
+      };    
   return <>
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
@@ -83,10 +91,27 @@ export default function Add_Permision() {
                   <div className="lg:col-span-6 col-span-12">
                   <NubmerInput value={phone} onChange={(phone) => setPohone(phone)} />
                   </div>
-
                   <div className="lg:col-span-6 col-span-12">
-    <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">Permission Category</h3>
-    <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <CustomSelect options={options} onChange={handleSelectChange} label="Employee Type" />
+                </div>
+                  <div className="lg:col-span-12 col-span-12">
+                  <table className="table-fixed">
+  <thead>
+    <tr>
+      <th className='text-xl'>Section</th>
+      <th className='text-xl'>Permission</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
         <label className="inline-flex">
     <input type="checkbox" className="form-checkbox outline-success" />
@@ -112,6 +137,187 @@ export default function Add_Permision() {
 </label>
         </li>
     </ul>
+      </td>
+    </tr>
+    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-success" />
+    <span>Add</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-warning" />
+    <span>Edit</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-danger" />
+    <span>Delete</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-dark" />
+    <span>Disabled</span>
+</label>
+        </li>
+    </ul>
+      </td>
+    </tr>    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-success" />
+    <span>Add</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-warning" />
+    <span>Edit</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-danger" />
+    <span>Delete</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-dark" />
+    <span>Disabled</span>
+</label>
+        </li>
+    </ul>
+      </td>
+    </tr>    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-success" />
+    <span>Add</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-warning" />
+    <span>Edit</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-danger" />
+    <span>Delete</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-dark" />
+    <span>Disabled</span>
+</label>
+        </li>
+    </ul>
+      </td>
+    </tr>    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-success" />
+    <span>Add</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-warning" />
+    <span>Edit</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-danger" />
+    <span>Delete</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-dark" />
+    <span>Disabled</span>
+</label>
+        </li>
+    </ul>
+      </td>
+    </tr>    <tr>
+      <td >   
+        <label className="inline-flex ">
+    <input type="checkbox" className="form-checkbox" />
+    <span>Category</span>
+</label>
+</td>
+      <td>
+      <ul className="grid grid-cols-12 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-success" />
+    <span>Add</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-warning" />
+    <span>Edit</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 sm:border-b-0 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-danger" />
+    <span>Delete</span>
+</label>
+        </li>
+        <li className="w-full lg:col-span-12 col-span-6 dark:border-gray-600">
+        <label className="inline-flex">
+    <input type="checkbox" className="form-checkbox outline-dark" />
+    <span>Disabled</span>
+</label>
+        </li>
+    </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 </div>
 </div>
 

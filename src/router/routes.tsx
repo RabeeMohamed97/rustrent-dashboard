@@ -30,30 +30,6 @@ const routes = [
         layout: 'blank',
     },
 
-
-    //Resturants
-    // {
-    //     path: '/Restaurant/Add',
-    //     element: <Add_Restaurant />,
-    // },
-    // {
-    //     path: '/Restaurant/List',
-    //     element: <List_Restaurant />,
-    // },
-
-    //users
-    // {
-    //     path: '/users/Add',
-    //     element: <Add_Users />,
-    // },
-    // {
-    //     path: '/users/List',
-    //     element: <List_Users />,
-    // },
-
-
-    //Categories , Items
-
     {
         path: '/change-password',
         element: (
@@ -63,64 +39,79 @@ const routes = [
         ),
     },
 
-    {
-        path: '/offers/List',
-        element: <List_Offers/>,
-    },
+    // {
+    //     path: '/offers/List',
+    //     element: (
+    //         <AuthProvider>
+    //             <List_Offers/>
+    //         </AuthProvider>
+    //     ),
+    // },
     {
         path: '/Categories/List',
-        element:
-        // <AuthProvider>
+        element: (
+            <AuthProvider>
         <List_Category />
-        // </AuthProvider>
-,
+        </AuthProvider>
+        ),
+
     },
     {
         path: '/Sub_Categories/List',
-        element: <List_SubCategory />,
+        element: (
+            <AuthProvider>
+<List_SubCategory />        </AuthProvider>
+        ),
     },
     {
         path: '/Tables/List',
-        element: <List_Tables />,
+        element: (
+            <AuthProvider>
+ <List_Tables />
+      </AuthProvider>
+        ),
     },
     {
         path: '/Meals/List',
-        element: <List_Meals/>,
+        element: (
+            <AuthProvider>
+<List_Meals/>      </AuthProvider>
+        ),
+  
     },
     {
         path: '/Permsion/List',
-        element: <List_Permsion/>,
+        element: (
+            <AuthProvider>
+<List_Permsion/>
+  </AuthProvider>
+        ),
     },
     {
         path: '/Coupons/List',
-        element: <List_Coupons/>,
+        element: (
+            <AuthProvider>
+<List_Coupons/>
+  </AuthProvider>
+        ),
     },
     {
         path: '/City/List',
-        element: <List_City />,
+        element: (
+            <AuthProvider>
+<List_City />
+  </AuthProvider>
+        ),
     },
     {
         path: '/region/List',
-        element: <List_Region/>,
+        element: (
+            <AuthProvider>
+ <List_Region/>
+   </AuthProvider>
+        ),
     },
-    // {
-    //     path: '/Categories/item/Add',
-    //     element: <Add_item />,
-    // },
 
-
-    // Store
-    // {
-
-    //         path: '/Store/Add',
-    //         element: <Add_Store/>,
-    // },
-    // Expenses
-    // {
-
-    //         path: '/Expenses/Add',
-    //         element: <Add_Expenses/>,
-    // }
 
 ];
 

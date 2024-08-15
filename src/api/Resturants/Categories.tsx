@@ -316,9 +316,6 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-
-                // Get the access token from the parsed auth_data
-
         updateRestaurantStatus: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -552,6 +549,7 @@ const resApi = createApi({
                 body: code,
             }),
         }),
+        
         ResetPassword: builder.mutation<any, any>({
             query: (formData) => ({
                 url: `reset-password/change-password`,
