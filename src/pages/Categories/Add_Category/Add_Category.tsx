@@ -1,52 +1,119 @@
 import React, { useEffect, useState } from 'react'
 
 import Upload from '../../../components/reusableComponents/Upload';
+import { z } from 'zod';
+import { toast } from 'react-toastify';
+import { showAlert } from '../../../components/Error';
+import { useNavigate } from 'react-router-dom';
+import LoadingButton from '../../../components/reusableComponents/Loading_button';
+import { useCreateCategoryMutation } from '../../../api/Resturants/Categories';
 
+export const formSchema = z
+.object({
+    name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
+})
 
-
+interface CategoreyresFormData {
+name: string;
+has_delivery: number;
+description: string,
+} 
+  
 export default function Add_Category() {
-    const [formData, setFormData] = useState({
-        name: '',
-        price: '',
-        category: '',
-        description: '',
-      });
+  const [file, setFile] = useState<File | null>(null);
+  const navigate = useNavigate();
 
-      const [file, setFile] = useState<File | null>(null);
+    const [resformData, setresFormData] =  useState<CategoreyresFormData>({
+      name: '',
+      has_delivery: 1,
+      description: 'Test',
+  });
+    
+    
+    
+      
+      
   const [isChecked, setIsChecked] = useState(true);
   const handleCheckboxChange = (event: any) => {
-      setIsChecked(event.target.checked);
+    setresFormData({ ...resformData, has_delivery: event.target.checked ? 1 : 0 });
   };
+  const [toastData, setToastData] = useState<any>({});
 
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
+  const [errors, setErrors] = useState<any>({});
+  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setresFormData({ ...resformData, [name]: value });
+};
 
-      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+useEffect(() => {
+  if (toastData?.data?.status === 200) {
+      showAlert('Added', toastData?.data?.response?.message);
+      navigate('/Categories/List')
+      setToastData({});
+  }
+  console.log(toastData.data);
+  if (toastData?.error?.status === 422) {
+      toast.error(toastData?.error?.response.data?.message, {});
+      setToastData({});
+  }
+  if (toastData?.error?.status === 500) {
+      toast.error(toastData?.error?.response?.data?.message, {});
+      setToastData({});
+  }
+
+  if (isLoading) {
+      toast.loading('Loading...', {
+          toastId: 'loginLoadingToast',
+          autoClose: false,
+      });
+  } else {
+      toast.dismiss('loginLoadingToast');
+  }
+}, [toastData, isLoading]);
+      const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:', resformData);
+        const formData = new FormData();
+        formData.append('name', resformData.name);
+        formData.append('description', resformData.description);
+                //@ts-ignore
+        formData.append('has_delivery', resformData.has_delivery);
+
+        if (file) {
+          formData.append(`image`, file);
+      }
         // dispatch(modalActions.closeModal())
+        const result = formSchema.safeParse(resformData);
 
         // Perform your form submission logic here, such as making an API call.
         // After submission, you can close the modal and clear the form
+        if (!result.success) {
+          // @ts-ignore
+          setErrors(result.error.formErrors.fieldErrors);
+          console.log(result.error.formErrors.fieldErrors);
+          return;
+      }
+      // const data = await createResturant(formData);
+      // console.log(data);
+      try {
+        const response = await createCategory(formData);
 
-        setFormData({
-          name: '',
-          price: '',
-          category: '',
-          description: '',
-        });
+        setToastData(response);
+        setErrors({});
+    } catch (err) {
+        setToastData(err);
+        setErrors(err);
+    }
+      
       };
-  return <>
+  return <> 
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4  mb-4 grid-cols-12">
                   <div className="lg:col-span-10 col-span-12">
                     <label htmlFor="name" className="block mb-2 text-[16px] font-medium text-[#2E2E2E] dark:text-white">Category Name</label>
-                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
+                    <input type="text" name="name" id="name" value={resformData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Category Name"  />
                   </div>
                   <div className="lg:col-span-2 col-span-12  ">
                                         <h2 className="text-[#2E2E2E] text-center text-[16px] font-medium   pb-5">Delivery</h2>
@@ -71,22 +138,31 @@ export default function Add_Category() {
                                             </div>
                                             <span className={isChecked ? 'text-red-500 font-semibold text-[16px]' : 'text-[16px]'}>Yes</span>
                                         </div>
-                  </div>
+                  </div> 
                   <div className="col-span-12  ">
                     <label htmlFor="price" className="block mb-2 text-[16px] font-medium text-[#2E2E2E]  dark:text-white">Image</label>
                     <Upload  setFile={setFile} />
                     </div>
-
-
+              
+            
                 </div>
                 <div className='w-full  flex justify-end'>
-                <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {isLoading ? (
+                        <>
+                            <LoadingButton />
+                        </>
+                    ) : (
+                        <> 
+                            <button type="submit" className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
                   Add new Categories
                 </button>
+                        </>
+                    )}
+           
                 </div>
-
-              </form>
+              
+              </form> 
 
 </>
 }

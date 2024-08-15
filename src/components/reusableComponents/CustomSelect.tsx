@@ -1,8 +1,9 @@
 import React from 'react';
-import Select from 'react-select';
+import Select, { SingleValue, ActionMeta } from 'react-select';
 import { customSelectProps } from '../../types/types';
 
 const CustomSelect = (props: customSelectProps) => {
+  
   const customStyles = {
     container: (provided:any) => ({
       ...provided,
@@ -29,6 +30,13 @@ const CustomSelect = (props: customSelectProps) => {
     }),
     // Add more styles here if needed
   };
+  const handleSelectChange = (
+    newValue: SingleValue<{ value: any; label: string }>,
+    actionMeta: ActionMeta<{ value: any; label: string }>
+  ) => {
+    const selectedValue = newValue ? newValue.value : 0; // Extract the value or set an empty string if null
+    props.onChange(selectedValue); // Pass the selected value (or empty string) back to the parent
+  };
     return <>
 
 <div className="relative ">
@@ -36,7 +44,7 @@ const CustomSelect = (props: customSelectProps) => {
 </label>
 
 
-            <Select defaultValue={props.options[0]} className="select_styles" options={props.options} isSearchable={false}  styles={customStyles} />
+            <Select  defaultValue={props?.options[0]} className="select_styles" options={props?.options} isSearchable={false} onChange={handleSelectChange}  styles={customStyles} />
         </div>
     </>
 

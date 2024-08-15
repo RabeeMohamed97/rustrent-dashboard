@@ -6,6 +6,7 @@ import CustomModal from '../../../components/reusableComponents/CustomModal';
 
 import Add_Permision from '../Add_Region/Add_Region';
 import { useDeleteregionMutation, useGetAllregionQuery } from '../../../api/Resturants/Categories';
+import { showAlert } from '../../../components/Error';
 
 export default function List_Region() {
 
@@ -76,6 +77,8 @@ const deleteSubmitHandler = async (id: string) => {
                 toast.error(data?.error?.data?.message, {});
                 setToastData({});
             }
+            console.log(data);
+            
             //@ts-ignore
             if (data?.data.status === 200) {
                 //@ts-ignore
@@ -96,9 +99,7 @@ const deleteSubmitHandler = async (id: string) => {
 
 
 
-const deleteHander=(id:string)=> {
-    console.log( "id form index deleteHander" ,id)
-}
+
 const viewHander=(id:string)=> {
     console.log( "id form index viewHander" ,id)
 }

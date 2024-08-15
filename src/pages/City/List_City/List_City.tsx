@@ -66,7 +66,7 @@ export default function List_City() {
 
     const deleteSubmitHandler = async (id: string) => {
         swal({
-            title: 'Are you sure you want to delete Category?',
+            title: 'Are you sure you want to delete city?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,

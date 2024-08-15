@@ -11,18 +11,21 @@ import { showAlert } from '../../../components/Error';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
 import { useCreateCategoryMutation, useCreateRegionMutation } from '../../../api/Resturants/Categories';
+import CustomSelectWithType from '../../../components/reusableComponents/CustomSelectWithType';
 
 export const formSchema = z
 .object({
     name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
 })
 
+
 interface CityFormData {
 name: string;
-city:string;
+city_id:number;
 
 }
 export default function Add_Region() {
+    
     const options = [
         { value: '', label: 'Write your table Category' },
         { value: 'orange', label: 'Orange' },
@@ -34,8 +37,7 @@ export default function Add_Region() {
 
       const [resformData, setresFormData] =  useState<CityFormData>({
         name: '',
-        city:"",
-
+        city_id:0,
 });
 
 
@@ -52,6 +54,9 @@ export default function Add_Region() {
       const { name, value } = e.target;
       setresFormData({ ...resformData, [name]: value });
   };
+const handleSelectChange = (value: number) => {
+    setresFormData({ ...resformData, city_id: value }); // Update the category in state
+  }; 
 
   useEffect(() => {
     if (toastData?.data?.status === 200) {
@@ -83,6 +88,9 @@ export default function Add_Region() {
           console.log('Form submitted:', resformData);
           const formData = new FormData();
           formData.append('name', resformData.name);
+
+                      // @ts-ignore
+          formData.append('city_id', resformData.city_id);
 
 
           // dispatch(modalActions.closeModal())
@@ -119,7 +127,7 @@ export default function Add_Region() {
                     <input type="text" name="name" id="name" value={resformData.name} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write your Coupon name"  />
                   </div>
                   <div className="lg:col-span-6 col-span-12">
-                  <CustomSelect  options={options} label="City name" />
+                  <CustomSelectWithType label="MainCity" type="City" onChange={handleSelectChange} />
                 </div>
 
 

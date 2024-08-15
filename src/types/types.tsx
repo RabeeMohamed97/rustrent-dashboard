@@ -36,7 +36,7 @@ export type tabelProps = {
     onUpdateDelivery?: (id: string, status: boolean) => void;
     pagination?: Pagination;
     setPage: (page: number) => void;
-    page: number
+    page: number;
 };
 
 //components / reusableComponents/ inputComponnent
@@ -52,6 +52,7 @@ export type customInputProps = {
     disabled?: boolean;
 };
 //components / reusableComponents/ NumberInput
+
 export type customNumbersInputProps = {
     value: string;
 
@@ -61,6 +62,16 @@ export type customNumbersInputProps = {
 
 //components / reusableComponents/ customSelect
 export type customSelectProps = {
-    options: { value: string; label: string }[];
+    options: { value: any; label: string }[];
     label?: string;
+    onChange: (value: number) => void; // Add this prop
+};
+export type customAnySelectProps = {
+    label?: string;
+    type: string;
+    onChange: (value: number) => void; // Add this prop
+};
+export type ModalProps = {
+    children: React.ReactNode;
+    title?: string;
 };
