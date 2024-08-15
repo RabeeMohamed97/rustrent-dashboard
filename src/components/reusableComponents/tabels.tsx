@@ -201,9 +201,6 @@ const ColumnChooser = (props: tabelProps) => {
               )
             : accessor === 'main_category'
             ? ({ main_category }: any) => {
-                  // Log the attachments object
-                  console.log('main_category', main_category);
-
                   return (
                       <div className="flex justify-between w-max gap-3">
                           <p>{main_category?.name}</p>
