@@ -35,7 +35,9 @@ const Upload = (props: UploadImageProps) => {
         }
     };
     useEffect(() => {
-        setImageSrc(props?.editImgUrl);
+        if (props?.editImgUrl) {
+            setImageSrc(props?.editImgUrl);
+        }
     }, [imageSrc]);
 
     return (
