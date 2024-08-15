@@ -85,11 +85,6 @@ export default function Add_Region(props: editData) {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', resformData);
-        const formData = new FormData();
-        formData.append('name', resformData.name);
-
-        // @ts-ignore
-        formData.append('city_id', resformData.city_id);
 
         // dispatch(modalActions.closeModal())
         const result = formSchema.safeParse(resformData);
@@ -106,12 +101,12 @@ export default function Add_Region(props: editData) {
         // console.log(data);
         try {
             if (props?.data?.id) {
-                const response = await editRegion({ id: props?.data?.id, formData });
+                const response = await editRegion({ id: props?.data?.id, formData: resformData });
                 console.log(response);
                 setToastData(response);
                 setErrors({});
             } else {
-                const response = await createRegion(formData);
+                const response = await createRegion(resformData);
                 console.log(response);
                 setToastData(response);
                 setErrors({});

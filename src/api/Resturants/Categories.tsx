@@ -174,7 +174,7 @@ const resApi = createApi({
             query: ({ id, formData }) => {
                 return {
                     url: `restaurant/store/region/${id}`,
-                    method: 'POST',
+                    method: 'PUT',
                     body: formData,
                 };
             },
