@@ -9,10 +9,11 @@ import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../ap
 import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 
-
 export default function List_Category() {
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllCategoriesQuery({ page });
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
     console.log('from ', data);
     useEffect(() => {
         refetch();
@@ -99,8 +100,8 @@ export default function List_Category() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-    const EditHandelr = (id: string) => {
-        console.log('id form index EditHandelr', id);
+    const EditHandelr = (data: any) => {
+        setEditData(data);
     };
 
     const [isTrue, setisTrue] = useState(false);
@@ -117,10 +118,16 @@ export default function List_Category() {
     return (
         <Main_list title="Categeories">
             <MainPageCard>
-                <CustomModal title="Add Category">
-                    <Add_Category />
-                </CustomModal>
-
+                {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add Category">
+                        <Add_Category />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Category">
+                        <Add_Category data={editData} />
+                    </CustomModal>
+                )}
                 <ColumnChooser
                     isLoading={loadingStatus}
                     isLoadingDelivery={loadingDelivery}
@@ -138,6 +145,7 @@ export default function List_Category() {
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
                 />
             </MainPageCard>
         </Main_list>

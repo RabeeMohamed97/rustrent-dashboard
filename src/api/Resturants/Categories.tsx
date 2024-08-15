@@ -11,9 +11,10 @@ const resApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
+            const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
             // headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
-            // headers.set('Accept-Language', 'ar');
+            headers.set('Authorization', `Bearer ${accessToken}`);
             return headers;
         },
     }),
@@ -122,6 +123,26 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        editCategory: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `restaurant/store/category/${id}`,
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['Categories'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
         createCity: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -614,6 +635,7 @@ export const {
     useGetAllSubCategoriesQuery,
     useGetAllSubCategoriesWithoutPaginationQuery,
     useGetAnySelectOptionsQuery,
+    useEditCategoryMutation,
 
     useGetAllMealsQuery,
     useGetAlltableQuery,

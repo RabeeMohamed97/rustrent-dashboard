@@ -226,7 +226,7 @@ export default function Add_Meals(props: EditMealProps) {
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             image
                         </label>
-                        <Upload setFile={setFile} />
+                        <Upload setFile={setFile} editImgUrl={props?.data?.image} />
                     </div>
                     <div className="col-span-12">
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
