@@ -7,29 +7,62 @@ import { showAlert } from '../../../components/Error';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
+import { useGetAllCategoriesWithoutPaginationQuery, useGetAllSubCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+import CustomSelectWithType from '../../../components/reusableComponents/CustomSelectWithType';
 
 export const formSchema = z.object({
-    name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
+    // name: z.string().min(1, 'يجب إدخال الاسم'),
 });
 
 type mealsFormData = {
     name: string;
     price: string;
-    description: string;
+
     sub_category_id: string;
     category_id: string;
     details: string;
     preparation_time: string;
 };
+interface Category {
+    id: number;
+    name: string;
+}
 
-export default function Add_Meals() {
+type EditMealProps = {
+    data?: any;
+};
+export default function Add_Meals(props: EditMealProps) {
+    console.log(props.data);
     const [file, setFile] = useState<File | null>(null);
+    const [options, setoptions] = useState([]);
+    const [subCatOptions, setSubCatOpions] = useState([]);
     const navigate = useNavigate();
+    const { data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
+    const { data: subCat, isSuccess: subCatIsSucces } = useGetAllSubCategoriesWithoutPaginationQuery();
+
+    useEffect(() => {
+        if (isSuccess) {
+            const dataOfCategorty = data?.response?.data.map((category: Category) => ({
+                value: category?.id,
+                label: category?.name,
+            }));
+            setoptions(dataOfCategorty);
+        }
+    }, [isSuccess]);
+    useEffect(() => {
+        if (subCatIsSucces) {
+            const dataOfCategorty = subCat?.response?.data?.map((category: Category) => ({
+                value: category?.id,
+                label: category?.name,
+            }));
+            setSubCatOpions(dataOfCategorty);
+        }
+    }, [subCatIsSucces]);
 
     const [mealsformData, setMealsFormData] = useState<mealsFormData>({
         name: '',
         price: '',
-        description: '',
+
         sub_category_id: '',
         preparation_time: '',
         category_id: '',
@@ -43,16 +76,22 @@ export default function Add_Meals() {
     const [errors, setErrors] = useState<any>({});
     const [createMeal, { isLoading }] = useCreateMealMutation();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setMealsFormData({ ...mealsformData, [name]: value });
         console.log(mealsformData);
+    };
+    const handleSelectChange = (value: number) => {
+        setMealsFormData({ ...mealsformData, category_id: value.toString() }); // Update the category in state
+    };
+    const handleSubCatSelectChange = (value: number) => {
+        setMealsFormData({ ...mealsformData, sub_category_id: value.toString() }); // Update the category in state
     };
 
     useEffect(() => {
         if (toastData?.data?.status === 200) {
             showAlert('Added', toastData?.data?.response?.message);
-            navigate('/Categories/List');
+            navigate('/Meals/List');
             setToastData({});
         }
         console.log(toastData.data);
@@ -76,18 +115,20 @@ export default function Add_Meals() {
     }, [toastData, isLoading]);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        console.log(mealsformData);
         const formData = new FormData();
-        formData.append('name', mealsformData.name);
-        formData.append('description', mealsformData.description);
-        //@ts-ignore
-        formData.append('has_delivery', resformData.has_delivery);
 
+        formData.append('name', mealsformData.name);
+        formData.append('price', mealsformData.price);
+        formData.append('sub_category_id', mealsformData.sub_category_id);
+        formData.append('preparation_time', mealsformData.preparation_time);
+        formData.append('category_id', mealsformData.category_id);
+        formData.append('details', mealsformData.details);
         if (file) {
             formData.append(`image`, file);
         }
         // dispatch(modalActions.closeModal())
-        const result = formSchema.safeParse(mealsformData);
+        const result = formSchema.safeParse(formData);
 
         // Perform your form submission logic here, such as making an API call.
         // After submission, you can close the modal and clear the form
@@ -101,7 +142,7 @@ export default function Add_Meals() {
         // console.log(data);
         try {
             const response = await createMeal(formData);
-
+            console.log(response);
             setToastData(response);
             setErrors({});
         } catch (err) {
@@ -109,12 +150,6 @@ export default function Add_Meals() {
             setErrors(err);
         }
     };
-    const options = [
-        { value: '', label: 'Write your table Category' },
-        { value: 'orange', label: 'Orange' },
-        { value: 'white', label: 'White' },
-        { value: 'purple', label: 'Purple' },
-    ];
 
     return (
         <>
@@ -142,7 +177,7 @@ export default function Add_Meals() {
                             type="text"
                             name="preparation_time"
                             id="name"
-                            value={mealsformData?.name}
+                            value={mealsformData?.preparation_time}
                             onChange={handleChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Write your Table name"
@@ -150,22 +185,12 @@ export default function Add_Meals() {
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">
-                        <CustomSelect options={options} label=" Category Name" />
+                        {/* <CustomSelect options={options} onChange={handleSelectChange} label="Category" /> */}
+                        <CustomSelectWithType label="MainCategory" type="Category" onChange={handleSelectChange} />
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">
-                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Sub Category Name
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            value={mealsformData?.name}
-                            onChange={handleChange}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Write your Minimum number of people "
-                        />
+                        <CustomSelect options={subCatOptions} onChange={handleSubCatSelectChange} label="Sub Category Name" />
                     </div>
                     <div className="lg:col-span-6 col-span-12">
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -173,9 +198,9 @@ export default function Add_Meals() {
                         </label>
                         <input
                             type="text"
-                            name="name"
+                            name="price"
                             id="name"
-                            value={mealsformData?.name}
+                            value={mealsformData?.price}
                             onChange={handleChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Write your Maximum number of people"
@@ -193,9 +218,10 @@ export default function Add_Meals() {
                         </label>
                         <textarea
                             rows={4}
-                            name="name"
+                            name="details"
                             id="name"
-                            value={mealsformData?.name}
+                            onChange={handleChange}
+                            value={mealsformData?.details}
                             className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Type Here"
                         />

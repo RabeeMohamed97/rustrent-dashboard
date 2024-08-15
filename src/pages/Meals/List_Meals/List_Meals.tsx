@@ -10,8 +10,11 @@ import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 import Add_Meals from '../Add_Meals/Add_Meals';
 import { useDeleteMealMutation, useGetAllMealsQuery } from '../../../api/Resturants/Meals';
+import { useDispatch } from 'react-redux';
+import { modalActions } from '../../../store/modelSlice';
 
 export default function List_Category() {
+    const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllMealsQuery({ page });
     useEffect(() => {
@@ -45,7 +48,7 @@ export default function List_Category() {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
                 colss.splice(1, 2);
-               
+
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
             } else if (key === 'category_id') {
@@ -103,8 +106,15 @@ export default function List_Category() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-    const EditHandelr = (id: string) => {
-        console.log('id form index EditHandelr', id);
+
+    const EditHandelr = (data: any) => {
+        console.log(data);
+        dispatch(modalActions.openModal());
+        return (
+            <CustomModal title="Edit meal">
+                <Add_Meals data={data} />
+            </CustomModal>
+        );
     };
 
     const [isTrue, setisTrue] = useState(false);
@@ -119,9 +129,9 @@ export default function List_Category() {
     };
 
     return (
-        <Main_list title="Categeories">
+        <Main_list title="meal">
             <MainPageCard>
-                <CustomModal title="Add Category">
+                <CustomModal title="Add meal">
                     <Add_Meals />
                 </CustomModal>
 

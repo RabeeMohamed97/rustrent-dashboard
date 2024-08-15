@@ -149,36 +149,39 @@ const ColumnChooser = (props: tabelProps) => {
                       ) : (
                           <>
                               <label className="inline-flex items-center me-5 cursor-pointer">
-                                  <input type="checkbox" className="sr-only peer"  onChange={(e) => {
-        if (props.onUpdateDelivery) {
-          props.onUpdateDelivery(id, e.target.checked);
-        }
-      }}
-
-                        checked={has_delivery} />
+                                  <input
+                                      type="checkbox"
+                                      className="sr-only peer"
+                                      onChange={(e) => {
+                                          if (props.onUpdateDelivery) {
+                                              props.onUpdateDelivery(id, e.target.checked);
+                                          }
+                                      }}
+                                      checked={has_delivery}
+                                  />
                                   <div className="relative w-11 h-6 bg-gray-200 rounded-full  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gradient-to-r from-[#F23F39] to-[#FF9C99]"></div>
                               </label>
                           </>
                       )}
                   </>
               )
-
             : accessor === 'action'
-            ? ({ id }: any) => (
-                  <div className="flex  justify-between w-max mx-auto gap-3">
-
-{props.Enabel_edit?<>
-    <button type="button" onClick={() => props.onEdit(id)}>
-                          <IconPencil />
-                      </button>
-</>:<>
-
-</>}
-<button type="button" onClick={() => props.onView(id)}>
+            ? (data: any) => (
+                  <div className="flex  justify-between w-max  gap-3">
+                      {props.Enabel_edit ? (
+                          <>
+                              <button type="button" onClick={() => props.onEdit(data)}>
+                                  <IconPencil />
+                              </button>
+                          </>
+                      ) : (
+                          <></>
+                      )}
+                      <button type="button" onClick={() => props.onView(data?.id)}>
                           <IconEye />
                       </button>
 
-                      <button type="button" onClick={() => props.onDelete(id)}>
+                      <button type="button" onClick={() => props.onDelete(data?.id)}>
                           <IconTrashLines />
                       </button>
                   </div>
@@ -280,50 +283,46 @@ const ColumnChooser = (props: tabelProps) => {
                     <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
-                <Dropdown
-                                placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
-                                btnClassName="!flex items-center border font-semibold border-[#BD0600] dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
-                                button={
-                                    <>
-                                        <span className="ltr:mr-1 rtl:ml-1 text-[#BD0600]">Status</span>
-                                        <IconCaretDown className="w-5 h-5 text-[#BD0600]" />
-                                    </>
-                                }>
-                                <ul className="!min-w-[180px] z-0">
-                                    {cols.map((col, i) => {
-                                        return (
-                                            <li
-                                                key={i}
-                                                className="flex flex-col"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                            >
-                                                <div className="flex items-center px-4 py-1">
-                                                    <label className="cursor-pointer mb-0">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={!hideCols.includes(col.accessor)}
-                                                            className="form-checkbox"
-                                                            defaultValue={col.accessor}
-                                                            onChange={(event: any) => {
-                                                                setHideCols(event.target.value);
-                                                                showHideColumns(col.accessor, event.target.checked);
-                                                            }}
-                                                        />
-                                                        <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
-                                                    </label>
-                                                </div>
-
-
-
-
-
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Dropdown>
+                    <Dropdown
+                        placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
+                        btnClassName="!flex items-center border font-semibold border-[#BD0600] dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
+                        button={
+                            <>
+                                <span className="ltr:mr-1 rtl:ml-1 text-[#BD0600]">Status</span>
+                                <IconCaretDown className="w-5 h-5 text-[#BD0600]" />
+                            </>
+                        }
+                    >
+                        <ul className="!min-w-[180px] z-0">
+                            {cols.map((col, i) => {
+                                return (
+                                    <li
+                                        key={i}
+                                        className="flex flex-col"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <div className="flex items-center px-4 py-1">
+                                            <label className="cursor-pointer mb-0">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={!hideCols.includes(col.accessor)}
+                                                    className="form-checkbox"
+                                                    defaultValue={col.accessor}
+                                                    onChange={(event: any) => {
+                                                        setHideCols(event.target.value);
+                                                        showHideColumns(col.accessor, event.target.checked);
+                                                    }}
+                                                />
+                                                <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </Dropdown>
                     <div className="flex md:items-center md:flex-row flex-col gap-5">
                         <div className="dropdown">
                             <Dropdown
@@ -361,11 +360,6 @@ const ColumnChooser = (props: tabelProps) => {
                                                         <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
                                                     </label>
                                                 </div>
-
-
-
-
-
                                             </li>
                                         );
                                     })}
@@ -425,14 +419,6 @@ const ColumnChooser = (props: tabelProps) => {
                         )}
                     </div>
                 </div>
-
-
-
-
-
-
-
-
             </div>
 
             <div className="panel mt-6">

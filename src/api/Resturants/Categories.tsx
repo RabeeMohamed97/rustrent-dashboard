@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories','sub_category','table','city'],
+    tagTypes: ['country', 'Categories', 'sub_category', 'table', 'city'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -75,6 +75,26 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        getAllSubCategoriesWithoutPagination: builder.query<any, void>({
+            query: () => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/listOfcategories`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['Categories'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
@@ -91,7 +111,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories','sub_category'],
+            invalidatesTags: ['Categories', 'sub_category'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -172,7 +192,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories','sub_category'],
+            invalidatesTags: ['Categories', 'sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -247,7 +267,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['Categories','sub_category'],
+            invalidatesTags: ['Categories', 'sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -515,6 +535,26 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        getAnySelectOptions: builder.query<any, { type: string }>({
+            query: ({ type }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `restaurant/list/${type}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         getCountry: builder.query<any, { id: string | undefined }>({
             query: ({ id }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
@@ -570,10 +610,11 @@ export const {
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
-
+    useGetAllSubCategoriesWithoutPaginationQuery,
+    useGetAnySelectOptionsQuery,
 
     useGetAllMealsQuery,
-     useGetAlltableQuery,
+    useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateCategoryMutation,
     useCreateTableMutation,
