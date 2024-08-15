@@ -200,24 +200,21 @@ const ColumnChooser = (props: tabelProps) => {
                   </div>
               )
             : accessor === 'main_category'
-            ? ({ name }: any) => {
+            ? ({ main_category }: any) => {
                   // Log the attachments object
+                  console.log('main_category', main_category);
 
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{main_category?.name}</p>
                       </div>
                   );
               }
             : accessor === 'sub_category'
-            ? ({ name, isFavourite }: any) => {
-                  // Log the attachments object
-                  console.log('Attachments:', name);
-                  console.log('isFavourite:', isFavourite);
-
+            ? ({ sub_category }: any) => {
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{sub_category?.name}</p>
                       </div>
                   );
               }

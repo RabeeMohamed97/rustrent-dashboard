@@ -144,8 +144,13 @@ export default function Add_Meals(props: EditMealProps) {
         }
         // const data = await createResturant(formData);
         // console.log(data);
+
+        // if (!props?.data.id) {
+
+        // }
+
         try {
-            if (props.data.id) {
+            if (props?.data?.id) {
                 const response = await editMeal({ id: props?.data?.id, formData });
                 console.log(response);
                 setToastData(response);
