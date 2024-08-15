@@ -52,6 +52,7 @@ export default function Add_Category(props: catEditProps) {
             name: props?.data?.name,
         });
     }, []);
+
     useEffect(() => {
         if (toastData?.data?.status === 200) {
             showAlert('Added', toastData?.data?.response?.message);

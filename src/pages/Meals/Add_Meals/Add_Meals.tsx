@@ -202,7 +202,7 @@ export default function Add_Meals(props: EditMealProps) {
 
                     <div className="lg:col-span-6 col-span-12">
                         {/* <CustomSelect options={options} onChange={handleSelectChange} label="Category" /> */}
-                        <CustomSelectWithType id={props?.data?.category_id} label="MainCategory" type="Category" onChange={handleSelectChange} />
+                        <CustomSelectWithType id={props?.data?.category_id} label="MainCategory" type="mainCategory" onChange={handleSelectChange} />
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">

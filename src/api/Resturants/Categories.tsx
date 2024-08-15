@@ -6,7 +6,7 @@ const baseUrl = 'https://deliback.rowaduae.com/api/';
 // Define the user API slice
 const resApi = createApi({
     reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories', 'sub_category', 'table', 'city','region'],
+    tagTypes: ['country', 'Categories', 'sub_category', 'table', 'city', 'region'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -160,6 +160,25 @@ const resApi = createApi({
                 };
             },
             invalidatesTags: ['city'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editRegion: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `restaurant/store/region/${id}`,
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['region'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -682,7 +701,7 @@ const resApi = createApi({
                 body: code,
             }),
         }),
-        
+
         ResetPassword: builder.mutation<any, any>({
             query: (formData) => ({
                 url: `reset-password/change-password`,
@@ -708,6 +727,7 @@ export const {
     useGetAllSubCategoriesWithoutPaginationQuery,
     useGetAnySelectOptionsQuery,
     useEditCategoryMutation,
+    useEditRegionMutation,
 
     useGetAllMealsQuery,
     useGetAlltableQuery,
