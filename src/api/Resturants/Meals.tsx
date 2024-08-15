@@ -39,11 +39,29 @@ const mealsApi = createApi({
             },
         }),
 
-      
         createMeal: builder.mutation<any, any>({
             query: (formData) => {
                 return {
                     url: 'restaurant/store/item',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['meals'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editMeal: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `restaurant/store/item/${id}`,
                     method: 'POST',
                     body: formData,
                 };
@@ -381,7 +399,7 @@ export const {
     useResetPasswordMutation,
     useChangePasswordMutation,
     useGetAllSubCategoriesQuery,
-
+useEditMealMutation,
     useGetAlltableQuery,
     useForgetPasswordMutation,
     useCreateResturantMutation,

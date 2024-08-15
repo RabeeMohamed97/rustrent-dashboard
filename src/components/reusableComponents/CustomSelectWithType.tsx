@@ -36,7 +36,7 @@ const CustomSelectWithType = (props: customAnySelectProps) => {
     const [options, setoptions] = useState([]);
 
     const { data, isSuccess, isError } = useGetAnySelectOptionsQuery({ type: props.type });
-
+    const [selectValu, setSelectVal] = useState('');
     useEffect(() => {
         if (isSuccess) {
             const dataOfCategorty = data?.response?.data.map((category: Category) => ({
@@ -48,8 +48,13 @@ const CustomSelectWithType = (props: customAnySelectProps) => {
     }, [isSuccess]);
     const handleSelectChange = (newValue: SingleValue<{ value: number; label: string }>, actionMeta: ActionMeta<{ value: number; label: string }>) => {
         const selectedValue = newValue ? newValue.value : 0; // Extract the value or set an empty string if null
+
         props.onChange(selectedValue); // Pass the selected value (or empty string) back to the parent
     };
+
+    const selectedValue = options.filter((option: SingleValue<{ value: number; label: string }>) => option?.value === props?.id);
+
+    console.log(selectedValue);
     return (
         <>
             <div className="relative ">
@@ -58,7 +63,7 @@ const CustomSelectWithType = (props: customAnySelectProps) => {
                     {props?.label}
                 </label>
 
-                <Select defaultValue={options[0]} className="select_styles" options={options} isSearchable={false} onChange={handleSelectChange} styles={customStyles} />
+                <Select defaultValue={selectedValue[0]} value={selectedValue[0]} className="select_styles" options={options} isSearchable={false} onChange={handleSelectChange} styles={customStyles} />
             </div>
         </>
     );

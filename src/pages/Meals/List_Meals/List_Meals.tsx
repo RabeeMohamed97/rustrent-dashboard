@@ -16,6 +16,13 @@ import { modalActions } from '../../../store/modelSlice';
 export default function List_Category() {
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
+
+
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
+
+
+    
     const { refetch, data, isSuccess, isError } = useGetAllMealsQuery({ page });
     useEffect(() => {
         console.log(data);
@@ -108,13 +115,7 @@ export default function List_Category() {
     };
 
     const EditHandelr = (data: any) => {
-        console.log(data);
-        dispatch(modalActions.openModal());
-        return (
-            <CustomModal title="Edit meal">
-                <Add_Meals data={data} />
-            </CustomModal>
-        );
+        setEditData(data);
     };
 
     const [isTrue, setisTrue] = useState(false);
@@ -127,13 +128,20 @@ export default function List_Category() {
     const updateDeliveryHander = async (id: string, status: boolean) => {
         console.log('updateDeliveryHander', status);
     };
-
+    console.log(editData);
     return (
         <Main_list title="meal">
             <MainPageCard>
-                <CustomModal title="Add meal">
-                    <Add_Meals />
-                </CustomModal>
+                {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add meal">
+                        <Add_Meals />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Meal">
+                        <Add_Meals data={editData} />
+                    </CustomModal>
+                )}
 
                 <ColumnChooser
                     isLoading={loadingStatus}
@@ -152,6 +160,8 @@ export default function List_Category() {
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
+                    // resetEditData={setEditData}
                 />
             </MainPageCard>
         </Main_list>

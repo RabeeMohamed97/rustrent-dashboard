@@ -4,7 +4,6 @@ import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 
-
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
 const List_SubCategory = lazy(() => import('../pages/SubCategories/List_SubCategory/List_SubCategory'));
@@ -30,7 +29,6 @@ const routes = [
         layout: 'blank',
     },
 
-
     //Resturants
     // {
     //     path: '/Restaurant/Add',
@@ -51,7 +49,6 @@ const routes = [
     //     element: <List_Users />,
     // },
 
-
     //Categories , Items
 
     {
@@ -65,15 +62,15 @@ const routes = [
 
     {
         path: '/offers/List',
-        element: <List_Offers/>,
+        element: <List_Offers />,
     },
     {
         path: '/Categories/List',
-        element:
-        // <AuthProvider>
-        <List_Category />
+        element: (
+            // <AuthProvider>
+            <List_Category />
+        ),
         // </AuthProvider>
-,
     },
     {
         path: '/Sub_Categories/List',
@@ -85,15 +82,19 @@ const routes = [
     },
     {
         path: '/Meals/List',
-        element: <List_Meals/>,
+        element: (
+            <AuthProvider>
+                <List_Meals />
+            </AuthProvider>
+        ),
     },
     {
         path: '/Permsion/List',
-        element: <List_Permsion/>,
+        element: <List_Permsion />,
     },
     {
         path: '/Coupons/List',
-        element: <List_Coupons/>,
+        element: <List_Coupons />,
     },
     {
         path: '/City/List',
@@ -101,13 +102,12 @@ const routes = [
     },
     {
         path: '/region/List',
-        element: <List_Region/>,
+        element: <List_Region />,
     },
     // {
     //     path: '/Categories/item/Add',
     //     element: <Add_item />,
     // },
-
 
     // Store
     // {
@@ -121,7 +121,6 @@ const routes = [
     //         path: '/Expenses/Add',
     //         element: <Add_Expenses/>,
     // }
-
 ];
 
 export { routes };

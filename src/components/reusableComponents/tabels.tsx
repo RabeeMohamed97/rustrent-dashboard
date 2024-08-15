@@ -170,7 +170,14 @@ const ColumnChooser = (props: tabelProps) => {
                   <div className="flex  justify-between w-max  gap-3">
                       {props.Enabel_edit ? (
                           <>
-                              <button type="button" onClick={() => props.onEdit(data)}>
+                              <button
+                                  type="button"
+                                  onClick={() => {
+                                      props.onEdit(data);
+
+                                      openModal();
+                                  }}
+                              >
                                   <IconPencil />
                               </button>
                           </>
@@ -193,24 +200,21 @@ const ColumnChooser = (props: tabelProps) => {
                   </div>
               )
             : accessor === 'main_category'
-            ? ({ name }: any) => {
+            ? ({ main_category }: any) => {
                   // Log the attachments object
+                  console.log('main_category', main_category);
 
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{main_category?.name}</p>
                       </div>
                   );
               }
             : accessor === 'sub_category'
-            ? ({ name, isFavourite }: any) => {
-                  // Log the attachments object
-                  console.log('Attachments:', name);
-                  console.log('isFavourite:', isFavourite);
-
+            ? ({ sub_category }: any) => {
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{sub_category?.name}</p>
                       </div>
                   );
               }
@@ -249,7 +253,10 @@ const ColumnChooser = (props: tabelProps) => {
     }, [props.page, pageSize, initialRecords]);
 
     const openModal = () => {
-        dispatch(modalActions.openModal());
+        // dispatch(modalActions.openModal());
+        props.openCloseModal((prevState) => !prevState);
+        // props.resetEditData([]);
+        console.log('openModal');
     };
     useEffect(() => {
         console.log(props.TableBody);
@@ -423,6 +430,7 @@ const ColumnChooser = (props: tabelProps) => {
 
             <div className="panel mt-6">
                 <div className="datatables z-10">
+                    {/* @ts-ignore */}
                     <DataTable
                         className="whitespace-nowrap   table-hover"
                         records={recordsData}

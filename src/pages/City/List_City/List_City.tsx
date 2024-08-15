@@ -3,11 +3,17 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
+import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
 import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
+import { showAlert } from '../../../components/Error';
 
 export default function List_City() {
     const [page, setPage] = useState(1);
+
+
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
     const { refetch, data, isSuccess, isError } = useGetAllcityQuery({ page });
     console.log(data)
 
@@ -93,9 +99,7 @@ export default function List_City() {
     const viewHander=(id:string)=> {
     console.log( "id form index viewHander" ,id)
     }
-    const EditHandelr=(id:string)=> {
-    console.log( "id form index EditHandelr" ,id)
-    }
+  
 
 
     const updateHander = async(id:string,status:boolean)=> {
@@ -109,8 +113,11 @@ export default function List_City() {
 
 
     };
-
-
+    const EditHandelr = (data: any) => {
+        setEditData(data);
+    };
+    const [isTrue, setisTrue] = useState(false);
+    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
 
 
@@ -119,10 +126,16 @@ export default function List_City() {
   return (
     <Main_list  title='Cities'>
     <MainPageCard>
-    <CustomModal  title='Add City' >
-    <Add_City/>
-    </CustomModal>
-
+    {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add City">
+                        <Add_City/>
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit City">
+                        <Add_City data={editData} />
+                    </CustomModal>
+                )}
 
 
     <ColumnChooser
@@ -136,7 +149,16 @@ isLoading={loadingStatus}
                 onUpdateDelivery={updateDeliveryHander}
                 Enabel_edit={true}
                 TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
-                tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='City' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+                tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='City' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} 
+                Chcekbox={false}
+                    Page_Add={false}
+                    Link_Navigation="Categories"
+                    onDelete={deleteSubmitHandler}
+                    onView={viewHander}
+                    onUpdate={updateHander}
+                    onEdit={EditHandelr}
+                    openCloseModal={setOpen}
+                    />
     </MainPageCard>
 
     </Main_list>
