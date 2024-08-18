@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import IconPencil from '../Icon/IconPencil';
 import IconEye from '../Icon/IconEye';
 import IconTrashLines from '../Icon/IconTrashLines';
-import { modalActions } from '../../store/modelSlice';
+import { modalActions } from '../../store/generalSlice';
 
 const ColumnChooser = (props: tabelProps) => {
     console.log(props.TableBody);

@@ -8,6 +8,7 @@ import Add_Category from '../Add_Category/Add_Category';
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../api/Resturants/Categories';
 import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
+import Tabs from '../../../components/reusableComponents/Tabs';
 
 export default function List_Category() {
     const [page, setPage] = useState(1);
@@ -128,6 +129,7 @@ export default function List_Category() {
                         <Add_Category data={editData} />
                     </CustomModal>
                 )}
+
                 <ColumnChooser
                     isLoading={loadingStatus}
                     isLoadingDelivery={loadingDelivery}

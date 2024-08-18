@@ -11,18 +11,14 @@ import { showAlert } from '../../../components/Error';
 import Add_Meals from '../Add_Meals/Add_Meals';
 import { useDeleteMealMutation, useGetAllMealsQuery } from '../../../api/Resturants/Meals';
 import { useDispatch } from 'react-redux';
-import { modalActions } from '../../../store/modelSlice';
 
 export default function List_Category() {
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
 
-
     const [open, setOpen] = useState(false);
     const [editData, setEditData] = useState<any>([]);
 
-
-    
     const { refetch, data, isSuccess, isError } = useGetAllMealsQuery({ page });
     useEffect(() => {
         console.log(data);
@@ -167,4 +163,3 @@ export default function List_Category() {
         </Main_list>
     );
 }
-

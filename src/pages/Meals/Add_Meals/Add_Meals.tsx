@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllCategoriesWithoutPaginationQuery, useGetAllSubCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 import CustomSelectWithType from '../../../components/reusableComponents/CustomSelectWithType';
+import CustomTextAria from '../../../components/reusableComponents/CustomTextAria';
 
 export const formSchema = z.object({
     // name: z.string().min(1, 'يجب إدخال الاسم'),
@@ -202,7 +203,7 @@ export default function Add_Meals(props: EditMealProps) {
 
                     <div className="lg:col-span-6 col-span-12">
                         {/* <CustomSelect options={options} onChange={handleSelectChange} label="Category" /> */}
-                        <CustomSelectWithType id={props?.data?.category_id} label="MainCategory" type="mainCategory" onChange={handleSelectChange} />
+                        <CustomSelectWithType id={props?.data?.category_id} label="MainCategory" type="Category" onChange={handleSelectChange} />
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">
@@ -228,7 +229,8 @@ export default function Add_Meals(props: EditMealProps) {
                         </label>
                         <Upload setFile={setFile} editImgUrl={props?.data?.image} />
                     </div>
-                    <div className="col-span-12">
+                    <CustomTextAria label="Meal Description" name="details" onChange={handleChange} value={mealsformData?.details} placeholder="Type Here" />
+                    {/* <div className="col-span-12">
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Meal Description
                         </label>
@@ -241,7 +243,7 @@ export default function Add_Meals(props: EditMealProps) {
                             className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Type Here"
                         />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="w-full  flex justify-end">
                     <button

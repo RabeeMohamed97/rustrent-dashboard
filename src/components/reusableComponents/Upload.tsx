@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import uploadImg from '../../../public/assets/images/upload-img.png';
 import uploadUser from '../../../public/assets/images/upload-user.png';
-import { modalActions } from '../../store/modelSlice';
+
 import { useDispatch } from 'react-redux';
 type UploadImageProps = {
     user?: boolean;
@@ -17,7 +17,6 @@ const Upload = (props: UploadImageProps) => {
         // Programmatically click the hidden file input
 
         if (fileInputRef.current) {
-            dispatch(modalActions.openModal());
             fileInputRef.current.click();
         }
     };

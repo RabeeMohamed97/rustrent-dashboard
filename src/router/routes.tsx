@@ -3,6 +3,7 @@ import Login from '../pages/Auth/Login';
 import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
+import Profile from '../pages/profile/Profile';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -107,6 +108,14 @@ const routes = [
         element: (
             <AuthProvider>
                 <List_Region />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/profile',
+        element: (
+            <AuthProvider>
+                <Profile />
             </AuthProvider>
         ),
     },
