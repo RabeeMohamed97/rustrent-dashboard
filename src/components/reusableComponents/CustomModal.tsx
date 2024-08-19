@@ -14,7 +14,7 @@ const CustomModal = (props: ModalProps) => {
     };
     return (
         <>
-            <div id="crud-modal" aria-hidden="true" className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[100vh] bg-gray-800 bg-opacity-50">
+            <div id="crud-modal" aria-hidden="true" className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center  h-[100vh] bg-gray-800 bg-opacity-85">
                 <div className="relative p-4  w-[75%]">
                     <div className="relative bg-white rounded-2xl shadow dark:bg-gray-700">
                         <div className="flex items-center bg-gradient-to-r from-[#F23F39] to-[#BD0600]  justify-between p-4 md:p-5  rounded-t-xl  dark:border-gray-600">

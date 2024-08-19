@@ -10,6 +10,7 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
+
             headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             headers.set('Accept-Language', 'ar');
@@ -55,12 +56,12 @@ const authApi = createApi({
         changePassword: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: 'restaurant/auth/change-password',
+                    url: '/restaurant/auth/change-password',
                     method: 'POST',
                     body: formData,
                     headers: {

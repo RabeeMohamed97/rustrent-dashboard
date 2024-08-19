@@ -227,6 +227,7 @@ export default function Add_Meals(props: EditMealProps) {
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             image
                         </label>
+
                         <Upload setFile={setFile} editImgUrl={props?.data?.image} />
                     </div>
                     <CustomTextAria label="Meal Description" name="details" onChange={handleChange} value={mealsformData?.details} placeholder="Type Here" />
