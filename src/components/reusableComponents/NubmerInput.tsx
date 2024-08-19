@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 import { customNumbersInputProps } from '../../types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleRTL } from '../../store/themeConfigSlice';
-import { IRootState } from '../../store';
 
 const NubmerInput = (props: customNumbersInputProps) => {
-    return (
-        <div className="relative  ">
-            <label htmlFor="" className={`    bg-white text-[14px] font-[500]`}>
+    return <>
+      <div className="relative">
+            <label htmlFor="" className={`  text-[14px] font-[500]`}>
                 Phone Number
             </label>
 
-            <PhoneInput        country={'eg'} value={props.value} onChange={(value) => props.onChange(value)} />
+            <PhoneInput defaultCountry="eg" className=" " value={props?.value} onChange={(phone:any) => props?.onChange(phone)} />
         </div>
-    );
+    
+    </>
 };
 
 export default NubmerInput;
