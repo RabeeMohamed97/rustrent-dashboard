@@ -4,6 +4,9 @@ import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 import Profile from '../pages/profile/Profile';
+import ContactUs from '../pages/Contact Us/ViewContactUs';
+import ContactUsList from '../pages/Contact Us/ContactUsList';
+import ViewContactUs from '../pages/Contact Us/ViewContactUs';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -116,6 +119,22 @@ const routes = [
         element: (
             <AuthProvider>
                 <Profile />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contact-us',
+        element: (
+            <AuthProvider>
+                <ContactUsList />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contactUs/:id',
+        element: (
+            <AuthProvider>
+                <ViewContactUs />
             </AuthProvider>
         ),
     },

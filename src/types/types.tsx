@@ -25,9 +25,10 @@ export type tabelProps = {
     allCols?: string[];
     isLoading?: { [key: number]: boolean };
     isLoadingDelivery?: { [key: number]: boolean };
-    Link_Navigation: string;
+    Link_Navigation?: string;
     Chcekbox?: boolean;
     Page_Add?: boolean;
+    showAddButton?: boolean;
     Enabel_edit?: boolean;
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;

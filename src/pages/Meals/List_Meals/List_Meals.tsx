@@ -151,6 +151,7 @@ export default function List_Category() {
                     tabelHead={finslColsKeys}
                     Chcekbox={false}
                     Page_Add={false}
+                    showAddButton={true}
                     Link_Navigation="Categories"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}

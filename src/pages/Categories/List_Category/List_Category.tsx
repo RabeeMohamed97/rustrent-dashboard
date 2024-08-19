@@ -143,6 +143,7 @@ export default function List_Category() {
                     Chcekbox={false}
                     Page_Add={false}
                     Link_Navigation="Categories"
+                    showAddButton={true}
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}

@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import MainPageCard from '../../../components/reusableComponents/MainPageCard';
-import Main_list from '../../../components/reusableComponents/Main_list';
-import ColumnChooser from '../../../components/reusableComponents/tabels';
-import CustomModal from '../../../components/reusableComponents/CustomModal';
-import Upload from '../../../components/reusableComponents/Upload';
-import Add_SubCategory from '../Add_SubCatgeories/Add_SubCategory';
-import { useDeleteCategoryMutation, useGetAllSubCategoriesQuery } from '../../../api/Resturants/Categories';
+import MainPageCard from '../../components/reusableComponents/MainPageCard';
+import Main_list from '../../components/reusableComponents/Main_list';
+import ColumnChooser from '../../components/reusableComponents/tabels';
+import CustomModal from '../../components/reusableComponents/CustomModal';
+import Upload from '../../components/reusableComponents/Upload';
+
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../api/Resturants/Categories';
 import swal from 'sweetalert';
-import { showAlert } from '../../../components/Error';
+import { showAlert } from '../../components/Error';
+import Tabs from '../../components/reusableComponents/Tabs';
+import Add_Response from './AddResponse';
+import { useGetAllContactsQuery } from '../../api/Resturants/SettingSlice';
+import { useNavigate } from 'react-router-dom';
 
-export default function List_SubCategory() {
+export default function ContactUsList() {
+    const navigate = useNavigate();
     const [page, setPage] = useState(1);
-    const { refetch, data, isSuccess, isError } = useGetAllSubCategoriesQuery({ page });
-    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
-    const [editData, setEditData] = useState<any>([]);
+    const { refetch, data, isSuccess, isError } = useGetAllContactsQuery({ page });
     const [open, setOpen] = useState(false);
-
+    const [editData, setEditData] = useState<any>([]);
+    console.log('from ', data);
     useEffect(() => {
         refetch();
     }, [page]);
 
+    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -40,7 +45,6 @@ export default function List_SubCategory() {
     useEffect(() => {
         colKeys?.map((key: any) => {
             console.log(key);
-
             if (key === 'attachments') {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
@@ -51,8 +55,6 @@ export default function List_SubCategory() {
                 // colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
-            } else if (key === 'parent_id') {
-                return;
             } else {
                 const formattedKey = key
                     .replace(/_/g, ' ')
@@ -71,7 +73,7 @@ export default function List_SubCategory() {
 
     const deleteSubmitHandler = async (id: string) => {
         swal({
-            title: 'Are you sure you want to delete  Sub_Category?',
+            title: 'Are you sure you want to delete This Contacts?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,
@@ -101,11 +103,14 @@ export default function List_SubCategory() {
         setErrors({});
     };
     const viewHander = (id: string) => {
-        console.log('id form index viewHander', id);
+        navigate(`/contactUs/${id}`);
     };
     const EditHandelr = (data: any) => {
         setEditData(data);
     };
+
+    const [isTrue, setisTrue] = useState(false);
+    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
     const updateHander = async (id: string, status: boolean) => {
         console.log('id form index updateHander', id, !status);
@@ -116,38 +121,37 @@ export default function List_SubCategory() {
     };
 
     return (
-        <Main_list title="Sub Categeories">
+        <Main_list title="Categeories">
             <MainPageCard>
                 {open && (
-                    <CustomModal openCloseModal={setOpen} title="Add Sub_Category">
-                        <Add_SubCategory />
+                    <CustomModal openCloseModal={setOpen} title="Add Category">
+                        <Add_Response />
                     </CustomModal>
                 )}
-                {open && editData.id && (
-                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Sub_Category">
-                        <Add_SubCategory data={editData} />
+                {/* {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Category">
+                        <Add_Response data={editData} />
                     </CustomModal>
-                )}
+                )} */}
 
                 <ColumnChooser
                     isLoading={loadingStatus}
-                    showAddButton={true}
                     isLoadingDelivery={loadingDelivery}
                     setPage={setPage}
                     page={page}
-                    openCloseModal={setOpen}
                     pagination={data?.response?.data}
                     onUpdateDelivery={updateDeliveryHander}
-                    Enabel_edit={true}
+                    Enabel_edit={false}
                     TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
                     tabelHead={finslColsKeys}
                     Chcekbox={false}
                     Page_Add={false}
-                    Link_Navigation="Categories"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}
+                    showAddButton={false}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
                 />
             </MainPageCard>
         </Main_list>
