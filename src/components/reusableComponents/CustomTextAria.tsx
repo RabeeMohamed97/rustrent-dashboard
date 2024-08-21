@@ -5,13 +5,15 @@ type CustomTextAriaProps = {
     name: string;
     placeholder: string;
     label: string;
+    labelLang?: string;
 };
 const CustomTextAria = (props: CustomTextAriaProps) => {
     return (
         <div className="col-span-12">
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                {props?.label}
+                {props?.label} <span className="bg-custom-gradient bg-clip-text text-transparent font-medium text-[16px]">{props.labelLang}</span>
             </label>
+
             <textarea
                 rows={4}
                 name={props?.name}

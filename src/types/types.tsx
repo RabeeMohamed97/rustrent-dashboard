@@ -44,6 +44,7 @@ export type tabelProps = {
 //components / reusableComponents/ inputComponnent
 export type customInputProps = {
     label: string;
+    labelLang?: string;
     type: string;
     placeholder: string;
     name?: string;

@@ -6,6 +6,7 @@ import resApi from '../api/Resturants/Categories';
 import mealsApi from '../api/Resturants/Meals';
 import modelSlice from './modelSlice';
 import settingApi from '../api/Resturants/SettingSlice';
+import settingsApi from '../api/Resturants/Settings';
 
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     [resApi.reducerPath]: resApi.reducer,
     [mealsApi.reducerPath]: mealsApi.reducer,
     [settingApi.reducerPath]: settingApi.reducer,
+    [settingsApi.reducerPath]: settingsApi.reducer,
 });
 
 export default configureStore({
@@ -23,7 +25,8 @@ export default configureStore({
             authApi.middleware,
             resApi.middleware,
             mealsApi.middleware,
-            settingApi.middleware
+            settingApi.middleware,
+            settingsApi.middleware
             // cartApi.middleware,
             // menuApi.middleware,
             // orderApi.middleware,

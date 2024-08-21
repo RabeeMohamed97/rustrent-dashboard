@@ -23,7 +23,7 @@ const ViewContactUs = () => {
     return (
         <div className="flex flex-col gap-[54px]">
             {open && (
-                <CustomModal openCloseModal={setOpen} title="Add Category">
+                <CustomModal openCloseModal={setOpen} title="Add Response">
                     <Add_Response id={id} />
                 </CustomModal>
             )}

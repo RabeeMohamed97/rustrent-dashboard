@@ -121,7 +121,7 @@ export default function ProfileForm() {
     useEffect(() => {
         if (toastData?.data?.status === 201) {
             showAlert('Added', toastData?.data?.response?.message);
-            navigate('/Restaurant/List')
+            navigate('/Restaurant/List');
             setToastData({});
         }
         console.log(toastData);
@@ -142,7 +142,8 @@ export default function ProfileForm() {
         // } else {
         //     toast.dismiss('loginLoadingToast');
         // }
-    }, [toastData, 
+    }, [
+        toastData,
         // isLoading
     ]);
 
@@ -202,68 +203,63 @@ export default function ProfileForm() {
 
     return (
         <>
-          <form action="" onSubmit={handleSubmit}>
-                    <div className="flex flex-col p-5 gap-[20px] pb-[30px]">
+            <form action="" onSubmit={handleSubmit}>
+                <div className="flex flex-col p-5 gap-[20px] pb-[30px]">
                     <div className="flex justify-center lg:flex-nowrap items-center bg-[#F5F5F5] flex-wrap md:w-[75%] mb-[30px] w-full  m-auto border-dashed border-2 rounded-3xl border-[#B7B7B7]">
-                                {/* <div className="flex justify-around gap-5 bg-grey-500 "> */}
-                                <div className="w-full p-4">
-                                    <Upload setFile={setImage} />
+                        {/* <div className="flex justify-around gap-5 bg-grey-500 "> */}
+                        <div className="w-full p-4">
+                            <Upload setFile={setImage} />
+                        </div>
+                        <div className="lg:border-s-2 lg:border-t-0 border-t-2 p-4 border-[#B7B7B7] border-solid  w-full">
+                            <Upload_cover setFile={setCoverImage} />
+                        </div>
+                    </div>
+                    <div className="grid-cols-12 lg:p-5 p-2  grid gap-4   ">
+                        <div className="lg:col-span-12 md:col-span-12 col-span-12">
+                            <div className="grid lg:grid-cols-3 md:grid-cols-2  gap-5">
+                                <div className="flex flex-col gap-2">
+                                    <InputComponent type="text" placeholder="Enter Name" onChange={handleChange} name="name" label="Restaurant Name" />
+                                    {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
                                 </div>
-                                <div className="lg:border-s-2 lg:border-t-0 border-t-2 p-4 border-[#B7B7B7] border-solid  w-full">
-                                    <Upload_cover setFile={setCoverImage} />
+                                <div className="flex flex-col gap-2">
+                                    <InputComponent type="text" placeholder="Enter Owner name" onChange={handleChange} name="name" label="Owner name" />
+                                    {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
                                 </div>
-                            </div>
-                            <div className="grid-cols-12 lg:p-5 p-2  grid gap-4   ">
-                                <div className="lg:col-span-12 md:col-span-12 col-span-12">
-                                    <div className="grid lg:grid-cols-3 md:grid-cols-2  gap-5">
-                                        <div className="flex flex-col gap-2">
-                                            <InputComponent type="text" placeholder="Enter Name" onChange={handleChange} name="name" label="Restaurant Name" />
-                                            {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <InputComponent type="text" placeholder="Enter Owner name" onChange={handleChange} name="name" label="Owner name" />
-                                            {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <div className="relative">
-                                                <InputComponent type="text" placeholder="El Mansoura -Egypt" onChange={handleChange} name="address" label="Location Address" />
-                                            </div>
-                                            <div>{errors?.address && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.address}</p>}</div>
-                                        </div>
-
-                                        <div className="flex flex-col gap-2">
-                                            <InputComponent type="text" placeholder="deli_2024" onChange={handleChange} name="username" label="User Name" />
-                                            {errors?.username && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.username}</p>}
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <NubmerInput value={phone} onChange={(phone) => setPohone(phone)} />
-                                            {errors?.phone && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.phone}</p>}
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <InputComponent type="email" placeholder="example@gmail.com" onChange={handleChange} name="email" label="Email" />
-                                            {errors?.email && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.email}</p>}
-                                        </div>
-
-                                     
-                                      
-
-                                     
-                                   
-                                        {/* <CustomSelect options={options} label="Register Type" /> */}
+                                <div className="flex flex-col gap-2">
+                                    <div className="relative">
+                                        <InputComponent type="text" placeholder="El Mansoura -Egypt" onChange={handleChange} name="address" label="Location Address" />
                                     </div>
+                                    <div>{errors?.address && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.address}</p>}</div>
                                 </div>
+
+                                <div className="flex flex-col gap-2">
+                                    <InputComponent type="text" placeholder="deli_2024" onChange={handleChange} name="username" label="User Name" />
+                                    {errors?.username && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.username}</p>}
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <NubmerInput value={phone} onChange={(phone) => setPohone(phone)} />
+                                    {errors?.phone && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.phone}</p>}
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <InputComponent type="email" placeholder="example@gmail.com" onChange={handleChange} name="email" label="Email" />
+                                    {errors?.email && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.email}</p>}
+                                </div>
+
+                                {/* <CustomSelect options={options} label="Register Type" /> */}
                             </div>
-                          
-                            {/* {resFormData.has_delivery ? (
+                        </div>
+                    </div>
+
+                    {/* {resFormData.has_delivery ? (
                                 <></>
                             ) : (
                                 <>
                                     <MapComponent setPosition={setLatLong} />
                                 </>
                             )} */}
-                    </div>
+                </div>
                 <div className="flex capitalize justify-end">
-                {/* {isLoading ? (
+                    {/* {isLoading ? (
                         <>
                             <LoadingButton />
                         </>

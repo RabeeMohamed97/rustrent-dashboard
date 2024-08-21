@@ -76,64 +76,19 @@ const settingApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        editMeal: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
+        generalSettings: builder.mutation<any, any>({
+            query: ({ formData }) => {
                 return {
-                    url: `restaurant/store/item/${id}`,
-                    method: 'POST',
+                    url: `restaurant/auth/settings`,
+                    method: 'Post',
                     body: formData,
                 };
             },
-            invalidatesTags: ['contactUs'],
+            // invalidatesTags: ['contactUs'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
 
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-
-        createResturant: builder.mutation<any, any>({
-            query: (formData) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: 'admin/restaurant/create',
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        deleteMeal: builder.mutation<any, any>({
-            query: (id) => {
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `restaurant/store/item/${id}`,
-                    method: 'DELETE',
-                };
-            },
-            invalidatesTags: ['contactUs'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
             },
             transformErrorResponse: (response, meta) => {
@@ -144,15 +99,5 @@ const settingApi = createApi({
 });
 
 // Export the generated hooks and the API slice
-export const {
-    useGetAllContactsQuery,
-    useSendRespnseMutation,
-    useGetSingleContactQuery,
-
-    useEditMealMutation,
-
-    useCreateResturantMutation,
-
-    useDeleteMealMutation,
-} = settingApi;
+export const { useGetAllContactsQuery, useSendRespnseMutation, useGetSingleContactQuery, useGeneralSettingsMutation } = settingApi;
 export default settingApi;

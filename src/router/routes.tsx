@@ -7,6 +7,8 @@ import Profile from '../pages/profile/Profile';
 import ContactUs from '../pages/Contact Us/ViewContactUs';
 import ContactUsList from '../pages/Contact Us/ContactUsList';
 import ViewContactUs from '../pages/Contact Us/ViewContactUs';
+import CustomDataInput from '../components/reusableComponents/DateInput';
+import Test from '../pages/Test';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -135,6 +137,14 @@ const routes = [
         element: (
             <AuthProvider>
                 <ViewContactUs />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/test',
+        element: (
+            <AuthProvider>
+                <Test />
             </AuthProvider>
         ),
     },
