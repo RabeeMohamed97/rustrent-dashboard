@@ -56,7 +56,31 @@ const settingApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        deleteContact: builder.mutation<any, any>({
+            query: (id) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `/restaurant/contactUs/${id}`,
+                    method: 'DELETE',
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['contactUs'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         sendRespnse: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 return {
@@ -99,5 +123,5 @@ const settingApi = createApi({
 });
 
 // Export the generated hooks and the API slice
-export const { useGetAllContactsQuery, useSendRespnseMutation, useGetSingleContactQuery, useGeneralSettingsMutation } = settingApi;
+export const { useGetAllContactsQuery, useSendRespnseMutation, useGetSingleContactQuery, useGeneralSettingsMutation,    useDeleteContactMutation} = settingApi;
 export default settingApi;
