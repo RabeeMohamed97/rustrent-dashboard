@@ -48,7 +48,7 @@ const routes = [
     //     path: '/offers/List',
     //     element: (
     //         <AuthProvider>
-    //             <List_Offers/>
+    //             <List_Offers />
     //         </AuthProvider>
     //     ),
     // },
