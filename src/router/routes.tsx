@@ -10,6 +10,7 @@ import ContactUsList from '../pages/Contact Us/ContactUsList';
 import ViewContactUs from '../pages/Contact Us/ViewContactUs';
 import CustomDataInput from '../components/reusableComponents/DateInput';
 import Test from '../pages/Test';
+import List_Advertisement from '../pages/Advertisement/List_Advertisement/List_Advertisement';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -138,6 +139,14 @@ const routes = [
         element: (
             <AuthProvider>
                 <List_Delivery_Price />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Advertisement',
+        element: (
+            <AuthProvider>
+                <List_Advertisement />
             </AuthProvider>
         ),
     },

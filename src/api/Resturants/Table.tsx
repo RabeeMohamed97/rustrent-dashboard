@@ -4,89 +4,88 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const mealsApi = createApi({
-    reducerPath: 'mealsApi',
-    tagTypes: ['meals'],
+const TableApi = createApi({
+    reducerPath: 'TableApi',
+    tagTypes: [ 'table'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
             const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
             // headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             headers.set('Authorization', `Bearer ${accessToken}`);
-            // headers.set('Accept-Language', 'ar');
             return headers;
         },
     }),
 
     endpoints: (builder) => ({
-        getAllMeals: builder.query<any, { page: number }>({
-            query: ({ page }) => {
-                return {
-                    url: `restaurant/store/item?page=${page}`,
-                    method: 'GET',
-                };
-            },
-            providesTags: ['meals'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
 
-        createMeal: builder.mutation<any, any>({
+
+        createTable: builder.mutation<any, any>({
             query: (formData) => {
-                return {
-                    url: 'restaurant/store/item',
-                    method: 'POST',
-                    body: formData,
-                };
-            },
-            invalidatesTags: ['meals'],
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        editMeal: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                return {
-                    url: `restaurant/store/item/${id}`,
-                    method: 'POST',
-                    body: formData,
-                };
-            },
-            invalidatesTags: ['meals'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        deleteMeal: builder.mutation<any, any>({
-            query: (id) => {
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `restaurant/store/item/${id}`,
-                    method: 'DELETE',
+                    url: '/restaurant/store/table',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
                 };
             },
-            invalidatesTags: ['meals'],
+            invalidatesTags: ['table'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editTable: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `/restaurant/store/table/${id}`,
+                    method: 'PUT',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['table'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+        deletetable: builder.mutation<any, any>({
+            query: (id) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `/restaurant/store/table/${id}`,
+                    method: 'DELETE',
+
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            invalidatesTags: ['table'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -95,16 +94,41 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-       
+
+        getAlltable: builder.query<any, { page: number }>({
+            query: ({ page }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/table?page=${page}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+            providesTags: ['table'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
       
     }),
 });
 
 // Export the generated hooks and the API slice
 export const {
-    useGetAllMealsQuery,
-    useCreateMealMutation,
-    useEditMealMutation,
-    useDeleteMealMutation,
-} = mealsApi;
-export default mealsApi;
+
+    useCreateTableMutation,
+
+    useEditTableMutation,
+
+    useGetAlltableQuery,
+
+    useDeletetableMutation,
+
+} = TableApi;
+export default TableApi;

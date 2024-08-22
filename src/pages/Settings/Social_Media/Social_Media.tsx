@@ -131,7 +131,7 @@ useEffect(() => {
         }
         // console.log(data);
         try {
-            if (data?.response?.data!==undefined) {
+            if (data?.response?.data?.id) {
                 const response = await editSocial({ id: data?.response?.data?.id, formData:resFormData });
                 console.log(response);
                 setToastData(response);

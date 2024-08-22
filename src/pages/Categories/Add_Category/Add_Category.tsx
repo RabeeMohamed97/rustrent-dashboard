@@ -79,6 +79,7 @@ export default function Add_Category(props: catEditProps) {
     }, [toastData, isLoading,editIsLoading]);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+console.log(resformData);
 
         const formData = new FormData();
 

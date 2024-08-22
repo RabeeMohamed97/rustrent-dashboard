@@ -14,7 +14,6 @@ import IconEye from '../Icon/IconEye';
 import IconTrashLines from '../Icon/IconTrashLines';
 
 const ColumnChooser = (props: tabelProps) => {
-    console.log(props.TableBody);
     // const [props.TableBody, setprops.TableBody] = useState(props.TableBody);
     const [cols, setcols] = useState(props.tabelHead);
 
@@ -31,8 +30,7 @@ const ColumnChooser = (props: tabelProps) => {
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(props.TableBody, cols[0]?.accessor));
     const [recordsData, setRecordsData] = useState(initialRecords);
-    console.log(recordsData);
-    console.log(initialRecords);
+  
     useEffect(() => {
         setInitialRecords(props.TableBody);
     }, [initialRecords, props.TableBody, props.page]);
@@ -217,7 +215,6 @@ const ColumnChooser = (props: tabelProps) => {
             : accessor === 'isFavourite'
             ? ({ isFavourite }: any) => {
                   // Log the attachments object
-                  console.log('Attachments:', isFavourite);
 
                   return (
                       <div className="flex justify-between w-max gap-3">
@@ -239,12 +236,10 @@ const ColumnChooser = (props: tabelProps) => {
     // }, [pageSize]);
 
     useEffect(() => {
-        console.log(recordsData);
         const from = props?.page - 1 * pageSize; // 10
 
         const to = from + pageSize;
 
-        console.log(from, to);
         setRecordsData([...initialRecords?.slice()]);
     }, [props.page, pageSize, initialRecords]);
 
@@ -252,10 +247,8 @@ const ColumnChooser = (props: tabelProps) => {
         // dispatch(modalActions.openModal());
         props.openCloseModal((prevState) => !prevState);
         // props.resetEditData([]);
-        console.log('openModal');
     };
     useEffect(() => {
-        console.log(props.TableBody);
         setRecordsData(() => {
             return props?.TableBody?.filter((item) => {
                 if (props?.allCols) {
@@ -276,8 +269,7 @@ const ColumnChooser = (props: tabelProps) => {
         // props.setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
-    console.log(props?.pagination?.current_page);
-    console.log(props?.pagination?.total);
+
 
     return (
         <div>

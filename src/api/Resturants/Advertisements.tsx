@@ -4,9 +4,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const mealsApi = createApi({
-    reducerPath: 'mealsApi',
-    tagTypes: ['meals'],
+const AdvertisementsApi = createApi({
+    reducerPath: 'AdvertisementsApi',
+    tagTypes: ['Advertisements'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -22,14 +22,14 @@ const mealsApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getAllMeals: builder.query<any, { page: number }>({
+        getAllAdvertisements: builder.query<any, { page: number }>({
             query: ({ page }) => {
                 return {
-                    url: `restaurant/store/item?page=${page}`,
+                    url: `/restaurant/store/banner?page=${page}`,
                     method: 'GET',
                 };
             },
-            providesTags: ['meals'],
+            providesTags: ['Advertisements'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -39,15 +39,15 @@ const mealsApi = createApi({
             },
         }),
 
-        createMeal: builder.mutation<any, any>({
+        createAdvertisements: builder.mutation<any, any>({
             query: (formData) => {
                 return {
-                    url: 'restaurant/store/item',
+                    url: '/restaurant/store/banner',
                     method: 'POST',
                     body: formData,
                 };
             },
-            invalidatesTags: ['meals'],
+            invalidatesTags: ['Advertisements'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -58,15 +58,15 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        editMeal: builder.mutation<any, any>({
+        editAdvertisements: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 return {
-                    url: `restaurant/store/item/${id}`,
+                    url: `/restaurant/store/banner/${id}`,
                     method: 'POST',
                     body: formData,
                 };
             },
-            invalidatesTags: ['meals'],
+            invalidatesTags: ['Advertisements'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -77,16 +77,18 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        deleteMeal: builder.mutation<any, any>({
+
+       
+        deleteAdvertisements: builder.mutation<any, any>({
             query: (id) => {
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `restaurant/store/item/${id}`,
+                    url: `/restaurant/store/banner/${id}`,
                     method: 'DELETE',
                 };
             },
-            invalidatesTags: ['meals'],
+            invalidatesTags: ['Advertisements'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -95,16 +97,18 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-       
-      
+    
+     
+  
+
     }),
 });
 
 // Export the generated hooks and the API slice
 export const {
-    useGetAllMealsQuery,
-    useCreateMealMutation,
-    useEditMealMutation,
-    useDeleteMealMutation,
-} = mealsApi;
-export default mealsApi;
+    useGetAllAdvertisementsQuery,
+    useCreateAdvertisementsMutation,
+useEditAdvertisementsMutation,
+    useDeleteAdvertisementsMutation,
+} = AdvertisementsApi;
+export default AdvertisementsApi;

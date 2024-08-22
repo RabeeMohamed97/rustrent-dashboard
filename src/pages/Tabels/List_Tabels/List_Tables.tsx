@@ -4,17 +4,17 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Add_Tables from '../Add_Tabels/Add_Tables';
 import { useEffect, useState } from 'react';
-import { useDeletetableMutation, useGetAlltableQuery } from '../../../api/Resturants/Categories';
 import swal from 'sweetalert';
 
 import { showAlert } from '../../../components/Error';
+import { useDeletetableMutation, useGetAlltableQuery } from '../../../api/Resturants/Table';
 
 export default function List_Tables() {
     const [editData, setEditData] = useState<any>([]);
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAlltableQuery({ page });
-    useEffect(() => {
+    useEffect(() => { 
         refetch();
     }, [page]);
     const [deletetable, { isLoading }] = useDeletetableMutation();
