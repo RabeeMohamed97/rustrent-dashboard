@@ -10,7 +10,6 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
-
             headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             headers.set('Accept-Language', 'ar');

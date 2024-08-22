@@ -4,6 +4,7 @@ import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 import Profile from '../pages/profile/Profile';
+import List_Delivery_Price from '../pages/Delivery_Price/List/List_Category';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -116,6 +117,14 @@ const routes = [
         element: (
             <AuthProvider>
                 <Profile />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Delivery',
+        element: (
+            <AuthProvider>
+                <List_Delivery_Price />
             </AuthProvider>
         ),
     },

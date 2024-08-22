@@ -58,11 +58,11 @@ const settingsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        editMeal: builder.mutation<any, any>({
+        editSocial: builder.mutation<any, any>({
             query: ({ id, formData }) => {
                 return {
-                    url: `restaurant/store/item/${id}`,
-                    method: 'POST',
+                    url: `/restaurant/socialMedia/${id}`,
+                    method: 'PUT',
                     body: formData,
                 };
             },
@@ -86,6 +86,6 @@ const settingsApi = createApi({
 export const {
     useGetSocilamediaQuery,
     useCreateSocialMediaMutation,
-    useEditMealMutation,
+    useEditSocialMutation,
 } = settingsApi;
 export default settingsApi;
