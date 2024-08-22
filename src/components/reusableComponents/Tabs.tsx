@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CustomTextAria from './CustomTextAria';
-import InputComponent from './InputComponent';
+
 import CustomConnection from './ConnectionDetails';
+import GeneralSettings from '../../pages/Settings/Genral/GeneralSettings';
 
 const Tabs = () => {
     const [activeTab, setActiveTab] = useState('General');
@@ -48,30 +48,10 @@ const Tabs = () => {
             </div>
             <div id="default-styled-tab-content w-full">
                 <div className={`p-4 rounded-lg bg-white dark:bg-gray-800 ${activeTab !== 'General' ? 'hidden' : ''}`} id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div className="flex flex-col gap-[28px] w-full ">
-                        <InputComponent label="Value added tax" type="text" onChange={() => console.log('first')} placeholder="hello" />
-                        <InputComponent label="Value added tax" type="text" onChange={() => console.log('first')} placeholder="hello" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <CustomTextAria label="Meal Description" name="details" onChange={() => console.log('change')} value="changing" placeholder="Type Here" />
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="text-white flex    bg-gradient-to-r from-[#F23F39] to-[#BD0600]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            >
-                                Save
-                            </button>
-                        </div>
-                    </div>
+                    <GeneralSettings />
                 </div>
                 <div className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${activeTab !== 'Connection' ? 'hidden' : ''}`} id="styled-dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                  <CustomConnection/>
+                    <CustomConnection />
                 </div>
             </div>
         </div>

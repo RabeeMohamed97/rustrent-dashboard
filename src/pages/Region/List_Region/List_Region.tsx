@@ -144,6 +144,7 @@ export default function List_Region() {
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
                     openCloseModal={setOpen}
+                    showAddButton={true}
                 />
             </MainPageCard>
         </Main_list>

@@ -145,6 +145,7 @@ export default function List_City() {
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
                     openCloseModal={setOpen}
+                    showAddButton={true}
                 />
             </MainPageCard>
         </Main_list>

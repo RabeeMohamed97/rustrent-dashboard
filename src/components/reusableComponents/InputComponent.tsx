@@ -5,7 +5,7 @@ const InputComponent = (props: customInputProps) => {
     return (
         <div className="lg:col-span-6 col-span-12">
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                {props.label}
+                {props.label} <span className="bg-custom-gradient bg-clip-text text-transparent font-medium text-[16px]">{props.labelLang}</span>
             </label>
             <input
                 type={props.type}
