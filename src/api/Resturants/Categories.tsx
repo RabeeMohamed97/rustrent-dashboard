@@ -16,7 +16,7 @@ const resApi = createApi({
             // headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             headers.set('Authorization',` Bearer ${accessToken}`);
-            
+
             return headers;
         },
     }),
@@ -201,7 +201,7 @@ const resApi = createApi({
         }),
 
 
-       
+
 
 
 
@@ -238,7 +238,7 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-      
+
         deleteCategory: builder.mutation<any, any>({
             query: (id) => {
                 // Retrieve auth_data from localStorage and parse it
