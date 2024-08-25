@@ -127,7 +127,6 @@ export default function ChangePasswordForProfile() {
     const handleToggleConfirmPasswordVisibility = () => {
         setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
     };
-    console.log(formData);
     return (
         <>
             <form action="" onSubmit={handleSubmit}>

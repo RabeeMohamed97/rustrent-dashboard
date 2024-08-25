@@ -10,6 +10,7 @@ import AdvertisementsApi from '../api/Resturants/Advertisements';
 import TableApi from '../api/Resturants/Table';
 import CategoriesApi from '../api/Resturants/Categories';
 import CountryApi from '../api/Resturants/Country_City_Region';
+import ProfileApi from '../api/Resturants/Profile';
 
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     [AdvertisementsApi.reducerPath]: AdvertisementsApi.reducer,
     [CategoriesApi.reducerPath]: CategoriesApi.reducer,
     [CountryApi.reducerPath]: CountryApi.reducer,
+    [ProfileApi.reducerPath]: ProfileApi.reducer,
 });
 
 export default configureStore({
@@ -36,7 +38,7 @@ export default configureStore({
             TableApi.middleware,
             CategoriesApi.middleware,
             CountryApi.middleware,
-            // cartApi.middleware,
+            ProfileApi.middleware,
             // menuApi.middleware,
             // orderApi.middleware,
             // paymentApi.middleware,

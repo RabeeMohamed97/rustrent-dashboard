@@ -8,8 +8,8 @@ import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 
 import CustomTextAria from '../../../components/reusableComponents/CustomTextAria';
-import CustomDataInput from '../../../components/reusableComponents/DateInput';
 import { useCreateAdvertisementsMutation, useEditAdvertisementsMutation } from '../../../api/Resturants/Advertisements';
+import CustomDataInput from '../../../components/reusableComponents/DateInput';
 
 export const formSchema = z.object({
     // name: z.string().min(1, 'يجب إدخال الاسم'),

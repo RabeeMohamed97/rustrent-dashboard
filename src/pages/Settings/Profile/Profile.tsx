@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
 import Upload_cover from '../../../components/reusableComponents/Upload_Cover';
 import MapComponent from '../../../components/reusableComponents/Map';
+import { useEditProfileMutation, useGetProfileQuery } from '../../../api/Resturants/Profile';
+import CustomDataInput from '../../../components/reusableComponents/DateInput';
 
 export const formSchema = z
     .object({
@@ -29,51 +31,25 @@ export const formSchema = z
 
         email: z.string().email('يجب إدخال البريد الإلكتروني بشكل صحيح').min(1, 'يجب إدخال البريد الإلكتروني'),
 
-        latitude: z.string().min(1, 'ادخل اخط العرض'),
 
-        longitude: z.string().min(1, 'ادخل اخط العرض'),
 
-        phone: z
-            .string()
-            .min(10, 'يجب أن يكون رقم الهاتف لا يقل عن 10 أرقام')
-            .refine((value) => /^\d+$/.test(value), {
-                message: 'يجب أن يحتوي رقم الهاتف على أرقام فقط',
-            }),
-
-        password: z
-            .string()
-            .min(6, 'يجب أن يكون الرقم السري لا يقل عن 6 حروف أو أرقام')
-            .refine((value) => /[A-Z]/.test(value), {
-                message: 'يجب أن تحتوي كلمة السر على حرف واحد كبير على الأقل',
-            }),
-
-        password_confirmation: z.string(),
     })
-    .refine(
-        (data) => {
-            // Check if password matches password_confirmation
-            return data.password === data.password_confirmation;
-        },
-        {
-            message: 'كلمتا المرور غير متطابقتين',
-            path: ['password_confirmation'], // Specify the path to the field being validated
-        }
-    );
+ 
 interface ProfileFormData {
     name: string;
     owner_name: string;
     username: string;
     address: string;
     email: string;
-    longitude: string | null;
-    latitude: string | null;
-    password: string;
-    password_confirmation: string;
-    has_delivery: number;
+
     phone: string;
 }
 export default function ProfileForm() {
     const [phone, setPohone] = useState('');
+    const { refetch, data, isSuccess, isError } = useGetProfileQuery();
+    const [editProfile, { isLoading }] = useEditProfileMutation();
+
+
     const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
     const navigate = useNavigate();
 
@@ -83,18 +59,14 @@ export default function ProfileForm() {
         username: '',
         address: '',
         email: '',
-        longitude: null,
-        latitude: null,
-        password: '',
-        password_confirmation: '',
-        has_delivery: 0,
         phone: '',
     });
     const [image, setImage] = useState<File | null>(null);
     const [cover_image, setCoverImage] = useState<File | null>(null);
 
     const [toastData, setToastData] = useState<any>({});
-
+    const [cuurentData, setcuurentData] = useState({})
+    
     const [errors, setErrors] = useState<any>({});
     // const [createProfile, { isLoading }] = useCreateProfileMutation();
 
@@ -102,21 +74,24 @@ export default function ProfileForm() {
         const { name, value } = e.target;
         setresFormData({ ...resFormData, [name]: value });
     };
-    const setLatLong = (position: { lat: number; lng: number } | null) => {
-        setPosition(position);
-        console.log(position);
-    };
-    const [isChecked, setIsChecked] = useState(true);
-    const handleCheckboxChange = (event: any) => {
-        // setIsChecked(event.target.checked);
-        setresFormData({ ...resFormData, has_delivery: event.target.checked ? 1 : 0 });
-    };
+
 
     //Password Functions
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const handleTogglePasswordVisibility = () => {
-        setIsPasswordVisible(!isPasswordVisible);
-    };
+
+    useEffect(() => {
+  
+        setcuurentData(data?.response?.data)
+        setresFormData({
+            ...resFormData,
+            name: data?.response?.data?.name,
+            owner_name: data?.response?.data?.owner_name,
+            username: data?.response?.data?.username,
+            address: data?.response?.data?.address,
+            phone: data?.response?.data?.phone,
+            email: data?.response?.data?.email,
+        });
+    
+}, [data])
 
     useEffect(() => {
         if (toastData?.data?.status === 201) {
@@ -146,15 +121,30 @@ export default function ProfileForm() {
         toastData,
         // isLoading
     ]);
+    const [StartedDate, setStartedDate] = useState<Date | null>(new Date());
+
+    const handleDateChange = (date: Date | null) => {
+        
+        const formattedDate = date?.toISOString().split('T')[0];
+                    {/* @ts-ignore */}
+        setStartedDate(formattedDate);
+    };
+    const [EndDate, setEndDate] = useState<Date | null>(new Date());
+
+    const handleEndDateChange = (date: Date | null) => {
+        const formattedDate = date?.toISOString().split('T')[0];
+                            {/* @ts-ignore */}
+        setEndDate(formattedDate);
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (position) {
-            resFormData.latitude = String(position?.lat);
-            resFormData.longitude = String(position?.lng);
-        }
-        resFormData.phone = phone;
 
+        resFormData.phone = phone;
+                            {/* @ts-ignore */}
+                            resFormData.publish_start_date = StartedDate;
+                            {/* @ts-ignore */}
+                            resFormData.publish_end_date = EndDate;
         //resFormData
         const formData = new FormData();
         formData.append('name', resFormData.name);
@@ -162,22 +152,16 @@ export default function ProfileForm() {
         formData.append('username', resFormData.username);
         formData.append('email', resFormData.email);
         formData.append('address', resFormData.address);
+
         //@ts-ignore
-        formData.append('latitude', resFormData?.latitude);
-        //@ts-ignore
-        formData.append('longitude', resFormData?.longitude);
-        formData.append('password', resFormData.password);
-        formData.append('password_confirmation', resFormData.password_confirmation);
-        //@ts-ignore
-        formData.append('has_delivery', resFormData.has_delivery);
         formData.append('phone', resFormData.phone);
 
         if (cover_image) {
-            formData.append(`media[0]`, cover_image);
+            formData.append(`cover_image`, cover_image);
         }
 
         if (image) {
-            formData.append(`media[1]`, image);
+            formData.append(`image`, image);
         }
         const result = formSchema.safeParse(resFormData);
         // phoneSchema.safeParse(phone);
@@ -191,10 +175,12 @@ export default function ProfileForm() {
         // const data = await createResturant(formData);
         // console.log(data);
         try {
-            // const response = await createProfile(formData);
-            // console.log(response);
-            // setToastData(response);
-            setErrors({});
+            if (cuurentData) {
+                const response = await editProfile({ formData });
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            } 
         } catch (err) {
             setToastData(err);
             setErrors(err);
@@ -208,40 +194,49 @@ export default function ProfileForm() {
                     <div className="flex justify-center lg:flex-nowrap items-center bg-[#F5F5F5] flex-wrap md:w-[75%] mb-[30px] w-full  m-auto border-dashed border-2 rounded-3xl border-[#B7B7B7]">
                         {/* <div className="flex justify-around gap-5 bg-grey-500 "> */}
                         <div className="w-full p-4">
-                            <Upload setFile={setImage} />
+                            <Upload setFile={setImage}  editImgUrl={data?.response?.data?.image}/>
                         </div>
                         <div className="lg:border-s-2 lg:border-t-0 border-t-2 p-4 border-[#B7B7B7] border-solid  w-full">
-                            <Upload_cover setFile={setCoverImage} />
+                            <Upload_cover setFile={setCoverImage} editImgUrl={data?.response?.data?.cover_image} />
                         </div>
                     </div>
                     <div className="grid-cols-12 lg:p-5 p-2  grid gap-4   ">
                         <div className="lg:col-span-12 md:col-span-12 col-span-12">
                             <div className="grid lg:grid-cols-3 md:grid-cols-2  gap-5">
                                 <div className="flex flex-col gap-2">
-                                    <InputComponent type="text" placeholder="Enter Name" onChange={handleChange} name="name" label="Restaurant Name" />
+                                    <InputComponent type="text" placeholder="Enter Name" value={resFormData?.name}  onChange={handleChange} name="name" label="Restaurant Name" />
                                     {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <InputComponent type="text" placeholder="Enter Owner name" onChange={handleChange} name="name" label="Owner name" />
+                                  <CustomDataInput label="Publication start date" value={StartedDate} onChange={handleDateChange} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                                  <CustomDataInput label="Publication End date" value={EndDate} onChange={handleEndDateChange} />
+                    </div>
+                                <div className="flex flex-col gap-2">
+                                    <InputComponent type="text" placeholder="Enter Owner name" value={resFormData?.owner_name} onChange={handleChange} name="owner_name" label="Owner name" />
                                     {errors?.name && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.name}</p>}
                                 </div>
+                                
                                 <div className="flex flex-col gap-2">
                                     <div className="relative">
-                                        <InputComponent type="text" placeholder="El Mansoura -Egypt" onChange={handleChange} name="address" label="Location Address" />
+                                        <InputComponent value={resFormData.address} type="text" placeholder="El Mansoura -Egypt" onChange={handleChange} name="address" label="Location Address" />
                                     </div>
                                     <div>{errors?.address && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.address}</p>}</div>
                                 </div>
+                                
+                 
 
                                 <div className="flex flex-col gap-2">
-                                    <InputComponent type="text" placeholder="deli_2024" onChange={handleChange} name="username" label="User Name" />
+                                    <InputComponent value={resFormData.username} type="text" placeholder="deli_2024" onChange={handleChange} name="username" label="User Name" />
                                     {errors?.username && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.username}</p>}
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <NubmerInput value={phone} onChange={(phone) => setPohone(phone)} />
+                                    <NubmerInput value={resFormData?.phone||phone} onChange={(phone) => setPohone(phone)} />
                                     {errors?.phone && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.phone}</p>}
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <InputComponent type="email" placeholder="example@gmail.com" onChange={handleChange} name="email" label="Email" />
+                                    <InputComponent value={resFormData.email} type="email" placeholder="example@gmail.com" onChange={handleChange} name="email" label="Email" />
                                     {errors?.email && <p className="text-[#FF0000] text-[14px] mx-2">{errors?.email}</p>}
                                 </div>
 
@@ -259,7 +254,7 @@ export default function ProfileForm() {
                             )} */}
                 </div>
                 <div className="flex capitalize justify-end">
-                    {/* {isLoading ? (
+                    {isLoading ? (
                         <>
                             <LoadingButton />
                         </>
@@ -267,10 +262,10 @@ export default function ProfileForm() {
                         <> 
                         
                             <button type="submit" className="btn rounded-full text-[18px] btn-primary shadow-md px-10 py-3  mt-6">
-                               Save 
+                               Edit Profile 
                             </button>
                         </>
-                    )} */}
+                    )}
                 </div>
             </form>
         </>
