@@ -39,6 +39,60 @@ const couponsApi = createApi({
             },
         }),
 
+        createCoupon: builder.mutation<any, any>({
+            query: (formData) => {
+                return {
+                    url: 'restaurant/store/coupon',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['coupons'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editCoupon: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `restaurant/store/coupon/${id}`,
+                    method: 'PUT',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['coupons'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        deleteCoupon: builder.mutation<any, any>({
+            query: (id) => {
+                // Get the access token from the parsed auth_data
+
+                return {
+                    url: `restaurant/store/coupon/${id}`,
+                    method: 'DELETE',
+                };
+            },
+            invalidatesTags: ['coupons'],
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
         createSocialMedia: builder.mutation<any, any>({
             query: (formData) => {
                 return {
@@ -79,5 +133,5 @@ const couponsApi = createApi({
 });
 
 // Export the generated hooks and the API slice
-export const { useGetCouponsQuery, useCreateSocialMediaMutation, useEditMealMutation } = couponsApi;
+export const { useGetCouponsQuery, useCreateSocialMediaMutation, useEditMealMutation, useCreateCouponMutation, useDeleteCouponMutation, useEditCouponMutation } = couponsApi;
 export default couponsApi;

@@ -10,6 +10,7 @@ type CustomDataInputProps = {
 };
 
 const CustomDataInput: React.FC<CustomDataInputProps> = ({ label, value, onChange }) => {
+    console.log(value);
     // Custom input component
     const CustomInput = ({ value, onClick }: { value?: string; onClick?: () => void }) => (
         <div className="relative ">

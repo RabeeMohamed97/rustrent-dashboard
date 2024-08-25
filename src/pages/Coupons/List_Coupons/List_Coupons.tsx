@@ -10,7 +10,7 @@ import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 import Tabs from '../../../components/reusableComponents/Tabs';
 import Add_Coupons from '../Add_Coupons/Add_Coupons';
-import { useGetCouponsQuery } from '../../../api/Resturants/Coupons';
+import { useDeleteCouponMutation, useGetCouponsQuery } from '../../../api/Resturants/Coupons';
 
 export default function List_Coupons() {
     const [page, setPage] = useState(1);
@@ -22,7 +22,7 @@ export default function List_Coupons() {
         refetch();
     }, [page]);
 
-    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
+    const [deleteCoupon, { isLoading }] = useDeleteCouponMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -77,13 +77,13 @@ export default function List_Coupons() {
 
     const deleteSubmitHandler = async (id: string) => {
         swal({
-            title: 'Are you sure you want to delete Category?',
+            title: 'Are you sure you want to delete coupon?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deleteCategory(id);
+                const data = await deleteCoupon(id);
                 console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
