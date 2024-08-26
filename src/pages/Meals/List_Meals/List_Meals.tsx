@@ -10,9 +10,15 @@ import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
 import Add_Meals from '../Add_Meals/Add_Meals';
 import { useDeleteMealMutation, useGetAllMealsQuery } from '../../../api/Resturants/Meals';
+import { useDispatch } from 'react-redux';
 
 export default function List_Category() {
+    const dispatch = useDispatch();
     const [page, setPage] = useState(1);
+
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
+
     const { refetch, data, isSuccess, isError } = useGetAllMealsQuery({ page });
     useEffect(() => {
         console.log(data);
@@ -45,7 +51,7 @@ export default function List_Category() {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
                 colss.splice(1, 2);
-               
+
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
             } else if (key === 'category_id') {
@@ -103,8 +109,9 @@ export default function List_Category() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-    const EditHandelr = (id: string) => {
-        console.log('id form index EditHandelr', id);
+
+    const EditHandelr = (data: any) => {
+        setEditData(data);
     };
 
     const [isTrue, setisTrue] = useState(false);
@@ -117,13 +124,20 @@ export default function List_Category() {
     const updateDeliveryHander = async (id: string, status: boolean) => {
         console.log('updateDeliveryHander', status);
     };
-
+    console.log(editData);
     return (
-        <Main_list title="Categeories">
+        <Main_list title="meal">
             <MainPageCard>
-                <CustomModal title="Add Category">
-                    <Add_Meals />
-                </CustomModal>
+                {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add meal">
+                        <Add_Meals />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Meal">
+                        <Add_Meals data={editData} />
+                    </CustomModal>
+                )}
 
                 <ColumnChooser
                     isLoading={loadingStatus}
@@ -137,11 +151,14 @@ export default function List_Category() {
                     tabelHead={finslColsKeys}
                     Chcekbox={false}
                     Page_Add={false}
+                    showAddButton={true}
                     Link_Navigation="Categories"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
+                    // resetEditData={setEditData}
                 />
             </MainPageCard>
         </Main_list>

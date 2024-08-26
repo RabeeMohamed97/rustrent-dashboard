@@ -25,9 +25,10 @@ export type tabelProps = {
     allCols?: string[];
     isLoading?: { [key: number]: boolean };
     isLoadingDelivery?: { [key: number]: boolean };
-    Link_Navigation: string;
+    Link_Navigation?: string;
     Chcekbox?: boolean;
     Page_Add?: boolean;
+    showAddButton?: boolean;
     Enabel_edit?: boolean;
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;
@@ -37,34 +38,46 @@ export type tabelProps = {
     pagination?: Pagination;
     setPage: (page: number) => void;
     page: number;
+    openCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 //components / reusableComponents/ inputComponnent
 export type customInputProps = {
     label: string;
+    labelLang?: string;
     type: string;
     placeholder: string;
     name?: string;
-    // value: string;
+    value?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     required?: boolean;
     disabled?: boolean;
 };
 //components / reusableComponents/ NumberInput
+
 export type customNumbersInputProps = {
     value: string;
+
     onChange: (value: string) => void;
     required?: boolean;
 };
 
 //components / reusableComponents/ customSelect
 export type customSelectProps = {
-    options: { value: number; label: string }[];
+    options: { value: any; label: string }[];
     label?: string;
+    onChange: (value: number) => void; // Add this prop
+};
+export type customAnySelectProps = {
+    label?: string;
+    type: string;
+    id?: string;
     onChange: (value: number) => void; // Add this prop
 };
 export type ModalProps = {
     children: React.ReactNode;
     title?: string;
+    openCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+    resetEditData?: React.Dispatch<React.SetStateAction<[]>>;
 };

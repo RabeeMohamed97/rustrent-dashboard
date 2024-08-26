@@ -12,12 +12,15 @@ import Logo from '../../assets/Artboard 2 2.png';
 import IconMenuCategory from '../Icon/Menu/IconMenuCategory';
 
 import IconCoupons from '../Icon/Menu/IconCoupons';
-import IconOffers from '../Icon/Menu/IconOffers';
 import IconPermission from '../Icon/Menu/IconPermission';
 import IconTables from '../Icon/Menu/IconTables';
 import IconMeals from '../Icon/Menu/iconMeals';
 import IconCity from '../Icon/Menu/IconCity';
-import IconRegion from '../Icon/Menu/IconRegion';
+import IconSettings from '../Icon/IconSettings';
+import IconDelivery from '../Icon/IconDelivery_Price';
+
+import { CiHeadphones } from 'react-icons/ci';
+import IconAdvertisement from '../Icon/IconAdvertisement';
 const Sidebar = () => {
     const [currentMenu, setCurrentMenu] = useState<string>('');
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
@@ -186,7 +189,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Coupons/List" className="group">
@@ -197,8 +200,8 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
-                            <li className="nav-item">
+                            </li> */}
+                            {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Offers/List" className="group">
@@ -209,8 +212,8 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
-                            <li className="nav-item">
+                            </li> */}
+                            {/* <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Permsion/List" className="group">
@@ -221,15 +224,15 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/City/List" className="group">
                                             <div className="flex items-center">
-                                            <IconCity className=" shrink-0" />
-                                            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('City')}</span>
-                                                </div>
+                                                <IconCity className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('City')}</span>
+                                            </div>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -350,6 +353,54 @@ const Sidebar = () => {
                                             <div className="flex items-center">
                                                 <IconPermission className=" shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Region')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item">
+                                <ul>
+                                    <li className="nav-item">
+                                        <NavLink to="/profile" className="group">
+                                            <div className="flex items-center">
+                                                <IconSettings className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Settings')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item">
+                                <ul>
+                                    <li className="nav-item">
+                                        <NavLink to="/Delivery" className="group">
+                                            <div className="flex items-center">
+                                                <IconDelivery className=" shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Delivery')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item">
+                                <ul>
+                                    <li className="nav-item">
+                                        <NavLink to="/contact-us" className="group">
+                                            <div className="flex items-center">
+                                                <CiHeadphones className=" w-6 h-6 shrink-0" />{' '}
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Contact Us')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item">
+                                <ul>
+                                    <li className="nav-item">
+                                        <NavLink to="/Advertisement" className="group">
+                                            <div className="flex items-center">
+                                                <IconAdvertisement className=" w-6 h-6 shrink-0" />{' '}
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Advertisement')}</span>
                                             </div>
                                         </NavLink>
                                     </li>

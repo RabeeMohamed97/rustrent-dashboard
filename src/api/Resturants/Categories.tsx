@@ -4,37 +4,23 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const resApi = createApi({
-    reducerPath: 'resApi',
-    tagTypes: ['country', 'Categories','sub_category'],
+const CategoriesApi = createApi({
+    reducerPath: 'CategoriesApi',
+    tagTypes: [ 'Categories', 'sub_category'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
+            const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
             // headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
-            // headers.set('Accept-Language', 'ar');
+            headers.set('Authorization', `Bearer ${accessToken}`);
             return headers;
         },
     }),
 
     endpoints: (builder) => ({
-        Adminlogin: builder.mutation<any, any>({
-            query: (formData) => ({
-                url: `restaurant/auth/login`,
-                method: 'POST',
-                body: formData,
-            }),
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
+    
         getAllCategories: builder.query<any, { page: number }>({
             query: ({ page }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
@@ -75,88 +61,11 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        createCategory: builder.mutation<any, any>({
-            query: (formData) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: '/restaurant/store/category',
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['Categories','sub_category'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        deleteCategory: builder.mutation<any, any>({
-            query: (id) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `/restaurant/store/category/${id}`,
-                    method: 'DELETE',
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['Categories','sub_category'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        deletetable: builder.mutation<any, any>({
-            query: (id) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `/restaurant/store/table/${id}`,
-                    method: 'DELETE',
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['Categories','sub_category'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        getAlltable: builder.query<any, { page: number }>({
-            query: ({ page }) => {
+        getAllSubCategoriesWithoutPagination: builder.query<any, void>({
+            query: () => {
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/restaurant/store/table?page=${page}`,
+                    url: `/restaurant/store/listOfcategories`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -173,94 +82,35 @@ const resApi = createApi({
             },
         }),
 
-
-        updateRestaurantStatus: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `/admin/restaurant/restaurant-status/${id}`,
-                    method: 'POST',
-                    body: formData,
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['Categories'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        updateRestaurantDelivery: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `/admin/restaurant/restaurant-delivery/${id}`,
-                    method: 'POST',
-                    body: formData,
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['Categories'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        updateCountryStatus: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: `/admin/country-status/${id}`,
-                    method: 'POST',
-                    body: formData,
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['country'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        createCountry: builder.mutation<any, any>({
+        // getAllCityWithoutPagination: builder.query<any, void>({
+        //     query: () => {
+        //         const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+        //         return {
+        //             url: `restaurant/store/city/`,
+        //             method: 'GET',
+        //             headers: {
+        //                 Authorization: `Bearer ${accessToken}`,
+        //             },
+        //         };
+        //     },
+        //     providesTags: ['Categories'],
+        //     transformResponse: (response, meta) => {
+        //         console.log(meta?.response?.status);
+        //         return { status: meta?.response?.status, response };
+        //     },
+        //     transformErrorResponse: (response, meta) => {
+        //         return { status: meta?.response?.status, response };
+        //     },
+        // }),
+        createCategory: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: 'admin/country',
+                    url: '/restaurant/store/category',
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -268,7 +118,8 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['country'],
+            invalidatesTags: ['Categories', 'sub_category'],
+
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
 
@@ -278,65 +129,48 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        updateCountry: builder.mutation<any, any>({
+        editCategory: builder.mutation<any, any>({
             query: ({ id, formData }) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
-
-                // Get the access token from the parsed auth_data
-
                 return {
-                    url: `admin/country/${id}`,
-                    method: 'PUT',
-                    body: formData,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                };
-            },
-            invalidatesTags: ['country'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        changePassword: builder.mutation<any, any>({
-            query: (formData) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
-
-                // Get the access token from the parsed auth_data
-
-                return {
-                    url: 'admin/auth/change-password',
+                    url: `restaurant/store/category/${id}`,
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
                 };
             },
+            invalidatesTags: ['Categories', 'sub_category'],
+
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
+
                 return { status: meta?.response?.status, response };
             },
             transformErrorResponse: (response, meta) => {
                 return { status: meta?.response?.status, response };
             },
         }),
-        deleteCountry: builder.mutation<any, any>({
+    
+
+
+       
+
+
+
+
+
+
+
+
+
+    
+        deleteCategory: builder.mutation<any, any>({
             query: (id) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `/admin/country/${id}`,
+                    url: `/restaurant/store/category/${id}`,
                     method: 'DELETE',
 
                     headers: {
@@ -344,7 +178,7 @@ const resApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['country'],
+            invalidatesTags: ['Categories', 'sub_category'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -353,6 +187,10 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+ 
+     
+   
+ 
         getAllSubCategories: builder.query<any, { page: number }>({
             query: ({ page }) => {
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
@@ -373,18 +211,18 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getCountry: builder.query<any, { id: string | undefined }>({
-            query: ({ id }) => {
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+        getAnySelectOptions: builder.query<any, { type: string }>({
+            query: ({ type }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `/admin/country/${id}`,
+                    url: `restaurant/list/${type}`,
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 };
             },
-            providesTags: ['country'],
+
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -393,52 +231,24 @@ const resApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        ForgetPassword: builder.mutation<any, any>({
-            query: (formData) => ({
-                url: `reset-password/email-validation`,
-                method: 'POST',
-                body: formData,
-            }),
-        }),
-        verifyCode: builder.mutation<any, any>({
-            query: (code) => ({
-                url: 'reset-password/send-code',
-                method: 'POST',
-                body: code,
-            }),
-        }),
-        ResetPassword: builder.mutation<any, any>({
-            query: (formData) => ({
-                url: `reset-password/change-password`,
-                method: 'POST',
-                body: formData,
-            }),
-        }),
+  
     }),
 });
 
 // Export the generated hooks and the API slice
 export const {
+
     useGetAllCategoriesQuery,
     useGetAllCategoriesWithoutPaginationQuery,
-    useAdminloginMutation,
-    useResetPasswordMutation,
-    useChangePasswordMutation,
+
     useGetAllSubCategoriesQuery,
+    useGetAllSubCategoriesWithoutPaginationQuery,
+    useGetAnySelectOptionsQuery,
+    useEditCategoryMutation,
 
-
-     useGetAlltableQuery,
-    useForgetPasswordMutation,
     useCreateCategoryMutation,
-    useUpdateCountryStatusMutation,
-    useUpdateRestaurantStatusMutation,
-    useUpdateRestaurantDeliveryMutation,
-    useUpdateCountryMutation,
-    useVerifyCodeMutation,
-    useCreateCountryMutation,
-    useDeleteCountryMutation,
+
     useDeleteCategoryMutation,
-    useDeletetableMutation,
-    useGetCountryQuery,
-} = resApi;
-export default resApi;
+
+} = CategoriesApi;
+export default CategoriesApi;

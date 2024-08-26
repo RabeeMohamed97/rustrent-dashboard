@@ -55,12 +55,12 @@ const authApi = createApi({
         changePassword: builder.mutation<any, any>({
             query: (formData) => {
                 // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliToken') || '');
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: 'restaurant/auth/change-password',
+                    url: '/restaurant/auth/change-password',
                     method: 'POST',
                     body: formData,
                     headers: {

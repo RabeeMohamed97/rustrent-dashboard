@@ -3,7 +3,14 @@ import Login from '../pages/Auth/Login';
 import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
-
+import Profile from '../pages/profile/Profile';
+import List_Delivery_Price from '../pages/Delivery_Price/List/List_Category';
+import ContactUs from '../pages/Contact Us/ViewContactUs';
+import ContactUsList from '../pages/Contact Us/ContactUsList';
+import ViewContactUs from '../pages/Contact Us/ViewContactUs';
+import CustomDataInput from '../components/reusableComponents/DateInput';
+import Test from '../pages/Test';
+import List_Advertisement from '../pages/Advertisement/List_Advertisement/List_Advertisement';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -30,30 +37,6 @@ const routes = [
         layout: 'blank',
     },
 
-
-    //Resturants
-    // {
-    //     path: '/Restaurant/Add',
-    //     element: <Add_Restaurant />,
-    // },
-    // {
-    //     path: '/Restaurant/List',
-    //     element: <List_Restaurant />,
-    // },
-
-    //users
-    // {
-    //     path: '/users/Add',
-    //     element: <Add_Users />,
-    // },
-    // {
-    //     path: '/users/List',
-    //     element: <List_Users />,
-    // },
-
-
-    //Categories , Items
-
     {
         path: '/change-password',
         element: (
@@ -63,65 +46,134 @@ const routes = [
         ),
     },
 
-    {
-        path: '/offers/List',
-        element: <List_Offers/>,
-    },
+    // {
+    //     path: '/offers/List',
+    //     element: (
+    //         <AuthProvider>
+    //             <List_Offers/>
+    //         </AuthProvider>
+    //     ),
+    // },
     {
         path: '/Categories/List',
-        element: 
-        <AuthProvider>
-        <List_Category />
-        </AuthProvider>
-,
+        element: (
+            <AuthProvider>
+                <List_Category />
+            </AuthProvider>
+        ),
     },
     {
         path: '/Sub_Categories/List',
-        element: <List_SubCategory />,
+        element: (
+            <AuthProvider>
+                <List_SubCategory />{' '}
+            </AuthProvider>
+        ),
     },
     {
         path: '/Tables/List',
-        element: <List_Tables />,
+        element: (
+            <AuthProvider>
+                <List_Tables />
+            </AuthProvider>
+        ),
     },
     {
         path: '/Meals/List',
-        element: <List_Meals/>,
+        element: (
+            <AuthProvider>
+                <List_Meals />{' '}
+            </AuthProvider>
+        ),
     },
     {
         path: '/Permsion/List',
-        element: <List_Permsion/>,
+        element: (
+            <AuthProvider>
+                <List_Permsion />
+            </AuthProvider>
+        ),
     },
     {
         path: '/Coupons/List',
-        element: <List_Coupons/>,
+        element: (
+            <AuthProvider>
+                <List_Coupons />
+            </AuthProvider>
+        ),
     },
     {
         path: '/City/List',
-        element: <List_City />,
+        element: (
+            <AuthProvider>
+                <List_City />
+            </AuthProvider>
+        ),
     },
     {
         path: '/region/List',
-        element: <List_Region/>,
+        element: (
+            <AuthProvider>
+                <List_Region />
+            </AuthProvider>
+        ),
     },
-    // {
-    //     path: '/Categories/item/Add',
-    //     element: <Add_item />,
-    // },
-
-
-    // Store
-    // {
-
-    //         path: '/Store/Add',
-    //         element: <Add_Store/>,
-    // },
-    // Expenses
-    // {
-
-    //         path: '/Expenses/Add',
-    //         element: <Add_Expenses/>,
-    // }
-
+    {
+        path: '/profile',
+        element: (
+            <AuthProvider>
+                <Profile />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contact-us',
+        element: (
+            <AuthProvider>
+                <ContactUsList />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Delivery',
+        element: (
+            <AuthProvider>
+                <List_Delivery_Price />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Advertisement',
+        element: (
+            <AuthProvider>
+                <List_Advertisement />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contact-us',
+        element: (
+            <AuthProvider>
+                <ContactUsList />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contactUs/:id',
+        element: (
+            <AuthProvider>
+                <ViewContactUs />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/test',
+        element: (
+            <AuthProvider>
+                <Test />
+            </AuthProvider>
+        ),
+    },
 ];
 
 export { routes };

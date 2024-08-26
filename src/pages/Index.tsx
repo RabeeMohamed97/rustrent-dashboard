@@ -533,36 +533,30 @@ const cols = [
     { accessor: 'age', title: 'Age' },
     { accessor: 'dob', title: 'Birthdate' },
     { accessor: 'status', title: 'Status' },
-    {accessor: 'action', title: 'Action',},
-    
-]; 
+    { accessor: 'action', title: 'Action' },
+];
 const Index = () => {
+    const deleteHander = (id: string) => {
+        console.log('id form index deleteHander', id);
+    };
+    const viewHander = (id: string) => {
+        console.log('id form index viewHander', id);
+    };
+    const EditHandelr = (id: string) => {
+        console.log('id form index EditHandelr', id);
+    };
 
-const deleteHander=(id:string)=> {
-    console.log( "id form index deleteHander" ,id)
-}
-const viewHander=(id:string)=> {
-    console.log( "id form index viewHander" ,id)
-}
-const EditHandelr=(id:string)=> {
-    console.log( "id form index EditHandelr" ,id)
-}
-
-
-
-const updateHander = async(id:string,status:boolean)=> {
-    console.log( "id form index updateHander" ,id ,!status)
-}
-
+    const updateHander = async (id: string, status: boolean) => {
+        console.log('id form index updateHander', id, !status);
+    };
 
     return (
-        <Main_list title='User List'>
-        <MainPageCard>
-
-            <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={true} Link_Navigation='users' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
-        </MainPageCard>
+        <Main_list title="User List">
+            <MainPageCard>
+                <div className=""></div>
+                {/* <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={true} Link_Navigation='users' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} /> */}
+            </MainPageCard>
         </Main_list>
-
     );
 };
 

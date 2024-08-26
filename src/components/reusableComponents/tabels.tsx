@@ -12,10 +12,8 @@ import { Link } from 'react-router-dom';
 import IconPencil from '../Icon/IconPencil';
 import IconEye from '../Icon/IconEye';
 import IconTrashLines from '../Icon/IconTrashLines';
-import { modalActions } from '../../store/modelSlice';
 
 const ColumnChooser = (props: tabelProps) => {
-    console.log(props.TableBody);
     // const [props.TableBody, setprops.TableBody] = useState(props.TableBody);
     const [cols, setcols] = useState(props.tabelHead);
 
@@ -32,8 +30,7 @@ const ColumnChooser = (props: tabelProps) => {
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(props.TableBody, cols[0]?.accessor));
     const [recordsData, setRecordsData] = useState(initialRecords);
-    console.log(recordsData);
-    console.log(initialRecords);
+  
     useEffect(() => {
         setInitialRecords(props.TableBody);
     }, [initialRecords, props.TableBody, props.page]);
@@ -211,59 +208,58 @@ const ColumnChooser = (props: tabelProps) => {
                   </>
               )
             : accessor === 'action'
-            ? ({ id }: any) => (
+            ? (data: any) => (
                   <div className="flex  justify-between w-max  gap-3">
                       {props.Enabel_edit ? (
                           <>
-                              <button type="button" onClick={() => props.onEdit(id)}>
+                              <button
+                                  type="button"
+                                  onClick={() => {
+                                      props.onEdit(data);
+
+                                      openModal();
+                                  }}
+                              >
                                   <IconPencil />
                               </button>
                           </>
                       ) : (
                           <></>
                       )}
-                      <button type="button" onClick={() => props.onView(id)}>
+                      <button type="button" onClick={() => props.onView(data?.id)}>
                           <IconEye />
                       </button>
 
-                      <button type="button" onClick={() => props.onDelete(id)}>
+                      <button type="button" onClick={() => props.onDelete(data?.id)}>
                           <IconTrashLines />
                       </button>
                   </div>
               )
             : accessor === 'image'
-            ? ({ attachments }: any) => (
+            ? ({ image }: any) => (
                   <div className="flex  justify-between w-max  gap-3">
-                      <img src={attachments} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
+                      <img src={image} alt="" className="w-[50px] text-left h-[50px] rounded-full" />
                   </div>
               )
             : accessor === 'main_category'
-            ? ({ name }: any) => {
-                  // Log the attachments object
-                  console.log('Attachments:', name);
-
+            ? ({ main_category }: any) => {
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{main_category?.name}</p>
                       </div>
                   );
               }
             : accessor === 'sub_category'
-            ? ({ name, isFavourite }: any) => {
-                  // Log the attachments object
-                  console.log('Attachments:', name);
-                  console.log('isFavourite:', isFavourite);
-
+            ? ({ sub_category }: any) => {
                   return (
                       <div className="flex justify-between w-max gap-3">
-                          <p>{name}</p>
+                          <p>{sub_category?.name}</p>
                       </div>
                   );
               }
             : accessor === 'isFavourite'
             ? ({ isFavourite }: any) => {
                   // Log the attachments object
-                  console.log('Attachments:', isFavourite);
 
                   return (
                       <div className="flex justify-between w-max gap-3">
@@ -285,20 +281,19 @@ const ColumnChooser = (props: tabelProps) => {
     // }, [pageSize]);
 
     useEffect(() => {
-        console.log(recordsData);
         const from = props?.page - 1 * pageSize; // 10
 
         const to = from + pageSize;
 
-        console.log(from, to);
         setRecordsData([...initialRecords?.slice()]);
     }, [props.page, pageSize, initialRecords]);
 
     const openModal = () => {
-        dispatch(modalActions.openModal());
+        // dispatch(modalActions.openModal());
+        props.openCloseModal((prevState) => !prevState);
+        // props.resetEditData([]);
     };
     useEffect(() => {
-        console.log(props.TableBody);
         setRecordsData(() => {
             return props?.TableBody?.filter((item) => {
                 if (props?.allCols) {
@@ -319,8 +314,7 @@ const ColumnChooser = (props: tabelProps) => {
         // props.setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
-    console.log(props?.pagination?.current_page);
-    console.log(props?.pagination?.total);
+
 
     return (
         <div>
@@ -329,56 +323,91 @@ const ColumnChooser = (props: tabelProps) => {
                     <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
-                    <div className="flex md:items-center md:flex-row flex-col gap-5">
-                        {props?.TableBody.length > 0 ? (
+                    <Dropdown
+                        placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
+                        btnClassName="!flex items-center border font-semibold border-[#BD0600] dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
+                        button={
                             <>
-                                <div className="dropdown">
-                                    <Dropdown
-                                        placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
-                                        btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
-                                        button={
-                                            <>
-                                                <span className="ltr:mr-1 rtl:ml-1">Columns</span>
-                                                <IconCaretDown className="w-5 h-5" />
-                                            </>
-                                        }
-                                    >
-                                        <ul className="!min-w-[180px] z-0">
-                                            {cols.map((col, i) => {
-                                                return (
-                                                    <li
-                                                        key={i}
-                                                        className="flex flex-col"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                        }}
-                                                    >
-                                                        <div className="flex items-center px-4 py-1">
-                                                            <label className="cursor-pointer mb-0">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={!hideCols.includes(col.accessor)}
-                                                                    className="form-checkbox"
-                                                                    defaultValue={col.accessor}
-                                                                    onChange={(event: any) => {
-                                                                        setHideCols(event.target.value);
-                                                                        showHideColumns(col.accessor, event.target.checked);
-                                                                    }}
-                                                                />
-                                                                <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
-                                    </Dropdown>
-                                </div>
+                                <span className="ltr:mr-1 rtl:ml-1 text-[#BD0600]">Status</span>
+                                <IconCaretDown className="w-5 h-5 text-[#BD0600]" />
                             </>
-                        ) : (
-                            <></>
-                        )}
+                        }
+                    >
+                        <ul className="!min-w-[180px] z-0">
+                            {cols.map((col, i) => {
+                                return (
+                                    <li
+                                        key={i}
+                                        className="flex flex-col"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <div className="flex items-center px-4 py-1">
+                                            <label className="cursor-pointer mb-0">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={!hideCols.includes(col.accessor)}
+                                                    className="form-checkbox"
+                                                    defaultValue={col.accessor}
+                                                    onChange={(event: any) => {
+                                                        setHideCols(event.target.value);
+                                                        showHideColumns(col.accessor, event.target.checked);
+                                                    }}
+                                                />
+                                                <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </Dropdown>
+                    <div className="flex md:items-center md:flex-row flex-col gap-5">
+                        <div className="dropdown">
+                            <Dropdown
+                                placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
+                                btnClassName="!flex items-center border font-semibold border-[#BD0600] dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
+                                button={
+                                    <>
+                                        <span className="ltr:mr-1 rtl:ml-1 text-[#BD0600]">Columns</span>
+                                        <IconCaretDown className="w-5 h-5 text-[#BD0600]" />
+                                    </>
+                                }
+                            >
+                                <ul className="!min-w-[180px] z-0">
+                                    {cols.map((col, i) => {
+                                        return (
+                                            <li
+                                                key={i}
+                                                className="flex flex-col"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                }}
+                                            >
+                                                <div className="flex items-center px-4 py-1">
+                                                    <label className="cursor-pointer mb-0">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={!hideCols.includes(col.accessor)}
+                                                            className="form-checkbox"
+                                                            defaultValue={col.accessor}
+                                                            onChange={(event: any) => {
+                                                                setHideCols(event.target.value);
+                                                                showHideColumns(col.accessor, event.target.checked);
+                                                            }}
+                                                        />
+                                                        <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </Dropdown>
+                        </div>
                     </div>
+
                     <div className="text-right flex gap-2">
                         {selectedRecords?.length > 0 && selectedRecords ? (
                             <>
@@ -417,15 +446,17 @@ const ColumnChooser = (props: tabelProps) => {
                             </>
                         ) : (
                             <>
-                                <button onClick={openModal} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
-                                    <span className="mr-2">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                    Add New
-                                </button>
+                                {props.showAddButton && (
+                                    <button onClick={openModal} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
+                                        <span className="mr-2">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </span>
+                                        Add New
+                                    </button>
+                                )}
                             </>
                         )}
                     </div>
@@ -434,6 +465,7 @@ const ColumnChooser = (props: tabelProps) => {
 
             <div className="panel mt-6">
                 <div className="datatables z-10">
+                    {/* @ts-ignore */}
                     <DataTable
                         className="whitespace-nowrap   table-hover"
                         records={recordsData}

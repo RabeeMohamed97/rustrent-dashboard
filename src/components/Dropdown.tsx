@@ -2,7 +2,6 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import { usePopper } from 'react-popper';
 
 const Dropdown = (props : any, forwardedRef: any) => {
-    console.log(props.placement);
     
     const [visibility, setVisibility] = useState<any>(false);
 
