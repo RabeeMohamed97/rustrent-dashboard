@@ -52,7 +52,11 @@ export default function List_SubCategory() {
                 // colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
-            } else {
+            }   else if (key === 'parent_id') {
+                return;
+            } 
+            
+            else {
                 const formattedKey = key
                     .replace(/_/g, ' ')
                     .split(' ')
