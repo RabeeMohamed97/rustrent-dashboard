@@ -42,7 +42,6 @@ export default configureStore({
             // menuApi.middleware,
             // orderApi.middleware,
             // paymentApi.middleware,
-
             // contactUsApi.middleware
         ),
 });

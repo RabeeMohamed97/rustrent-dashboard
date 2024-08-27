@@ -231,6 +231,9 @@ const ColumnChooser = (props: tabelProps) => {
             : undefined,
     }));
 
+    const [selectedStatus, setSelectedStatus] = useState('active');
+
+
     // useEffect(() => {
     //     props.setPage(1);
     // }, [pageSize]);
@@ -273,11 +276,14 @@ const ColumnChooser = (props: tabelProps) => {
 
     return (
         <div>
-            <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
+            <div className="flex lg:items-center md:flex-row flex-col mb-5 gap-4">
                 <div className="text-left">
                     <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
-                <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
+                <div className="flex  justify-between items-center ltr:ml-auto gap-4 lg:ltr:ml-auto lg:rtl:mr-auto">
+                    <div className="flex  justify-between items-center gap-4 ltr:ml-auto rtl:mr-auto">
+
+                <div className="dropdown">
                     <Dropdown
                         placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
                         btnClassName="!flex items-center border font-semibold border-[#BD0600] dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
@@ -289,36 +295,46 @@ const ColumnChooser = (props: tabelProps) => {
                         }
                     >
                         <ul className="!min-w-[180px] z-0">
-                            {cols.map((col, i) => {
-                                return (
-                                    <li
-                                        key={i}
-                                        className="flex flex-col"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                        }}
-                                    >
-                                        <div className="flex items-center px-4 py-1">
-                                            <label className="cursor-pointer mb-0">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={!hideCols.includes(col.accessor)}
-                                                    className="form-checkbox"
-                                                    defaultValue={col.accessor}
-                                                    onChange={(event: any) => {
-                                                        setHideCols(event.target.value);
-                                                        showHideColumns(col.accessor, event.target.checked);
-                                                    }}
-                                                />
-                                                <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                );
-                            })}
+                    
+                        <li className="flex flex-col"     onClick={(e) => {
+                                                    e.stopPropagation();
+                                                }}>
+        <div className="flex items-center px-4 py-1">
+            <label className="cursor-pointer mb-0 flex items-center">
+                <input
+                    type="radio"
+                    name="status"
+                    value="active"
+                    className="form-radio"
+                    checked={selectedStatus === 'active'}
+                    onChange={() => setSelectedStatus('active')}
+                />
+                <span className="ltr:ml-2 rtl:mr-2">Active</span>
+            </label>
+        </div>
+    </li>
+    <li className="flex flex-col"     onClick={(e) => {
+                                                    e.stopPropagation();
+                                                }}>
+        <div className="flex items-center px-4 py-1">
+            <label className="cursor-pointer mb-0 flex items-center">
+                <input
+                    type="radio"
+                    name="status"
+                    value="non-active"
+                    className="form-radio"
+                    checked={selectedStatus === 'non-active'}
+                    onChange={() => setSelectedStatus('non-active')}
+                />
+                <span className="ltr:ml-2 rtl:mr-2">Non-Active</span>
+            </label>
+        </div>
+    </li>
+                           
                         </ul>
                     </Dropdown>
-                    <div className="flex md:items-center md:flex-row flex-col gap-5">
+                    </div>
+
                         <div className="dropdown">
                             <Dropdown
                                 placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
@@ -361,60 +377,64 @@ const ColumnChooser = (props: tabelProps) => {
                                 </ul>
                             </Dropdown>
                         </div>
-                    </div>
 
-                    <div className="text-right flex gap-2">
-                        {selectedRecords?.length > 0 && selectedRecords ? (
-                            <>
-                                <button className="btn bg-[#E7515A] rounded-xl shadow-none text-white">
-                                    <span className="mr-1">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2 4H3.33333H14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path
-                                                d="M12.6666 3.99998V13.3333C12.6666 13.6869 12.5261 14.0261 12.2761 14.2761C12.026 14.5262 11.6869 14.6666 11.3333 14.6666H4.66659C4.31296 14.6666 3.97382 14.5262 3.72378 14.2761C3.47373 14.0261 3.33325 13.6869 3.33325 13.3333V3.99998M5.33325 3.99998V2.66665C5.33325 2.31302 5.47373 1.97389 5.72378 1.72384C5.97383 1.47379 6.31296 1.33331 6.66659 1.33331H9.33325C9.68687 1.33331 10.026 1.47379 10.2761 1.72384C10.5261 1.97389 10.6666 2.31302 10.6666 2.66665V3.99998"
-                                                stroke="white"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                            <path d="M6.66675 7.33331V11.3333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M9.33325 7.33331V11.3333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                    Delete
-                                </button>
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                        {props.Page_Add ? (
-                            <>
-                                <Link to={`${props.Link_Navigation}/Add`} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
-                                    <span className="mr-2">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                    Add New
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                {props.showAddButton && (
-                                    <button onClick={openModal} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
-                                        <span className="mr-2">
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </span>
-                                        Add New
-                                    </button>
-                                )}
-                            </>
-                        )}
-                    </div>
+                        </div>
+
+
+                    <div className="flex  items-center justify-between gap-2 md:gap-2">
+ 
+    <div className="flex  gap-2 md:gap-4 lg:gap-6">
+        {selectedRecords?.length > 0 && selectedRecords ? (
+            <button className="btn bg-[#E7515A] rounded-xl shadow-none text-white">
+                <span className="mr-1">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 4H3.33333H14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M12.6666 3.99998V13.3333C12.6666 13.6869 12.5261 14.0261 12.2761 14.2761C12.026 14.5262 11.6869 14.6666 11.3333 14.6666H4.66659C4.31296 14.6666 3.97382 14.5262 3.72378 14.2761C3.47373 14.0261 3.33325 13.6869 3.33325 13.3333V3.99998M5.33325 3.99998V2.66665C5.33325 2.31302 5.47373 1.97389 5.72378 1.72384C5.97383 1.47379 6.31296 1.33331 6.66659 1.33331H9.33325C9.68687 1.33331 10.026 1.47379 10.2761 1.72384C10.5261 1.97389 10.6666 2.31302 10.6666 2.66665V3.99998"
+                            stroke="white"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path d="M6.66675 7.33331V11.3333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.33325 7.33331V11.3333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                Delete
+            </button>
+        ) : null}
+
+      
+    </div>
+    <div className="flex  gap-2 md:gap-4 lg:gap-6">
+    {props.Page_Add ? (
+            <Link to={`${props.Link_Navigation}/Add`} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
+                <span className="mr-2 md:hidden">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                Add New
+            </Link>
+        ) : (
+            props.showAddButton && (
+
+                <button onClick={openModal} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600]  rounded-xl text-md shadow-none text-white">
+                <span className="mr-1 md:hidden">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                </span>
+                Add New
+                </button>
+           
+            )
+        )}
+    </div>
+</div>
+
                 </div>
             </div>
 
