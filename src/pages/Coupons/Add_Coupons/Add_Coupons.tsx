@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 import Upload from '../../../components/reusableComponents/Upload';
-import { useCreateTableMutation, useEditTableMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
@@ -9,6 +9,7 @@ import { z } from 'zod';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
 import InputComponent from '../../../components/reusableComponents/InputComponent';
 import CustomDataInput from '../../../components/reusableComponents/DateInput';
+import { useCreateCouponMutation, useEditCouponMutation } from '../../../api/Resturants/Coupons';
 
 interface TableFormData {
     name: string;
@@ -22,12 +23,11 @@ type catEditProps = {
     data?: any;
 };
 
-export const formSchema = z.object({
-    table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
-});
+// export const formSchema = z.object({
+//     table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
+// });
 export default function Add_Tables(props: catEditProps) {
-    const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
-
+    console.log(props.data?.name);
     const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
     const [isChecked, setIsChecked] = useState(true);
@@ -40,7 +40,7 @@ export default function Add_Tables(props: catEditProps) {
     const [couponFormData, setcouponFormData] = useState<TableFormData>({
         name: '',
         code: '',
-        type: '',
+        type: 'fixed',
         value: '',
         start_date: '',
         end_date: '',
@@ -55,7 +55,7 @@ export default function Add_Tables(props: catEditProps) {
     };
 
     const handleEndDateChange = (date: Date | null) => {
-        setSelectedStartDate(date);
+        setSelectedEndDate(date);
     };
 
     const handleSelectChange = (value: number | string) => {
@@ -66,8 +66,8 @@ export default function Add_Tables(props: catEditProps) {
         const { name, value } = e.target;
         setcouponFormData({ ...couponFormData, [name]: value });
     };
-    const [createTable, { isLoading }] = useCreateTableMutation();
-    const [editTable, { isLoading: EditisLoading }] = useEditTableMutation();
+    const [createCoupon, { isLoading }] = useCreateCouponMutation();
+    const [editCoupon, { isLoading: EditisLoading }] = useEditCouponMutation();
 
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
@@ -75,7 +75,7 @@ export default function Add_Tables(props: catEditProps) {
     useEffect(() => {
         if (toastData?.data?.status === 200) {
             showAlert('Added', toastData?.data?.response?.message);
-            navigate('/Tables/List');
+            navigate('/Coupons/List');
             setToastData({});
         }
         if (toastData?.error?.status === 422) {
@@ -101,26 +101,29 @@ export default function Add_Tables(props: catEditProps) {
         console.log('Form submitted:', couponFormData);
 
         // dispatch(modalActions.closeModal())
-        const result = formSchema.safeParse(couponFormData);
+        // const result = formSchema.safeParse(couponFormData);
 
         // Perform your form submission logic here, such as making an API call.
         // After submission, you can close the modal and clear the form
-        if (!result.success) {
-            // @ts-ignore
-            setErrors(result.error.formErrors.fieldErrors);
-            console.log(result.error.formErrors.fieldErrors);
-            return;
-        }
+        // if (!result.success) {
+        //     // @ts-ignore
+        //     setErrors(result.error.formErrors.fieldErrors);
+        //     console.log(result.error.formErrors.fieldErrors);
+        //     return;
+        // }
         // const data = await createResturant(formData);
         // console.log(data);
 
+        couponFormData.start_date = convertData(selectedStartDate);
+        couponFormData.end_date = convertData(selectedEndDate);
+
         try {
             if (props?.data?.id) {
-                const response = await editTable({ id: props?.data?.id, formData: couponFormData });
+                const response = await editCoupon({ id: props?.data?.id, formData: couponFormData });
                 setToastData(response);
                 setErrors({});
             } else {
-                const response = await createTable(couponFormData);
+                const response = await createCoupon(couponFormData);
                 console.log(response);
                 setToastData(response);
                 setErrors({});
@@ -130,19 +133,22 @@ export default function Add_Tables(props: catEditProps) {
             setErrors(err);
         }
     };
-    // useEffect(() => {
-    //     setcouponFormData({
-    //         ...couponFormData,
-    //         table_name: props?.data?.table_name,
-    //         minimum_count: props?.data?.minimum_count,
-    //         maximum_count: props?.data?.maximum_count,
-    //         type: props?.data?.type,
-    //     });
-    // }, []);
+    useEffect(() => {
+        setcouponFormData({
+            ...couponFormData,
+            name: props?.data?.name,
+            code: props?.data?.code,
+            type: props?.data?.type,
+            value: props?.data?.value,
+        });
+        setSelectedStartDate(props?.data?.start_date);
+        setSelectedEndDate(props?.data?.end_date);
+    }, [props.data]);
 
     console.log(couponFormData);
     console.log(selectedStartDate);
-    const convertData = (date: Date) => {
+    const convertData = (date: Date | null) => {
+        //@ts-ignore
         const convertedDate = new Date(date);
 
         // Extracting the month, day, and year
@@ -151,7 +157,8 @@ export default function Add_Tables(props: catEditProps) {
         const year = convertedDate.getFullYear();
 
         // Formatting the date as MM/DD/YYYY
-        const formattedDate = `${month}/${day}/${year}`;
+        const formattedDate = `${year}-${month}-${day}`;
+        console.log(formattedDate);
         return formattedDate;
     };
 
@@ -160,10 +167,10 @@ export default function Add_Tables(props: catEditProps) {
             <form onSubmit={handleSubmit} className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-12">
                     <div className="lg:col-span-6 col-span-12">
-                        <InputComponent name="name" label="Coupon Name" onChange={handleChange} type="text" placeholder="Write your coupon name" />
+                        <InputComponent name="name" label="Coupon Name" value={couponFormData.name} onChange={handleChange} type="text" placeholder="Write your coupon name" />
                     </div>
                     <div className="lg:col-span-6 col-span-12">
-                        <InputComponent name="code" label="Coupon Code" onChange={handleChange} type="text" placeholder="Write your coupon code" />
+                        <InputComponent name="code" label="Coupon Code" value={couponFormData.code} onChange={handleChange} type="text" placeholder="Write your coupon code" />
                     </div>
 
                     <div className="lg:col-span-6 col-span-12">
@@ -171,11 +178,11 @@ export default function Add_Tables(props: catEditProps) {
                     </div>
                     {couponFormData.type === 'fixed' ? (
                         <div className="lg:col-span-6 col-span-12">
-                            <InputComponent name="value" label="discount percentage" onChange={handleChange} type="text" placeholder="Write your  fixed discount " />
+                            <InputComponent name="value" label="discount percentage" value={couponFormData.value} onChange={handleChange} type="text" placeholder="Write your  fixed discount " />
                         </div>
                     ) : (
                         <div className="lg:col-span-6 col-span-12">
-                            <InputComponent name="value" label="discount percentage" onChange={handleChange} type="text" placeholder="Write your discount percentage" />
+                            <InputComponent name="value" label="discount percentage" value={couponFormData.value} onChange={handleChange} type="text" placeholder="Write your discount percentage" />
                         </div>
                     )}
 
