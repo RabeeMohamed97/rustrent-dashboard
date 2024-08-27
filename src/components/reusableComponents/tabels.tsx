@@ -280,7 +280,7 @@ const ColumnChooser = (props: tabelProps) => {
                 <div className="text-left">
                     <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
-                <div className="flex  justify-between items-center ltr:ml-auto gap-4 lg:ltr:ml-auto lg:rtl:mr-auto">
+                <div className="flex  flex-wrap  justify-between items-center ltr:ml-auto gap-4 lg:ltr:ml-auto lg:rtl:mr-auto">
                     <div className="flex  justify-between items-center gap-4 ltr:ml-auto rtl:mr-auto">
 
                 <div className="dropdown">
@@ -409,7 +409,7 @@ const ColumnChooser = (props: tabelProps) => {
     <div className="flex  gap-2 md:gap-4 lg:gap-6">
     {props.Page_Add ? (
             <Link to={`${props.Link_Navigation}/Add`} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600] rounded-full shadow-none text-white">
-                <span className="mr-2 md:hidden">
+                <span className="mr-2 d">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -421,7 +421,7 @@ const ColumnChooser = (props: tabelProps) => {
             props.showAddButton && (
 
                 <button onClick={openModal} className="btn bg-gradient-to-r from-[#F23F39] to-[#BD0600]  rounded-xl text-md shadow-none text-white">
-                <span className="mr-1 md:hidden">
+                <span className="mr-1 ">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8 3.33331V12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M3.33325 8H12.6666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
