@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
 import Upload from '../../../components/reusableComponents/Upload';
-import { useCreateTableMutation, useEditTableMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
@@ -27,7 +26,6 @@ type catEditProps = {
 //     table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
 // });
 export default function Add_Tables(props: catEditProps) {
-    const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
     console.log(props.data?.name);
     const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
