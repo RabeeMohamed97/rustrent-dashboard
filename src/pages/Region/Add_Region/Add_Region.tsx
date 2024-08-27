@@ -5,9 +5,10 @@ import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { useNavigate } from 'react-router-dom';
-
-import { useCreateRegionMutation } from '../../../api/Resturants/Categories';
+import LoadingButton from '../../../components/reusableComponents/Loading_button';
+import { useCreateCategoryMutation,  } from '../../../api/Resturants/Categories';
 import CustomSelectWithType from '../../../components/reusableComponents/CustomSelectWithType';
+import { useCreateRegionMutation, useEditRegionMutation } from '../../../api/Resturants/Country_City_Region';
 
 export const formSchema = z.object({
     name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
@@ -17,7 +18,12 @@ interface CityFormData {
     name: string;
     city_id: number;
 }
-export default function Add_Region() {
+
+type editData = {
+    data?: any;
+};
+export default function Add_Region(props: editData) {
+    const [file, setFile] = useState<File | null>(null);
     const navigate = useNavigate();
 
     const [resformData, setresFormData] = useState<CityFormData>({
@@ -31,6 +37,7 @@ export default function Add_Region() {
 
     const [errors, setErrors] = useState<any>({});
     const [createRegion, { isLoading }] = useCreateRegionMutation();
+    const [editRegion, { isLoading: eidtLoding }] = useEditRegionMutation();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -39,7 +46,12 @@ export default function Add_Region() {
     const handleSelectChange = (value: number) => {
         setresFormData({ ...resformData, city_id: value }); // Update the category in state
     };
-
+    useEffect(() => {
+        setresFormData({
+            name: props?.data?.name,
+            city_id: props?.data?.city_id,
+        });
+    }, []);
     useEffect(() => {
         if (toastData?.data?.status === 200) {
             showAlert('Added', toastData?.data?.response?.message);
@@ -56,7 +68,7 @@ export default function Add_Region() {
             setToastData({});
         }
 
-        if (isLoading) {
+        if (isLoading || eidtLoding) {
             toast.loading('Loading...', {
                 toastId: 'loginLoadingToast',
                 autoClose: false,
@@ -64,34 +76,32 @@ export default function Add_Region() {
         } else {
             toast.dismiss('loginLoadingToast');
         }
-    }, [toastData, isLoading]);
+    }, [toastData, isLoading, eidtLoding]);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', resformData);
-        const formData = new FormData();
-        formData.append('name', resformData.name);
 
-        // @ts-ignore
-        formData.append('city_id', resformData.city_id);
-
-        // dispatch(modalActions.closeModal())
         const result = formSchema.safeParse(resformData);
 
-        // Perform your form submission logic here, such as making an API call.
-        // After submission, you can close the modal and clear the form
         if (!result.success) {
             // @ts-ignore
             setErrors(result.error.formErrors.fieldErrors);
             console.log(result.error.formErrors.fieldErrors);
             return;
         }
-        // const data = await createResturant(formData);
-        // console.log(data);
-        try {
-            const response = await createRegion(formData);
 
-            setToastData(response);
-            setErrors({});
+        try {
+            if (props?.data?.id) {
+                const response = await editRegion({ id: props?.data?.id, formData: resformData });
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            } else {
+                const response = await createRegion(resformData);
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            }
         } catch (err) {
             setToastData(err);
             setErrors(err);

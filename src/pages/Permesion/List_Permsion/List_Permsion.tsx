@@ -555,13 +555,14 @@ const updateHander = async(id:string,status:boolean)=> {
   return (
     <Main_list  title='Permission'>
     <MainPageCard>
-    <CustomModal  title='Add Permission' >
+        <div className=""></div>
+    {/* <CustomModal  title='Add Permission' >
     <Add_Permision/>
     </CustomModal>
 
 
 
-    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} />
+    <ColumnChooser TableBody={rowData}  tabelHead={cols} Chcekbox={false} Page_Add={false}  Link_Navigation='Categories' onDelete={deleteHander} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} /> */}
 
     </MainPageCard>
 

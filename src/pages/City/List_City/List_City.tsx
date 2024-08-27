@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
-import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
 import { showAlert } from '../../../components/Error';
+import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Country_City_Region';
 
 export default function List_City() {
     const [page, setPage] = useState(1);
 
-
     const [open, setOpen] = useState(false);
     const [editData, setEditData] = useState<any>([]);
     const { refetch, data, isSuccess, isError } = useGetAllcityQuery({ page });
-    console.log(data)
+    console.log(data);
 
     useEffect(() => {
         refetch();
@@ -31,7 +30,7 @@ export default function List_City() {
     const [loadingStatus, setLoadingStatus] = useState<{ [key: string]: boolean }>({});
     let keys: string[] = [];
     useEffect(() => {
-        if (isSuccess&&data?.response?.data?.data?.length) {
+        if (isSuccess && data?.response?.data?.data?.length) {
             keys = Object?.keys(data?.response?.data?.data[0]);
             setColKeys(keys);
         }
@@ -63,9 +62,8 @@ export default function List_City() {
         console.log(colss);
     }, [colKeys, isSuccess]);
 
-
-
     const deleteSubmitHandler = async (id: string) => {
+        //@ts-ignore
         swal({
             title: 'Are you sure you want to delete city?',
             icon: 'error',
@@ -89,6 +87,7 @@ export default function List_City() {
                 }
                 // setToastData(data);
             } else {
+                //@ts-ignore
                 swal('Not deleted');
             }
         });
@@ -96,39 +95,30 @@ export default function List_City() {
         if (data?.error) setToastData(data);
         setErrors({});
     };
-    const viewHander=(id:string)=> {
-    console.log( "id form index viewHander" ,id)
-    }
-  
-
-
-    const updateHander = async(id:string,status:boolean)=> {
-    console.log( "id form index updateHander" ,id ,!status)
-    }
-
-
-    const updateDeliveryHander = async (id: string, status: boolean) => {
-    console.log("updateDeliveryHander",status);
-
-
-
+    const viewHander = (id: string) => {
+        console.log('id form index viewHander', id);
     };
+
+    const updateHander = async (id: string, status: boolean) => {
+        console.log('id form index updateHander', id, !status);
+    };
+
     const EditHandelr = (data: any) => {
         setEditData(data);
     };
     const [isTrue, setisTrue] = useState(false);
     const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
+    const updateDeliveryHander = async (id: string, status: boolean) => {
+        console.log('updateDeliveryHander', status);
+    };
 
-
-
-
-  return (
-    <Main_list  title='Cities'>
-    <MainPageCard>
-    {open && (
+    return (
+        <Main_list title="Cities">
+            <MainPageCard>
+                {open && (
                     <CustomModal openCloseModal={setOpen} title="Add City">
-                        <Add_City/>
+                        <Add_City />
                     </CustomModal>
                 )}
                 {open && editData.id && (
@@ -137,30 +127,27 @@ export default function List_City() {
                     </CustomModal>
                 )}
 
-
-    <ColumnChooser
-
-isLoading={loadingStatus}
-                isLoadingDelivery={loadingDelivery}
-                   setPage={setPage}
-                page={page}
-
-                pagination={data?.response?.data}
-                onUpdateDelivery={updateDeliveryHander}
-                Enabel_edit={true}
-                TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
-                tabelHead={finslColsKeys} Chcekbox={false} Page_Add={false}  Link_Navigation='City' onDelete={deleteSubmitHandler} onView={viewHander} onUpdate={updateHander}   onEdit={EditHandelr} 
-                Chcekbox={false}
+                <ColumnChooser
+                    isLoading={loadingStatus}
+                    isLoadingDelivery={loadingDelivery}
+                    setPage={setPage}
+                    page={page}
+                    pagination={data?.response?.data}
+                    onUpdateDelivery={updateDeliveryHander}
+                    Enabel_edit={true}
+                    TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
+                    tabelHead={finslColsKeys}
+                    Chcekbox={false}
                     Page_Add={false}
-                    Link_Navigation="Categories"
+                    Link_Navigation="City"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
                     openCloseModal={setOpen}
-                    />
-    </MainPageCard>
-
-    </Main_list>
-     )
+                    showAddButton={true}
+                />
+            </MainPageCard>
+        </Main_list>
+    );
 }

@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
-import Upload from '../../../components/reusableComponents/Upload';
-import { useCreateTableMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { z } from 'zod';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
+import { useCreateTableMutation, useEditTableMutation } from '../../../api/Resturants/Table';
 
 interface TableFormData {
   table_name: string;
   minimum_count: number;
   type: any,
   maximum_count:number
-  }   
+  }  
+  type catEditProps = {
+    data?: any;
+  };
+   
   export const formSchema = z
 .object({
   table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
 })
-export default function Add_Tables() {
+export default function Add_Tables(props:catEditProps) {
   
-  const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
 
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
@@ -52,6 +54,7 @@ const options = [
     setresFormData({ ...resformData, [name]: value });
   };
   const [createTable, { isLoading }] = useCreateTableMutation();
+  const [editTable, { isLoading:EditisLoading }] = useEditTableMutation();
 
   const [toastData, setToastData] = useState<any>({});
   const [errors, setErrors] = useState<any>({});
@@ -71,7 +74,7 @@ const options = [
       setToastData({});
   }
 
-  if (isLoading) {
+  if (isLoading||EditisLoading) {
       toast.loading('Loading...', {
           toastId: 'loginLoadingToast',
           autoClose: false,
@@ -79,22 +82,11 @@ const options = [
   } else {
       toast.dismiss('loginLoadingToast');
   }
-}, [toastData, isLoading]);
+}, [toastData, isLoading,EditisLoading]);
       const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', resformData);
-        const formData = new FormData();
-        formData.append('table_name', resformData.table_name);
-                                //@ts-ignore
-
-        formData.append('minimum_count', resformData.minimum_count);
-                        //@ts-ignore
-
-        formData.append('type', resformData.type);
-                //@ts-ignore
-        formData.append('maximum_count', resformData.maximum_count);
-
-    
+     
         // dispatch(modalActions.closeModal())
         const result = formSchema.safeParse(resformData);
 
@@ -108,17 +100,35 @@ const options = [
       }
       // const data = await createResturant(formData);
       // console.log(data);
-      try {
-        const response = await createTable(formData);
-        console.log(response);
-        setToastData(response);
-        setErrors({});
-    } catch (err) {
-        setToastData(err);
-        setErrors(err);
-    }
+    
+
+    try {
+      if (props?.data?.id) {
+          const response = await editTable({ id: props?.data?.id, formData:resformData });
+          setToastData(response);
+          setErrors({});
+      } else {
+          const response = await createTable(resformData);
+          console.log(response);
+          setToastData(response);
+          setErrors({});
+      }
+  } catch (err) {
+      setToastData(err);
+      setErrors(err);
+  }
       
       };
+      useEffect(() => {
+        setresFormData({
+            ...resformData,
+            table_name: props?.data?.table_name,
+            minimum_count: props?.data?.minimum_count,
+            maximum_count: props?.data?.maximum_count,
+            type: props?.data?.type,
+  
+        });
+    }, []);
 
   return <>
     <form onSubmit={handleSubmit} className="p-4 md:p-5">
@@ -174,7 +184,7 @@ const options = [
              
                 </div>
                 <div className='w-full  flex justify-end'>
-                {isLoading ? (
+                {isLoading||EditisLoading ? (
                         <>
                             <LoadingButton />
                         </>

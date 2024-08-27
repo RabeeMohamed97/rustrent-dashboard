@@ -4,17 +4,19 @@ import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 
-import Add_Permision from '../Add_Region/Add_Region';
-import { useDeleteregionMutation, useGetAllregionQuery } from '../../../api/Resturants/Categories';
+import AddReion from '../Add_Region/Add_Region';
 import { showAlert } from '../../../components/Error';
+import { useDeleteRegionMutation, useGetAllregionQuery } from '../../../api/Resturants/Country_City_Region';
 
 export default function List_Region() {
+    const [open, setOpen] = useState(false);
+    const [editData, setEditData] = useState<any>([]);
     const [page, setPage] = useState(1);
     const { refetch, data, isSuccess, isError } = useGetAllregionQuery({ page });
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deletetable, { isLoading }] = useDeleteregionMutation();
+    const [deleteRegion, { isLoading }] = useDeleteRegionMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -60,7 +62,9 @@ export default function List_Region() {
         setFinalKeys(colss);
         console.log(colss);
     }, [colKeys, isSuccess]);
+
     const deleteSubmitHandler = async (id: string) => {
+        //@ts-ignore
         swal({
             title: 'Are you sure you want to delete region?',
             icon: 'error',
@@ -68,15 +72,14 @@ export default function List_Region() {
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deletetable(id);
+                const data = await deleteRegion(id);
+                console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
                     //@ts-ignore
                     toast.error(data?.error?.data?.message, {});
                     setToastData({});
                 }
-                console.log(data);
-
                 //@ts-ignore
                 if (data?.data.status === 200) {
                     //@ts-ignore
@@ -85,6 +88,7 @@ export default function List_Region() {
                 }
                 // setToastData(data);
             } else {
+                //@ts-ignore
                 swal('Not deleted');
             }
         });
@@ -96,20 +100,31 @@ export default function List_Region() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-    const EditHandelr = (id: string) => {
-        console.log('id form index EditHandelr', id);
+    const EditHandelr = (data: any) => {
+        setEditData(data);
     };
 
     const updateHander = async (id: string, status: boolean) => {
         console.log('id form index updateHander', id, !status);
     };
 
+    const updateDeliveryHander = async (id: string, status: boolean) => {
+        console.log('updateDeliveryHander', status);
+    };
+
     return (
         <Main_list title="Region">
             <MainPageCard>
-                <CustomModal title="Add Region">
-                    <Add_Permision />
-                </CustomModal>
+                {open && (
+                    <CustomModal openCloseModal={setOpen} title="Add Region">
+                        <AddReion />
+                    </CustomModal>
+                )}
+                {open && editData.id && (
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Region">
+                        <AddReion data={editData} />
+                    </CustomModal>
+                )}
 
                 <ColumnChooser
                     isLoading={loadingStatus}
@@ -128,6 +143,8 @@ export default function List_Region() {
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
+                    openCloseModal={setOpen}
+                    showAddButton={true}
                 />
             </MainPageCard>
         </Main_list>
