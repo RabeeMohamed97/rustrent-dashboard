@@ -4,59 +4,72 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const settingApi = createApi({
-    reducerPath: 'settingApi',
-    tagTypes: ['contactUs'],
+const TableApi = createApi({
+    reducerPath: 'TableApi',
+    tagTypes: [ 'table'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
             const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
-
             // headers.set('Content-Type', 'application/json');
             headers.set('Accept', 'application/json');
             headers.set('Authorization', `Bearer ${accessToken}`);
-            // headers.set('Accept-Language', 'ar');
             return headers;
         },
     }),
 
     endpoints: (builder) => ({
-        getAllContacts: builder.query<any, { page: number }>({
-            query: ({ page }) => {
+
+
+        createTable: builder.mutation<any, any>({
+            query: (formData) => {
+                // Retrieve auth_data from localStorage and parse it
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+
+                // Get the access token from the parsed auth_data
+
                 return {
-                    // url: `restaurant/contactUs`,
-                    url: `restaurant/contactUs?page=${page}`,
-                    method: 'GET',
+                    url: '/restaurant/store/table',
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
                 };
             },
-            providesTags: ['contactUs'],
+            invalidatesTags: ['table'],
+
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
+
                 return { status: meta?.response?.status, response };
             },
             transformErrorResponse: (response, meta) => {
                 return { status: meta?.response?.status, response };
             },
         }),
-        getSingleContact: builder.query<any, { id: number | null | undefined }>({
-            query: ({ id }) => {
+        editTable: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
                 return {
-                    // url: `restaurant/contactUs`,
-                    url: `restaurant/contactUs/${id}`,
-                    method: 'GET',
+                    url: `/restaurant/store/table/${id}`,
+                    method: 'PUT',
+                    body: formData,
                 };
             },
-            providesTags: ['contactUs'],
+            invalidatesTags: ['table'],
+
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
+
                 return { status: meta?.response?.status, response };
             },
             transformErrorResponse: (response, meta) => {
                 return { status: meta?.response?.status, response };
             },
         }),
-        deleteContact: builder.mutation<any, any>({
+
+        deletetable: builder.mutation<any, any>({
             query: (id) => {
                 // Retrieve auth_data from localStorage and parse it
                 const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
@@ -64,7 +77,7 @@ const settingApi = createApi({
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `/restaurant/contactUs/${id}`,
+                    url: `/restaurant/store/table/${id}`,
                     method: 'DELETE',
 
                     headers: {
@@ -72,7 +85,7 @@ const settingApi = createApi({
                     },
                 };
             },
-            invalidatesTags: ['contactUs'],
+            invalidatesTags: ['table'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -81,47 +94,41 @@ const settingApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        sendRespnse: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
+
+        getAlltable: builder.query<any, { page: number }>({
+            query: ({ page }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
                 return {
-                    url: `restaurant/contactUs/${id}`,
-                    method: 'PUT',
-                    body: formData,
+                    url: `/restaurant/store/table?page=${page}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
                 };
             },
-            invalidatesTags: ['contactUs'],
-
+            providesTags: ['table'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
-
                 return { status: meta?.response?.status, response };
             },
             transformErrorResponse: (response, meta) => {
                 return { status: meta?.response?.status, response };
             },
         }),
-        generalSettings: builder.mutation<any, any>({
-            query: ({ formData }) => {
-                return {
-                    url: `restaurant/auth/settings`,
-                    method: 'Post',
-                    body: formData,
-                };
-            },
-            // invalidatesTags: ['contactUs'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
+      
     }),
 });
 
 // Export the generated hooks and the API slice
-export const { useGetAllContactsQuery, useSendRespnseMutation, useGetSingleContactQuery, useGeneralSettingsMutation,    useDeleteContactMutation} = settingApi;
-export default settingApi;
+export const {
+
+    useCreateTableMutation,
+
+    useEditTableMutation,
+
+    useGetAlltableQuery,
+
+    useDeletetableMutation,
+
+} = TableApi;
+export default TableApi;

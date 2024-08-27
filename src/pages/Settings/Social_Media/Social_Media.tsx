@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 // import { useCreateResturantMutation } from '../../../api/Resturants/resturant';
 import { useNavigate } from 'react-router-dom';
 
-import { useCreateSocialMediaMutation, useGetSocilamediaQuery } from '../../../api/Resturants/Settings';
+import { useCreateSocialMediaMutation, useEditSocialMutation, useGetSocilamediaQuery } from '../../../api/Resturants/Settings';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
 import { showAlert } from '../../../components/Error';
 
@@ -61,7 +61,9 @@ const [cuurentData, setcuurentData] = useState({})
 
 const [createSocialMedia, { isLoading }] = useCreateSocialMediaMutation();
 const {data,  isLoading:getSocilamediaLoading } = useGetSocilamediaQuery();
-console.log(data?.response?.data?.facebook_link);
+
+const [editSocial, { isLoading: editIsLoading }] = useEditSocialMutation();
+ 
 useEffect(() => {
   
         setcuurentData(data?.response?.data)
@@ -78,9 +80,8 @@ useEffect(() => {
     
 }, [data])
 
-useEffect(() => {
-    
-}, []);
+
+
 
 
 
@@ -102,7 +103,7 @@ useEffect(() => {
             setToastData({});
         }
 
-        if (isLoading) {
+        if (isLoading||editIsLoading) {
             toast.loading('Loading...', {
                 toastId: 'loginLoadingToast',
                 autoClose: false,
@@ -111,14 +112,14 @@ useEffect(() => {
             toast.dismiss('loginLoadingToast');
         }
     }, [toastData, 
-        isLoading
+        isLoading,editIsLoading
     ]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
      
-console.log(resFormData);
-resFormData.phone=phone
+        resFormData.phone=phone
+        console.log(resFormData);
       
         const result = formSchema.safeParse(resFormData);
 
@@ -130,10 +131,18 @@ resFormData.phone=phone
         }
         // console.log(data);
         try {
-            const response = await createSocialMedia(resFormData);
+            if (data?.response?.data?.id) {
+                const response = await editSocial({ id: data?.response?.data?.id, formData:resFormData });
+                console.log(response);
+                setToastData(response);
+                setErrors({});
+            } else {
+                const response = await createSocialMedia(resFormData);
             console.log(response);
             setToastData(response);
             setErrors({});
+            }
+          
         } catch (err) {
             setToastData(err);
             setErrors(err);
@@ -186,14 +195,14 @@ resFormData.phone=phone
                      
                     </div>
                 <div className="flex capitalize justify-end">
-                {isLoading ? (
+                {isLoading||editIsLoading ? (
                         <>
                             <LoadingButton />
                         </>
                     ) : (
                         <> 
                                <button type="submit" className="btn rounded-full text-[18px] text-white bg-custom-gradient shadow-md px-10 py-3  mt-6">
-                               Save 
+                              {data?.response?.data!==undefined? 'Edit Social' :'Add Social' }
                             </button>
                         
                         </>

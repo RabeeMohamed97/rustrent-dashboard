@@ -10,7 +10,7 @@ import swal from 'sweetalert';
 import { showAlert } from '../../components/Error';
 import Tabs from '../../components/reusableComponents/Tabs';
 import Add_Response from './AddResponse';
-import { useGetAllContactsQuery } from '../../api/Resturants/SettingSlice';
+import { useDeleteContactMutation, useGetAllContactsQuery } from '../../api/Resturants/SettingSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function ContactUsList() {
@@ -24,7 +24,7 @@ export default function ContactUsList() {
         refetch();
     }, [page]);
 
-    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
+    const [deleteContact, { isLoading }] = useDeleteContactMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -79,7 +79,7 @@ export default function ContactUsList() {
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deleteCategory(id);
+                const data = await deleteContact(id);
                 console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
@@ -121,7 +121,7 @@ export default function ContactUsList() {
     };
 
     return (
-        <Main_list title="Categeories">
+        <Main_list title="Contact Us">
             <MainPageCard>
                 {open && (
                     <CustomModal openCloseModal={setOpen} title="Add Category">

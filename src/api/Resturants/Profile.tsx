@@ -4,9 +4,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const settingsApi = createApi({
-    reducerPath: 'settingsApi',
-    tagTypes: ['social', 'Categories', 'sub_category'],
+const ProfileApi = createApi({
+    reducerPath: 'ProfileApi',
+    tagTypes: ['Profile'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -22,14 +22,14 @@ const settingsApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getSocilamedia: builder.query<any, void>({
+        getProfile: builder.query<any, void>({
             query: () => {
                 return {
-                    url: `/restaurant/socialMedia`,
+                    url: `/restaurant/restaurantProfile`,
                     method: 'GET',
                 };
             },
-            providesTags: ['social'],
+            providesTags: ['Profile'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -39,34 +39,16 @@ const settingsApi = createApi({
             },
         }),
 
-        createSocialMedia: builder.mutation<any, any>({
-            query: (formData) => {
+
+        editProfile: builder.mutation<any, any>({
+            query: ({ formData }) => {
                 return {
-                    url: '/restaurant/socialMedia',
+                    url: `/restaurant/updateRestaurantProfile`,
                     method: 'POST',
                     body: formData,
                 };
             },
-            invalidatesTags: ['social'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        editSocial: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                return {
-                    url: `/restaurant/socialMedia/${id}`,
-                    method: 'PUT',
-                    body: formData,
-                };
-            },
-            invalidatesTags: ['social'],
+            invalidatesTags: ['Profile'],
 
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
@@ -84,8 +66,7 @@ const settingsApi = createApi({
 
 // Export the generated hooks and the API slice
 export const {
-    useGetSocilamediaQuery,
-    useCreateSocialMediaMutation,
-    useEditSocialMutation,
-} = settingsApi;
-export default settingsApi;
+    useGetProfileQuery,
+    useEditProfileMutation,
+} = ProfileApi;
+export default ProfileApi;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CustomSelect from '../../../components/reusableComponents/CustomSelect';
-import Upload from '../../../components/reusableComponents/Upload';
-import { useCreateTableMutation, useEditTableMutation, useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { z } from 'zod';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
+import { useCreateTableMutation, useEditTableMutation } from '../../../api/Resturants/Table';
 
 interface TableFormData {
     table_name: string;
@@ -22,8 +21,6 @@ export const formSchema = z.object({
     table_name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),
 });
 export default function Add_Tables(props: catEditProps) {
-    const { refetch, data, isSuccess, isError } = useGetAllCategoriesWithoutPaginationQuery();
-
     const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
     const [isChecked, setIsChecked] = useState(true);
@@ -42,7 +39,7 @@ export default function Add_Tables(props: catEditProps) {
         { value: 'public', label: 'public' },
     ];
 
-    const handleSelectChange = (value: number | string) => {
+    const handleSelectChange = (value: number) => {
         setresFormData({ ...resformData, type: value }); // Update the category in state
     };
 

@@ -4,11 +4,13 @@ import ChangePpassword from '../pages/Auth/changePassword/ChangePassword';
 import { AuthProvider } from '../components/AuthProvider';
 import CheckCode_Login from '../pages/Auth/CheckCode_Login';
 import Profile from '../pages/profile/Profile';
+import List_Delivery_Price from '../pages/Delivery_Price/List/List_Category';
 import ContactUs from '../pages/Contact Us/ViewContactUs';
 import ContactUsList from '../pages/Contact Us/ContactUsList';
 import ViewContactUs from '../pages/Contact Us/ViewContactUs';
 import CustomDataInput from '../components/reusableComponents/DateInput';
 import Test from '../pages/Test';
+import List_Advertisement from '../pages/Advertisement/List_Advertisement/List_Advertisement';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -121,6 +123,30 @@ const routes = [
         element: (
             <AuthProvider>
                 <Profile />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/contact-us',
+        element: (
+            <AuthProvider>
+                <ContactUsList />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Delivery',
+        element: (
+            <AuthProvider>
+                <List_Delivery_Price />
+            </AuthProvider>
+        ),
+    },
+    {
+        path: '/Advertisement',
+        element: (
+            <AuthProvider>
+                <List_Advertisement />
             </AuthProvider>
         ),
     },

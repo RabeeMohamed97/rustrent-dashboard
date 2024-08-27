@@ -4,6 +4,7 @@ import uploadUser from '../../../public/assets/images/upload-user.png';
 type UploadImageProps = {
     user?: boolean;
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
+    editImgUrl?: string | null;
 };
 const Upload_cover = (props: UploadImageProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);

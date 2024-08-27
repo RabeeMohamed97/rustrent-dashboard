@@ -3,20 +3,24 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-
-import AddReion from '../Add_Region/Add_Region';
+import Upload from '../../../components/reusableComponents/Upload';
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../api/Resturants/Categories';
+import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
-import { useDeleteRegionMutation, useGetAllregionQuery } from '../../../api/Resturants/Country_City_Region';
+import Tabs from '../../../components/reusableComponents/Tabs';
+import Add_Category from '../../Categories/Add_Category/Add_Category';
 
-export default function List_Region() {
+export default function List_Delivery_Price() {
+    const [page, setPage] = useState(1);
+    const { refetch, data, isSuccess, isError } = useGetAllCategoriesQuery({ page });
     const [open, setOpen] = useState(false);
     const [editData, setEditData] = useState<any>([]);
-    const [page, setPage] = useState(1);
-    const { refetch, data, isSuccess, isError } = useGetAllregionQuery({ page });
+    console.log('from ', data);
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deleteRegion, { isLoading }] = useDeleteRegionMutation();
+
+    const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -32,7 +36,7 @@ export default function List_Region() {
             setColKeys(keys);
         }
     }, [isSuccess]);
-    console.log();
+
     let colss: { accessor: string; title: string }[] = [];
     useEffect(() => {
         colKeys?.map((key: any) => {
@@ -64,15 +68,14 @@ export default function List_Region() {
     }, [colKeys, isSuccess]);
 
     const deleteSubmitHandler = async (id: string) => {
-        //@ts-ignore
         swal({
-            title: 'Are you sure you want to delete region?',
+            title: 'Are you sure you want to delete Delivery Price?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deleteRegion(id);
+                const data = await deleteCategory(id);
                 console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
@@ -88,7 +91,6 @@ export default function List_Region() {
                 }
                 // setToastData(data);
             } else {
-                //@ts-ignore
                 swal('Not deleted');
             }
         });
@@ -96,13 +98,15 @@ export default function List_Region() {
         if (data?.error) setToastData(data);
         setErrors({});
     };
-
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
     const EditHandelr = (data: any) => {
         setEditData(data);
     };
+
+    const [isTrue, setisTrue] = useState(false);
+    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
     const updateHander = async (id: string, status: boolean) => {
         console.log('id form index updateHander', id, !status);
@@ -113,16 +117,16 @@ export default function List_Region() {
     };
 
     return (
-        <Main_list title="Region">
+        <Main_list title="Delivery Price">
             <MainPageCard>
                 {open && (
-                    <CustomModal openCloseModal={setOpen} title="Add Region">
-                        <AddReion />
+                    <CustomModal openCloseModal={setOpen} title="Add Delivery Price">
+                        <Add_Category />
                     </CustomModal>
                 )}
                 {open && editData.id && (
-                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Region">
-                        <AddReion data={editData} />
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Delivery Price">
+                        <Add_Category data={editData} />
                     </CustomModal>
                 )}
 
@@ -132,19 +136,18 @@ export default function List_Region() {
                     setPage={setPage}
                     page={page}
                     pagination={data?.response?.data}
-                    onUpdateDelivery={updateHander}
+                    onUpdateDelivery={updateDeliveryHander}
                     Enabel_edit={true}
                     TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
                     tabelHead={finslColsKeys}
                     Chcekbox={false}
                     Page_Add={false}
-                    Link_Navigation="region"
+                    Link_Navigation="Categories"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
                     openCloseModal={setOpen}
-                    showAddButton={true}
                 />
             </MainPageCard>
         </Main_list>

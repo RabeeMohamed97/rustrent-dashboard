@@ -13,12 +13,12 @@ export default function CustomConnection() {
     return (
 <div className="mb-5 flex flex-col sm:flex-row">
       <Tab.Group className="w-full">
-        <div className="mx-10 mb-5 sm:mb-0">
-          <Tab.List className="mt-3 grid grid-cols-3 gap-2  bg-[#F5F5F5] dark:border-[#191e3a]">
+        <div className="mx-10 w-auto mb-5 sm:mb-0">
+          <Tab.List className="mt-3  grid grid-cols-3 gap-2 w-[75%] mx-auto  rounded-xl bg-[#f0efef] dark:border-[#191e3a]">
             <Tab as={Fragment}>
               {({ selected }) => (
                   <button
-                className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient  hover:text-white  rounded-lg p-3  before:inline-block    w-[50%]`}
+                className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient  hover:text-white  rounded-lg p-3  before:inline-block    `}
                 >
                     <ProfileIcon/>
                     Profile
@@ -28,7 +28,7 @@ export default function CustomConnection() {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient hover:text-white  rounded-lg p-3  before:inline-block    w-[50%]`}
+                className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient hover:text-white  rounded-lg p-3  before:inline-block    `}
                 >
             <SocialIcons/>
 
@@ -40,7 +40,7 @@ export default function CustomConnection() {
               {({ selected }) => (
 
                 <button
-                  className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient hover:text-white  rounded-lg p-3  before:inline-block    w-[50%]`}
+                  className={`${selected ? 'bg-custom-gradient text-white !outline-none' : ''} -mb-[1px] hover:bg-custom-gradient hover:text-white  rounded-lg p-3  before:inline-block    `}
                 >
     
 <ChangePasswordIcon/>

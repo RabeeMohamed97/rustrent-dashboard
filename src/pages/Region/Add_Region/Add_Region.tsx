@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import { showAlert } from '../../../components/Error';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '../../../components/reusableComponents/Loading_button';
-import { useCreateCategoryMutation, useCreateRegionMutation, useEditRegionMutation } from '../../../api/Resturants/Categories';
+import { useCreateCategoryMutation,  } from '../../../api/Resturants/Categories';
 import CustomSelectWithType from '../../../components/reusableComponents/CustomSelectWithType';
+import { useCreateRegionMutation, useEditRegionMutation } from '../../../api/Resturants/Country_City_Region';
 
 export const formSchema = z.object({
     name: z.string().min(1, 'يجب إدخال الاسم').max(100, 'يجب أن يكون الاسم أقل من 100 حرف'),

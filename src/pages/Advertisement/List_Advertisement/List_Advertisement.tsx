@@ -3,20 +3,31 @@ import MainPageCard from '../../../components/reusableComponents/MainPageCard';
 import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
-
-import AddReion from '../Add_Region/Add_Region';
+import Upload from '../../../components/reusableComponents/Upload';
+// import Add_Category from '../Add_Category/Add_Category';
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../api/Resturants/Categories';
+import swal from 'sweetalert';
 import { showAlert } from '../../../components/Error';
-import { useDeleteRegionMutation, useGetAllregionQuery } from '../../../api/Resturants/Country_City_Region';
+import Add_Meals from '../Add_Advertisement/Add_Advertisement';
+import { useDispatch } from 'react-redux';
+import { useDeleteAdvertisementsMutation, useGetAllAdvertisementsQuery } from '../../../api/Resturants/Advertisements';
 
-export default function List_Region() {
+export default function List_Advertisement() {
+    const dispatch = useDispatch();
+    const [page, setPage] = useState(1);
+
     const [open, setOpen] = useState(false);
     const [editData, setEditData] = useState<any>([]);
-    const [page, setPage] = useState(1);
-    const { refetch, data, isSuccess, isError } = useGetAllregionQuery({ page });
+
+    const { refetch, data, isSuccess, isError } = useGetAllAdvertisementsQuery({ page });
+    useEffect(() => {
+        console.log(data);
+    }, [isSuccess]);
     useEffect(() => {
         refetch();
     }, [page]);
-    const [deleteRegion, { isLoading }] = useDeleteRegionMutation();
+
+    const [deleteAdvertisements, { isLoading }] = useDeleteAdvertisementsMutation();
     const [toastData, setToastData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [colKeys, setColKeys] = useState<string[]>([]);
@@ -32,27 +43,28 @@ export default function List_Region() {
             setColKeys(keys);
         }
     }, [isSuccess]);
-    console.log();
+
     let colss: { accessor: string; title: string }[] = [];
     useEffect(() => {
         colKeys?.map((key: any) => {
-            console.log(key);
             if (key === 'attachments') {
                 colss.splice(11, 1);
                 colss.splice(3, 2);
                 colss.splice(1, 2);
-                // colss.splice(4, 2);
 
-                // colss?.push({ accessor: 'image cover', title: 'Image Cover' });
-                // colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image', title: 'Image' });
                 colss?.push({ accessor: 'image_cover', title: 'Image Cover' });
+            } else if (key === 'category_id') {
+                return;
+            } else if (key === 'sub_category_id') {
+                return;
             } else {
                 const formattedKey = key
                     .replace(/_/g, ' ')
                     .split(' ')
                     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ');
+
                 colss?.push({ accessor: key, title: formattedKey });
             }
         });
@@ -64,15 +76,14 @@ export default function List_Region() {
     }, [colKeys, isSuccess]);
 
     const deleteSubmitHandler = async (id: string) => {
-        //@ts-ignore
         swal({
-            title: 'Are you sure you want to delete region?',
+            title: 'Are you sure you want to delete Advertisement?',
             icon: 'error',
             buttons: ['Cancel', 'Delete'],
             dangerMode: true,
         }).then(async (willDelete: any) => {
             if (willDelete) {
-                const data = await deleteRegion(id);
+                const data = await deleteAdvertisements(id);
                 console.log(data);
                 //@ts-ignore
                 if (data?.error?.data?.status === 400) {
@@ -88,7 +99,6 @@ export default function List_Region() {
                 }
                 // setToastData(data);
             } else {
-                //@ts-ignore
                 swal('Not deleted');
             }
         });
@@ -96,13 +106,16 @@ export default function List_Region() {
         if (data?.error) setToastData(data);
         setErrors({});
     };
-
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
+
     const EditHandelr = (data: any) => {
         setEditData(data);
     };
+
+    const [isTrue, setisTrue] = useState(false);
+    const [isTrueFrommoale, setisTrueFrommoale] = useState(false);
 
     const updateHander = async (id: string, status: boolean) => {
         console.log('id form index updateHander', id, !status);
@@ -111,18 +124,18 @@ export default function List_Region() {
     const updateDeliveryHander = async (id: string, status: boolean) => {
         console.log('updateDeliveryHander', status);
     };
-
+    console.log(editData);
     return (
-        <Main_list title="Region">
+        <Main_list title="Advertisement">
             <MainPageCard>
                 {open && (
-                    <CustomModal openCloseModal={setOpen} title="Add Region">
-                        <AddReion />
+                    <CustomModal openCloseModal={setOpen} title="Add Advertisement">
+                        <Add_Meals />
                     </CustomModal>
                 )}
                 {open && editData.id && (
-                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Region">
-                        <AddReion data={editData} />
+                    <CustomModal openCloseModal={setOpen} resetEditData={setEditData} title="Edit Advertisement">
+                        <Add_Meals data={editData} />
                     </CustomModal>
                 )}
 
@@ -132,19 +145,20 @@ export default function List_Region() {
                     setPage={setPage}
                     page={page}
                     pagination={data?.response?.data}
-                    onUpdateDelivery={updateHander}
+                    onUpdateDelivery={updateDeliveryHander}
                     Enabel_edit={true}
                     TableBody={data?.response?.data?.data ? data?.response?.data?.data : []}
                     tabelHead={finslColsKeys}
                     Chcekbox={false}
                     Page_Add={false}
-                    Link_Navigation="region"
+                    showAddButton={true}
+                    Link_Navigation="Advertisement"
                     onDelete={deleteSubmitHandler}
                     onView={viewHander}
                     onUpdate={updateHander}
                     onEdit={EditHandelr}
                     openCloseModal={setOpen}
-                    showAddButton={true}
+                    // resetEditData={setEditData}
                 />
             </MainPageCard>
         </Main_list>

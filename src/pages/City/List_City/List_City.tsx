@@ -5,8 +5,8 @@ import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
 import Add_City from '../Add_City/Add_City';
-import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Categories';
 import { showAlert } from '../../../components/Error';
+import { useDeleteCityMutation, useGetAllcityQuery } from '../../../api/Resturants/Country_City_Region';
 
 export default function List_City() {
     const [page, setPage] = useState(1);

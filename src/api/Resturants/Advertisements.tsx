@@ -4,9 +4,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'https://deliback.rowaduae.com/api/';
 
 // Define the user API slice
-const settingApi = createApi({
-    reducerPath: 'settingApi',
-    tagTypes: ['contactUs'],
+const AdvertisementsApi = createApi({
+    reducerPath: 'AdvertisementsApi',
+    tagTypes: ['Advertisements'],
 
     baseQuery: fetchBaseQuery({
         baseUrl,
@@ -22,15 +22,14 @@ const settingApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getAllContacts: builder.query<any, { page: number }>({
+        getAllAdvertisements: builder.query<any, { page: number }>({
             query: ({ page }) => {
                 return {
-                    // url: `restaurant/contactUs`,
-                    url: `restaurant/contactUs?page=${page}`,
+                    url: `/restaurant/store/banner?page=${page}`,
                     method: 'GET',
                 };
             },
-            providesTags: ['contactUs'],
+            providesTags: ['Advertisements'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -39,40 +38,57 @@ const settingApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        getSingleContact: builder.query<any, { id: number | null | undefined }>({
-            query: ({ id }) => {
-                return {
-                    // url: `restaurant/contactUs`,
-                    url: `restaurant/contactUs/${id}`,
-                    method: 'GET',
-                };
-            },
-            providesTags: ['contactUs'],
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        deleteContact: builder.mutation<any, any>({
-            query: (id) => {
-                // Retrieve auth_data from localStorage and parse it
-                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
 
+        createAdvertisements: builder.mutation<any, any>({
+            query: (formData) => {
+                return {
+                    url: '/restaurant/store/banner',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['Advertisements'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+        editAdvertisements: builder.mutation<any, any>({
+            query: ({ id, formData }) => {
+                return {
+                    url: `/restaurant/store/banner/${id}`,
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['Advertisements'],
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
+
+       
+        deleteAdvertisements: builder.mutation<any, any>({
+            query: (id) => {
                 // Get the access token from the parsed auth_data
 
                 return {
-                    url: `/restaurant/contactUs/${id}`,
+                    url: `/restaurant/store/banner/${id}`,
                     method: 'DELETE',
-
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
                 };
             },
-            invalidatesTags: ['contactUs'],
+            invalidatesTags: ['Advertisements'],
             transformResponse: (response, meta) => {
                 console.log(meta?.response?.status);
                 return { status: meta?.response?.status, response };
@@ -81,47 +97,18 @@ const settingApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
-        sendRespnse: builder.mutation<any, any>({
-            query: ({ id, formData }) => {
-                return {
-                    url: `restaurant/contactUs/${id}`,
-                    method: 'PUT',
-                    body: formData,
-                };
-            },
-            invalidatesTags: ['contactUs'],
+    
+     
+  
 
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
-        generalSettings: builder.mutation<any, any>({
-            query: ({ formData }) => {
-                return {
-                    url: `restaurant/auth/settings`,
-                    method: 'Post',
-                    body: formData,
-                };
-            },
-            // invalidatesTags: ['contactUs'],
-
-            transformResponse: (response, meta) => {
-                console.log(meta?.response?.status);
-
-                return { status: meta?.response?.status, response };
-            },
-            transformErrorResponse: (response, meta) => {
-                return { status: meta?.response?.status, response };
-            },
-        }),
     }),
 });
 
 // Export the generated hooks and the API slice
-export const { useGetAllContactsQuery, useSendRespnseMutation, useGetSingleContactQuery, useGeneralSettingsMutation,    useDeleteContactMutation} = settingApi;
-export default settingApi;
+export const {
+    useGetAllAdvertisementsQuery,
+    useCreateAdvertisementsMutation,
+useEditAdvertisementsMutation,
+    useDeleteAdvertisementsMutation,
+} = AdvertisementsApi;
+export default AdvertisementsApi;
