@@ -32,7 +32,7 @@ import IconMenuDatatables from '../Icon/Menu/IconMenuDatatables';
 import IconMenuForms from '../Icon/Menu/IconMenuForms';
 import IconMenuPages from '../Icon/Menu/IconMenuPages';
 import IconMenuMore from '../Icon/Menu/IconMenuMore';
-import logo from '../../assets/Artboard 2 2.png'
+import logo from '../../assets/Artboard 2 2.png';
 const Header = () => {
     const location = useLocation();
     useEffect(() => {
@@ -143,7 +143,7 @@ const Header = () => {
         localStorage.removeItem('deliProviderToken'); // Example for localStorage, update as needed
         navigate('/');
     }
-    
+
     return (
         <header className={`z-40 ${themeConfig.semidark && themeConfig.menu === 'horizontal' ? 'dark' : ''}`}>
             <div className="shadow-sm">

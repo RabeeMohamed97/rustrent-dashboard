@@ -4,6 +4,11 @@ import Main_list from '../../../components/reusableComponents/Main_list';
 import ColumnChooser from '../../../components/reusableComponents/tabels';
 import CustomModal from '../../../components/reusableComponents/CustomModal';
 import Upload from '../../../components/reusableComponents/Upload';
+
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '../../../api/Resturants/Categories';
+import swal from 'sweetalert';
+import { showAlert } from '../../../components/Error';
+import Tabs from '../../../components/reusableComponents/Tabs';
 import Add_Offers from '../Add_Offers/Add_Offers';
 import { useDeleteofferMutation, useGetAllofferQuery } from '../../../api/Resturants/Offer';
 import { useDispatch } from 'react-redux';
@@ -61,7 +66,6 @@ export default function List_Offers() {
                     .split(' ')
                     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ');
-
                 colss?.push({ accessor: key, title: formattedKey });
             }
         });
@@ -106,7 +110,6 @@ export default function List_Offers() {
     const viewHander = (id: string) => {
         console.log('id form index viewHander', id);
     };
-
     const EditHandelr = (data: any) => {
         setEditData(data);
     };

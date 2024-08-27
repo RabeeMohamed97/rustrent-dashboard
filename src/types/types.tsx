@@ -67,7 +67,7 @@ export type customNumbersInputProps = {
 export type customSelectProps = {
     options: { value: any; label: string }[];
     label?: string;
-    onChange: (value: number) => void; // Add this prop
+    onChange: (value: number | string) => void; // Add this prop
 };
 export type customAnySelectProps = {
     label?: string;

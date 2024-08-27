@@ -12,6 +12,7 @@ import CategoriesApi from '../api/Resturants/Categories';
 import CountryApi from '../api/Resturants/Country_City_Region';
 import ProfileApi from '../api/Resturants/Profile';
 import offerApi from '../api/Resturants/Offer';
+import couponsApi from '../api/Resturants/Coupons';
 
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     [CategoriesApi.reducerPath]: CategoriesApi.reducer,
     [CountryApi.reducerPath]: CountryApi.reducer,
     [ProfileApi.reducerPath]: ProfileApi.reducer,
+    [couponsApi.reducerPath]: couponsApi.reducer,
 });
 
 export default configureStore({
@@ -42,6 +44,9 @@ export default configureStore({
             CategoriesApi.middleware,
             CountryApi.middleware,
             ProfileApi.middleware,
+            settingsApi.middleware,
+            couponsApi.middleware
+            // cartApi.middleware,
             // menuApi.middleware,
             // orderApi.middleware,
             // paymentApi.middleware,

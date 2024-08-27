@@ -190,7 +190,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                            {/* <li className="nav-item">
+                            <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
                                         <NavLink to="/Coupons/List" className="group">
@@ -201,7 +201,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li> */}
+                            </li> 
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
