@@ -18,7 +18,7 @@ import IconMeals from '../Icon/Menu/iconMeals';
 import IconCity from '../Icon/Menu/IconCity';
 import IconSettings from '../Icon/IconSettings';
 import IconDelivery from '../Icon/IconDelivery_Price';
-
+import { GoHome } from 'react-icons/go';
 import { CiHeadphones } from 'react-icons/ci';
 import IconAdvertisement from '../Icon/IconAdvertisement';
 const Sidebar = () => {
@@ -138,7 +138,18 @@ const Sidebar = () => {
                             </li> */}
 
                             {/* Categories */}
-
+                            <li className="nav-item">
+                                <ul>
+                                    <li className="nav-item">
+                                        <NavLink to="/pos" className="group">
+                                            <div className="flex items-center">
+                                                <GoHome className=" shrink-0 h-6 w-6" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark group-hover:text-white">{t('Dashboard')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">

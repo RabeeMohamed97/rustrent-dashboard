@@ -11,6 +11,7 @@ import ViewContactUs from '../pages/Contact Us/ViewContactUs';
 import CustomDataInput from '../components/reusableComponents/DateInput';
 import Test from '../pages/Test';
 import List_Advertisement from '../pages/Advertisement/List_Advertisement/List_Advertisement';
+import Pos from '../pages/Pos/Pos';
 
 const Index = lazy(() => import('../pages/Index'));
 const List_Tables = lazy(() => import('../pages/Tabels/List_Tabels/List_Tables'));
@@ -54,6 +55,14 @@ const routes = [
     //         </AuthProvider>
     //     ),
     // },
+    {
+        path: '/pos',
+        element: (
+            <AuthProvider>
+                <Pos />
+            </AuthProvider>
+        ),
+    },
     {
         path: '/Categories/List',
         element: (
