@@ -6,15 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import './cat_slider.css';
+import '../category_slider/cat_slider.css';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
 import { Sub_Cat } from '../sub_category/Sub_Cat';
-import { useGetAllCategoriesWithoutPaginationQuery } from '../../../api/Resturants/Categories';
+import { useGetAllCategoriesWithoutPaginationQuery, useGetAllSubCategoriesByMainQuery } from '../../../api/Resturants/Categories';
 
-export default function Custom_slider() {
-    const { data } = useGetAllCategoriesWithoutPaginationQuery();
+export default function Sub_slider() {
+    const { data } = useGetAllSubCategoriesByMainQuery();
     console.log(data);
     return (
         <>
@@ -28,16 +28,14 @@ export default function Custom_slider() {
                 // modules={[Pagination]}
                 className="mySwiper"
             >
-                {data?.response?.data?.map((item: any) => (
+                {data?.response?.data?.data?.map((item: any) => (
                     <SwiperSlide>
-                        <div className="flex px-6 py-2 border-[1px] rounded-[100px] text-primary hover:text-white  hover:bg-custom-gradient border-primary border-solid">
-                            <span className="   ">{item?.name}</span>
-                        </div>
+                        <Sub_Cat imgUrl={item?.image} title={item.name} />
                     </SwiperSlide>
                 ))}
 
                 {/* <SwiperSlide>
-                    <Sub_Cat />
+                   
                 </SwiperSlide> */}
             </Swiper>
         </>

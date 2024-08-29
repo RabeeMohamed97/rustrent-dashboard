@@ -46,6 +46,7 @@ const Tabs = () => {
                     </li>
                 </ul>
             </div>
+
             <div id="default-styled-tab-content w-full">
                 <div className={`p-4 rounded-lg bg-white dark:bg-gray-800 ${activeTab !== 'General' ? 'hidden' : ''}`} id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
                     <GeneralSettings />
