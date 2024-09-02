@@ -53,17 +53,30 @@ export default function Sub_slider({ categoryId ,onSelectSubCategory }:SubSlider
 
                     {data?.response?.data?.data?.map((item: any) => (
                   <SwiperSlide key={item.id} onClick={() => handleCategorySelect(item.id)}>
-                        <div className='w-[300px]  cursor-pointer'>
+         
+<div className={`${
+          selectedSubCategoryId === item.id ? 'bg-custom-gradient text-white' : 'hover:text-white hover:bg-custom-gradient'
+        } "flex flex-col items-center  w-[160px] h-[160px]    rounded-lg shadow     hover:bg-custom-gradient bg-white  text-[#A098AE] hover:text-white  py-4 gap-4"`}>
+    <div className="flex flex-col items-center  content-center">
+    <img src={item?.image} alt={item?.name} className="min-w-16 w-[160px] min-h-16 h-[160px] mb-3 rounded-full " />
+
+        <h5 className="mb-1 text-md font-medium "  title={item?.name}>  { item?.name}
+        </h5>     
+    </div>
+</div>
+                        {/* <div classNameName='card w-[150px]  cursor-pointer'>
 
                           
-            <div className={`${
+            <div classNameName={`${
           selectedSubCategoryId === item.id ? 'bg-custom-gradient text-white' : 'hover:text-white hover:bg-custom-gradient'
-        } "flex flex-col   border-primary  hover:bg-custom-gradient bg-white rounded-[16px] text-[#A098AE] hover:text-white p-4 gap-4"`}>
-                <img src={item?.image}  style={{ width: '50%' ,margin:'auto' }} alt="" className="h-[8] w-[8] rounded-full" />
-                <span className="text-6" title={item?.name}>
-  { item?.name}
-</span>            </div>
-        </div>
+        } "flex flex-col   border-primary  hover:bg-custom-gradient bg-white rounded-[16px] text-[#A098AE] hover:text-white  p-4 gap-4"`}>
+          <div>
+                <span classNameName="text-6">
+
+</span>     
+          </div>
+       </div>
+        </div> */}
                     </SwiperSlide>
 
                 ))}
