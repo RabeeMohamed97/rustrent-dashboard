@@ -1,3 +1,18 @@
 .custom-shadow {
     box-shadow: 2px 2px 12px 0px #56565a29;
 }
+input[type='radio'] {
+    accent-color: #bd0600;
+}
+
+input[type='radio']::before {
+    border: 1px solid #bd0600; /* Border of the unchecked radio button */
+}
+
+input[type='radio']:checked::before {
+    background-color: #bd0600; /* Color of the checked radio button */
+}
+
+input[type='radio']:checked::after {
+    background-color: white; /* Color of the inner dot when checked */
+}
