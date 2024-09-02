@@ -238,7 +238,13 @@ const DilaveryTab = () => {
                 <div className="flex flex-col gap-[6px]">
                     <span className="text-[24px] font-medium">Order Menu</span>
                     <div className="flex justify-between  items-center">
-                        <img src={orderImg} alt="" className="rounded-full" />
+                        <div className="flex gap-4 items-center">
+                            <img src={orderImg} alt="" className="rounded-full" />
+                            <div className="flex flex-col">
+                                <span className="text-[18px] font-medium">Fries</span>
+                                <span className="text-[12px] text-[#5C5C5C]">$8.00</span>
+                            </div>
+                        </div>
                         <div className="flex flex-col">
                             <span className="text-[18px] font-medium">Burger</span>
                             <span className="text-[12px] text-[#5C5C5C]">$12.00</span>
