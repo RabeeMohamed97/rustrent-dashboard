@@ -6,15 +6,13 @@ import Custom_slider from '../../category_slider/Cat_Slider';
 import { useGetAllCategoriesWithoutPaginationQuery } from '../../../../api/Resturants/Categories';
 import Sub_slider from '../../sub_category/Sub_Slider';
 import { Meals } from '../../Meals/Meals';
+import OrderCard from '../../Order/OrderCard';
 
 export default function PosTabs() {
     const [search, setSearch] = useState(false);
 
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
     const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<number | null>(null);
-    console.log(selectedCategoryId);
-    console.log(selectedSubCategoryId);
-    
 
     return (
         <div className="mb-5 flex flex-col sm:flex-row w-full">
@@ -127,7 +125,9 @@ export default function PosTabs() {
                             </div>
                         </div>
                     </Tab.Panel>
-                    <Tab.Panel>orders</Tab.Panel>
+                    <Tab.Panel>
+                        <OrderCard/>
+                    </Tab.Panel>
                     <Tab.Panel>track</Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
