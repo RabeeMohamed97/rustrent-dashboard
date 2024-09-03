@@ -13,6 +13,9 @@ module.exports = {
             backgroundImage: {
                 'custom-gradient': 'linear-gradient(90.37deg, #F23F39 0.04%, #BD0600 100.05%)',
             },
+            boxShadow: {
+                'custom': '80px 17px 26px 0px rgba(0, 0, 0, 0.08)',
+              },
             colors: {
                 primary: {
                     DEFAULT: '#BD0600',

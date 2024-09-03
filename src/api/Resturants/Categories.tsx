@@ -254,6 +254,26 @@ const CategoriesApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        getSubcategoriesByCategoryId: builder.query<any, { id: number|null }>({
+            query: ({ id }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/category/subCategories/${id}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
     }),
 });
 
@@ -265,6 +285,7 @@ export const {
     useGetAllSubCategoriesQuery,
     useGetAllSubCategoriesWithoutPaginationQuery,
     useGetAnySelectOptionsQuery,
+    useGetSubcategoriesByCategoryIdQuery,
     useEditCategoryMutation,
 
     useCreateCategoryMutation,

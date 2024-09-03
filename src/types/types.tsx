@@ -58,7 +58,6 @@ export type customInputProps = {
 
 export type customNumbersInputProps = {
     value: string;
-
     onChange: (value: string) => void;
     required?: boolean;
 };
@@ -76,6 +75,7 @@ export type customAnySelectProps = {
     onChange: (value: number) => void; // Add this prop
 };
 export type ModalProps = {
+    width?: string;
     children: React.ReactNode;
     title?: string;
     openCloseModal: React.Dispatch<React.SetStateAction<boolean>>;

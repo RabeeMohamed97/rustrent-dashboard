@@ -95,6 +95,26 @@ const mealsApi = createApi({
                 return { status: meta?.response?.status, response };
             },
         }),
+        getItemBySubCategoryId: builder.query<any, { id: number|null }>({
+            query: ({ id }) => {
+                const accessToken = JSON.parse(localStorage.getItem('deliProviderToken') || '');
+                return {
+                    url: `/restaurant/store/itemBySubCategory/${id}`,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                };
+            },
+
+            transformResponse: (response, meta) => {
+                console.log(meta?.response?.status);
+                return { status: meta?.response?.status, response };
+            },
+            transformErrorResponse: (response, meta) => {
+                return { status: meta?.response?.status, response };
+            },
+        }),
        
       
     }),
@@ -103,6 +123,8 @@ const mealsApi = createApi({
 // Export the generated hooks and the API slice
 export const {
     useGetAllMealsQuery,
+    
+    useGetItemBySubCategoryIdQuery,
     useCreateMealMutation,
     useEditMealMutation,
     useDeleteMealMutation,
