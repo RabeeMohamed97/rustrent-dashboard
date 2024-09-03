@@ -44,7 +44,7 @@ const Login = () => {
         const token = localStorage.getItem('deliProviderToken');
         console.log(token);    
         if (token) {
-            navigate('/Categories/List');
+            navigate('/pos');
         }
     }, []);
     useEffect(() => {
@@ -57,7 +57,7 @@ const Login = () => {
                 JSON.stringify(toastData?.response.data.token)
             );
             setToastData({});
-            navigate('/Categories/List');
+            navigate('/pos');
         }
 
         if (toastData?.status === 422) {
