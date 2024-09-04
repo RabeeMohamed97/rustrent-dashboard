@@ -7,6 +7,7 @@ import { useGetAllCategoriesWithoutPaginationQuery } from '../../../../api/Restu
 import Sub_slider from '../../sub_category/Sub_Slider';
 import { Meals } from '../../Meals/Meals';
 import OrderCard from '../../Order/OrderCard';
+import Tabel from '../../TabelPos/TabelTabs';
 
 export default function PosTabs() {
     const [search, setSearch] = useState(false);
@@ -129,6 +130,7 @@ export default function PosTabs() {
                         <OrderCard/>
                     </Tab.Panel>
                     <Tab.Panel>track</Tab.Panel>
+                    <Tab.Panel><Tabel/></Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
         </div>
