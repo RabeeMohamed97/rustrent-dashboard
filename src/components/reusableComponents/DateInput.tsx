@@ -4,12 +4,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { FaCalendarAlt } from 'react-icons/fa';
 
 type CustomDataInputProps = {
-    label: string;
+    label?: string;
     value: Date | null;
     onChange: (date: Date | null) => void;
+    color?: boolean;
 };
 
-const CustomDataInput: React.FC<CustomDataInputProps> = ({ label, value, onChange }) => {
+const CustomDataInput: React.FC<CustomDataInputProps> = ({ label, value, onChange, color }) => {
     console.log(value);
     // Custom input component
     const CustomInput = ({ value, onClick }: { value?: string; onClick?: () => void }) => (
@@ -19,7 +20,9 @@ const CustomDataInput: React.FC<CustomDataInputProps> = ({ label, value, onChang
                 value={value}
                 onClick={onClick}
                 readOnly
-                className="bg-[#F5F5F5] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                className={` border ${
+                    color ? 'bg-white' : 'bg-[#F5F5F5]'
+                } border-gray-300   text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
             />
             <FaCalendarAlt className="absolute top-3.5 right-3  text-primary " onClick={onClick} />
         </div>
