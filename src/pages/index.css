@@ -76,3 +76,6 @@ body {
 .react-tel-input .selected-flag {
     background-color: white;
 }
+table thead tr{
+    background-color: transparent;
+}
